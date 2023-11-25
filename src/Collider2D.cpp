@@ -4,11 +4,10 @@
 #include "Entity.hpp"
 
 
-
-Collider2D::Collider2D(const SDL_Rect& colliderRect, const Vector2& relativePos, const bool renderBounds)
+Collider2D::Collider2D(const Vector2& dimensions, const Vector2& relativePos, const bool renderBounds)
 	:
 	m_position(relativePos),
-	m_colliderRectangle({colliderRect.x, colliderRect.y, colliderRect.w, colliderRect.h}),
+	m_colliderRectangle({0, 0, dimensions.x, dimensions.y}),
 	bRenderBounds(renderBounds)
 {
 }

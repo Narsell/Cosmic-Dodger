@@ -5,6 +5,7 @@
 #include "RenderWindow.hpp"
 #include "Entity.hpp"
 #include "Math.hpp"
+#include "Collider2D.hpp"
 
 RenderWindow::RenderWindow(const char* title, int width, int height)
     :m_window(nullptr), m_renderer(nullptr), m_windowDimensions(Vector2(width, height))
@@ -37,18 +38,30 @@ void RenderWindow::Clear(){
 }
 
 void RenderWindow::Render(Entity& entity){
-    SDL_Rect src;
-    src.x = entity.GetCurrentFrame().x;
-    src.y = entity.GetCurrentFrame().y;
-    src.w = entity.GetCurrentFrame().w;
-    src.h = entity.GetCurrentFrame().h;
 
-    SDL_Rect dst;
-    dst.x = entity.GetPosition().x;
-    dst.y = entity.GetPosition().y;
-    dst.w = entity.GetCurrentFrame().w;
-    dst.h = entity.GetCurrentFrame().h;
+    SDL_Rect src { 
+        entity.GetCurrentFrame().x, 
+        entity.GetCurrentFrame().y, 
+        entity.GetCurrentFrame().w, 
+        entity.GetCurrentFrame().h
+    };
+
+    SDL_Rect dst {
+        entity.GetPosition().x,
+        entity.GetPosition().y,
+        entity.GetCurrentFrame().w,
+        entity.GetCurrentFrame().h
+    };
+
+    //Render entity
     SDL_RenderCopy(m_renderer, entity.GetTexture(), &src, &dst);
+
+    //Render componentes
+    for (const Collider2D* collider : entity.GetAllColliders()) {
+        if (collider->GetbRenderBounds()) {
+            Render(&collider->GetRect());
+        }
+    }
 }
 
 void RenderWindow::Render(const SDL_Rect* rect)

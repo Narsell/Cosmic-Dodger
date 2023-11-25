@@ -23,8 +23,16 @@ int main(int argc, char** args)
     //GOOD CANDIDATE FOR SHARED PTR
     SDL_Texture* grassTexture = window.LoadTexture("assets/ground_tile.png");
 
-    Entity wilson(Vector2(0.f, 0.f), grassTexture);
-    Entity robert(Vector2(0.f, 688.f), grassTexture);
+    Entity wilson(Vector2(0, 0), grassTexture);
+    Entity robert(Vector2(0, 688), grassTexture);
+    wilson.AddCollider(Vector2(32), Vector2::ZERO, true);
+    //wilson.AddCollider(Vector2(32), Vector2(32, 0), true);
+
+    robert.AddCollider(Vector2(32), Vector2::ZERO, true);
+    //robert.AddCollider(Vector2(32), Vector2(0, 32), true);
+
+    Vector2 wilsonDelta = Vector2(2, 2);
+    Vector2 robertDelta = Vector2(2, -2);
 
     bool gameRunning = true;
     SDL_Event event;
@@ -32,9 +40,6 @@ int main(int argc, char** args)
     constexpr float timeStep = 0.01f;
     float accumulator = 0.0f;
     float currentTime = utils::HireTimeInSeconds();
-
-    Vector2 wilsonDelta = Vector2(2.f, 2.f);
-    Vector2 robertDelta = Vector2(2.f, -2.f);
 
     while(gameRunning)
     {
@@ -63,6 +68,7 @@ int main(int argc, char** args)
         wilson.AddPositionDelta(wilsonDelta);
         robert.AddPositionDelta(robertDelta);
 
+        // Bounce on walls
         if ((wilson.GetPosition().x + wilson.GetCurrentFrame().w) >= window.GetWindowDimensions().x || wilson.GetPosition().x <= 0) {
             wilsonDelta = Vector2(-wilsonDelta.x, wilsonDelta.y);
         }
@@ -80,16 +86,17 @@ int main(int argc, char** args)
         wilson.Update();
         robert.Update();
 
-        if (wilson.GetCollider2D().IsColliding(robert.GetCollider2D())) {
-            std::cout << "IS COLLIDING!!\n";
+        if (wilson.HasCollided(robert)) {
+            //wilsonDelta *= -1;
+            //robertDelta *= -1;
+            std::cout << "Collided at ";
+            wilson.GetPosition().Print();
         }
 
         window.Clear();
 
         window.Render(wilson);
         window.Render(robert);
-        window.Render(&wilson.GetCollider2D().GetRect());
-        window.Render(&robert.GetCollider2D().GetRect());
 
         window.Display();
     }
