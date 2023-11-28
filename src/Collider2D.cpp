@@ -18,7 +18,6 @@ Collider2D::Collider2D()
 	m_colliderRectangle(SDL_Rect(0, 0, 0, 0)), 
 	bRenderBounds(false)
 {
-
 }
 
 Collider2D::~Collider2D()

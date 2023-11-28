@@ -38,12 +38,12 @@ void Vector2::operator-=(const Vector2& other)
 	*this = *this - other;
 }
 
-const Vector2& Vector2::operator*(const float scalar)
+const Vector2& Vector2::operator*(float scalar)
 {
 	return Vector2(x * scalar, y * scalar);
 }
 
-void Vector2::operator*=(const float scalar)
+void Vector2::operator*=(float scalar)
 {
 	*this = *this * scalar;
 }

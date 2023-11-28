@@ -4,6 +4,7 @@
 Entity::Entity(const Vector2& position, SDL_Texture* texture)
 	:
 	m_position(position),
+	m_velocity(Vector2(0,0)),
 	m_currentFrame(SDL_Rect(0, 0, 32, 32)),
 	m_texture(texture)
 {
@@ -24,6 +25,7 @@ Entity::~Entity()
 
 void Entity::Update()
 {
+	AddPositionDelta(m_velocity);
 	for (Collider2D* collider : m_colliders) {
 		collider->Update(this);
 	}

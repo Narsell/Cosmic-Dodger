@@ -17,6 +17,7 @@ public:
 	//Updates and "physics"
 	void Update();
 	void AddPositionDelta(const Vector2& deltaPosition);
+	void SetVelocity(const Vector2& newVelocity) { m_velocity = newVelocity; };
 
 	//Collisions
 	void AddCollider(const Vector2& dimensions, const Vector2& relativePos = Vector2::ZERO, const bool renderBounds = false);
@@ -24,6 +25,7 @@ public:
 
 	// Getters
 	const Vector2& GetPosition() const { return m_position; };
+	const Vector2& GetVelocity() const { return m_velocity; };
 	SDL_Texture* GetTexture() const { return m_texture; };
 	SDL_Rect GetCurrentFrame() const { return m_currentFrame; };
 	const std::vector<Collider2D*> GetAllColliders() const { return m_colliders; };
@@ -32,6 +34,7 @@ public:
 private:
 
 	Vector2 m_position;
+	Vector2 m_velocity;
 	SDL_Rect m_currentFrame;
 	SDL_Texture* m_texture = nullptr;
 	std::vector<Collider2D*> m_colliders;

@@ -4,11 +4,15 @@
 
 class RenderWindow {
 public:
-    RenderWindow(const char* title, int width, int height);
+    RenderWindow(const char* title, const Vector2& windowDimensions);
+    RenderWindow(const Vector2& other) = delete;
+    const Vector2& operator=(const Vector2& other) = delete;
+    ~RenderWindow();
 
     const Vector2& GetWindowDimensions() const { return m_windowDimensions; };
-    void CleanUp();
     SDL_Texture* LoadTexture(const char* filePath);
+
+    //Rendering
     void Clear();
 	void Render(class Entity& entity);
     void Render(const struct SDL_Rect* rect);

@@ -19,8 +19,8 @@ public:
 	const Vector2& operator-(const Vector2& other);
 	void operator-=(const Vector2& other);
 
-	const Vector2& operator*(const float scalar);
-	void operator*=(const float scalar);
+	const Vector2& operator*(float scalar);
+	void operator*=(float scalar);
 
 	void Print() const;
 
