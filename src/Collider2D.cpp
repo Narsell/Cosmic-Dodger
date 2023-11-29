@@ -1,4 +1,5 @@
 #include <SDL.h>
+#include <assert.h>
 
 #include "Collider2D.hpp"
 #include "Entity.hpp"
@@ -24,13 +25,23 @@ Collider2D::~Collider2D()
 {
 }
 
-void Collider2D::Update(const Entity* parent)
+void Collider2D::Update(const float deltaTime, const Entity* parent)
 {
 	m_colliderRectangle.x = parent->GetPosition().x + m_position.x;
 	m_colliderRectangle.y = parent->GetPosition().y + m_position.y;
 }
 
-SDL_bool Collider2D::IsColliding(const Collider2D& other) const
+SDL_bool Collider2D::IsColliding(const Collider2D* other) const
 {
-	return SDL_HasIntersection(&m_colliderRectangle, &other.m_colliderRectangle);
+	assert(other);
+	return SDL_HasIntersection(&m_colliderRectangle, &other->m_colliderRectangle);
+}
+
+SDL_bool Collider2D::IsColliding(const std::vector<Collider2D*> others) const
+{
+	for (Collider2D* other : others) {
+		if (IsColliding(other))
+			return SDL_TRUE;
+	}
+	return SDL_FALSE;
 }

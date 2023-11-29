@@ -1,11 +1,30 @@
 #include "Entity.hpp"
 #include "Collider2D.hpp"
 
-Entity::Entity(const Vector2& position, SDL_Texture* texture)
+
+Entity::Entity()
+	:
+	m_position(Vector2(0, 0)),
+	m_velocity(Vector2(0, 0)),
+	m_currentFrame(SDL_Rect({0, 0, 0, 0})),
+	m_texture(nullptr)
+{
+}
+
+Entity::Entity(const Vector2& position)
+	:
+	m_position(position),
+	m_velocity(Vector2(0, 0)),
+	m_currentFrame(SDL_Rect(0, 0, 0, 0)),
+	m_texture(nullptr)
+{
+}
+
+Entity::Entity(const Vector2& position, SDL_Texture* texture, const Vector2& textureDimensions)
 	:
 	m_position(position),
 	m_velocity(Vector2(0,0)),
-	m_currentFrame(SDL_Rect(0, 0, 32, 32)),
+	m_currentFrame(SDL_Rect(0, 0, textureDimensions.x, textureDimensions.y)),
 	m_texture(texture)
 {
 
@@ -23,11 +42,11 @@ Entity::~Entity()
 
 }
 
-void Entity::Update()
+void Entity::Update(const float deltaTime)
 {
 	AddPositionDelta(m_velocity);
 	for (Collider2D* collider : m_colliders) {
-		collider->Update(this);
+		collider->Update(deltaTime, this);
 	}
 }
 
@@ -47,11 +66,12 @@ const bool Entity::HasCollided(const Entity& otherEntity)
 {
 	for (const Collider2D* collider : m_colliders) {
 		for (const Collider2D* otherCollider : otherEntity.GetAllColliders()) {
-			if (collider->IsColliding(*otherCollider)) {
+			if (collider->IsColliding(otherCollider)) {
 				return true;
 			}	
 		}
 	}
 	return false;
 }
+
 

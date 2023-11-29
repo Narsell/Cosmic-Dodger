@@ -4,6 +4,7 @@
 
 class RenderWindow {
 public:
+
     RenderWindow(const char* title, const Vector2& windowDimensions);
     RenderWindow(const Vector2& other) = delete;
     const Vector2& operator=(const Vector2& other) = delete;
@@ -17,6 +18,7 @@ public:
 	void Render(class Entity& entity);
     void Render(const struct SDL_Rect* rect);
 	void Display();
+
 private:
     struct SDL_Window* m_window;
     struct SDL_Renderer* m_renderer;

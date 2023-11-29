@@ -9,15 +9,16 @@ class Collider2D;
 class Entity 
 {
 public:
-	Entity(const Vector2& position, SDL_Texture* texture);
+	Entity(const Vector2& position);
+	Entity(const Vector2& position, SDL_Texture* texture, const Vector2& textureDimensions);
 	Entity(const Entity& copy) = delete;
 	const Entity& operator=(const Entity& other) = delete;
 	~Entity();
 	
 	//Updates and "physics"
-	void Update();
-	void AddPositionDelta(const Vector2& deltaPosition);
-	void SetVelocity(const Vector2& newVelocity) { m_velocity = newVelocity; };
+	virtual void Update(const float deltaTime);
+	virtual void AddPositionDelta(const Vector2& deltaPosition);
+	virtual void SetVelocity(const Vector2& newVelocity) { m_velocity = newVelocity; };
 
 	//Collisions
 	void AddCollider(const Vector2& dimensions, const Vector2& relativePos = Vector2::ZERO, const bool renderBounds = false);
@@ -29,10 +30,11 @@ public:
 	SDL_Texture* GetTexture() const { return m_texture; };
 	SDL_Rect GetCurrentFrame() const { return m_currentFrame; };
 	const std::vector<Collider2D*> GetAllColliders() const { return m_colliders; };
-	const Collider2D& GetColliderByIndex(const size_t index) const { return *m_colliders.at(index); };
+	const Collider2D* GetColliderByIndex(const size_t index) const { return m_colliders.at(index); };
 
-private:
+protected:
 
+	Entity();
 	Vector2 m_position;
 	Vector2 m_velocity;
 	SDL_Rect m_currentFrame;

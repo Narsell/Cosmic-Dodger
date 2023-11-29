@@ -19,19 +19,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="include\Player.cpp" />
     <ClCompile Include="src\Collider2D.cpp" />
     <ClCompile Include="src\Entity.cpp" />
+    <ClCompile Include="src\GameManager.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Math.cpp" />
     <ClCompile Include="src\RenderWindow.cpp" />
-    <ClCompile Include="src\SDLApp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Collider2D.hpp" />
     <ClInclude Include="include\Entity.hpp" />
+    <ClInclude Include="include\GameManager.hpp" />
     <ClInclude Include="include\Math.hpp" />
+    <ClInclude Include="include\Player.hpp" />
     <ClInclude Include="include\RenderWindow.hpp" />
-    <ClInclude Include="include\SDLApp.hpp" />
     <ClInclude Include="include\Utils.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
