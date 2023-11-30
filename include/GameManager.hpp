@@ -40,8 +40,8 @@ private:
 	class RenderWindow* m_renderWindow = nullptr;
 
 	// Game entities
-	std::list<class Entity*> m_entities;
+	std::list<class GameObject*> m_gameObjects;
 	class Player* player = nullptr;
-	class Entity* windowBounds = nullptr;
+	class GameObject* windowBounds = nullptr;
 
 };

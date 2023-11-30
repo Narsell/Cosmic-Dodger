@@ -4,7 +4,6 @@
 #include "GameManager.hpp"
 #include "RenderWindow.hpp"
 #include "Player.hpp"
-#include "Collider2D.hpp"
 
 GameManager::GameManager()
     :m_renderWindow(nullptr),
@@ -42,13 +41,14 @@ void GameManager::GameStart(const char* gameTitle, int windowWidth, int windowHe
 
 void GameManager::Construction()
 {
-    constexpr int borderWidth = 10;
-    Vector2 windowDimensions = m_renderWindow->GetWindowDimensions();
-    windowBounds = new Entity(Vector2::ZERO);
-    windowBounds->AddCollider(Vector2(borderWidth, windowDimensions.y), Vector2(0, 0), true);
-    windowBounds->AddCollider(Vector2(borderWidth, windowDimensions.y), Vector2(windowDimensions.x - borderWidth, 0), true);
-    windowBounds->AddCollider(Vector2(windowDimensions.x, borderWidth), Vector2(0, 0), true);
-    windowBounds->AddCollider(Vector2(windowDimensions.x, borderWidth), Vector2(0, windowDimensions.y - borderWidth), true);
+    // TODO: Refactor this into a new WindowBounds type of class
+    // constexpr int borderWidth = 10;
+    //Vector2 windowDimensions = m_renderWindow->GetWindowDimensions();
+    //windowBounds = new GameObject();
+    //windowBounds->AddCollider(Vector2(borderWidth, windowDimensions.y), Vector2(0, 0), true);
+    //windowBounds->AddCollider(Vector2(borderWidth, windowDimensions.y), Vector2(windowDimensions.x - borderWidth, 0), true);
+    //windowBounds->AddCollider(Vector2(windowDimensions.x, borderWidth), Vector2(0, 0), true);
+    //windowBounds->AddCollider(Vector2(windowDimensions.x, borderWidth), Vector2(0, windowDimensions.y - borderWidth), true);
 
     //TODO: Use sharedptr
     SDL_Texture* playerTexture = m_renderWindow->LoadTexture("assets/player_ship.png");
@@ -57,10 +57,10 @@ void GameManager::Construction()
     Vector2 textureDimensions = Vector2(112, 75);
     player = new Player(playerPosition, playerTexture, textureDimensions);
 
-    player->AddCollider(Vector2(112, 75), Vector2::ZERO, true);
+    //player->AddCollider(Vector2(112, 75), Vector2::ZERO, true);
 
-   m_entities.push_back(player);
-   m_entities.push_back(windowBounds);
+   m_gameObjects.push_back(player);
+   //m_entities.push_back(windowBounds);
 }
 
 void GameManager::BeginPlay()
@@ -87,32 +87,32 @@ void GameManager::HandleInput()
 void GameManager::Update(const float deltaTime)
 {
 
-    for (Entity* entity : m_entities) {
+    for (GameObject* entity : m_gameObjects) {
         entity->Update(deltaTime);
     }
 
-    //Some collision placeholder bulshi...
-    if (windowBounds->GetColliderByIndex(0)->IsColliding(player->GetAllColliders()) ||
-        windowBounds->GetColliderByIndex(1)->IsColliding(player->GetAllColliders())
-        ) 
-    {
-        Vector2 bounceVelocity(-player->GetVelocity().x, player->GetVelocity().y);
-        player->SetVelocity(bounceVelocity);
-    }
-    else if (windowBounds->GetColliderByIndex(2)->IsColliding(player->GetAllColliders()) ||
-             windowBounds->GetColliderByIndex(3)->IsColliding(player->GetAllColliders())
-        ) 
-    {
-        Vector2 bounceVelocity(player->GetVelocity().x, -player->GetVelocity().y);
-        player->SetVelocity(bounceVelocity);
-    }
+    //TODO: refactor this inside collision component
+    //if (windowBounds->GetColliderByIndex(0)->IsColliding(player->GetAllColliders()) ||
+    //    windowBounds->GetColliderByIndex(1)->IsColliding(player->GetAllColliders())
+    //    ) 
+    //{
+    //    Vector2 bounceVelocity(-player->GetVelocity().x, player->GetVelocity().y);
+    //    player->SetVelocity(bounceVelocity);
+    //}
+    //else if (windowBounds->GetColliderByIndex(2)->IsColliding(player->GetAllColliders()) ||
+    //         windowBounds->GetColliderByIndex(3)->IsColliding(player->GetAllColliders())
+    //    ) 
+    //{
+    //    Vector2 bounceVelocity(player->GetVelocity().x, -player->GetVelocity().y);
+    //    player->SetVelocity(bounceVelocity);
+    //}
 }
 
 void GameManager::Render()
 {
     m_renderWindow->Clear();
 
-    for (Entity* entity : m_entities) {
+    for (GameObject* entity : m_gameObjects) {
         m_renderWindow->Render(*entity);
     }
 
@@ -136,7 +136,3 @@ void GameManager::ClearFrameEvents()
 {
     GetFrameEvents().clear();
 }
-
-
-
-

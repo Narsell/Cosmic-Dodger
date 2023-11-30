@@ -1,11 +1,12 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
+#include <assert.h>
 
 #include "RenderWindow.hpp"
-#include "Entity.hpp"
+#include "GameObject.hpp"
 #include "Math.hpp"
-#include "Collider2D.hpp"
+#include "CollisionComponent.hpp"
 #include "GameManager.hpp"
 
 RenderWindow::RenderWindow(const char* title, const Vector2& windowDimensions)
@@ -38,8 +39,9 @@ void RenderWindow::Clear(){
     SDL_RenderClear(m_renderer);
 }
 
-void RenderWindow::Render(Entity& entity){
+void RenderWindow::Render(GameObject& entity){
 
+    assert(entity);
     SDL_Rect src { 
         entity.GetCurrentFrame().x, 
         entity.GetCurrentFrame().y, 
@@ -55,15 +57,17 @@ void RenderWindow::Render(Entity& entity){
     };
 
     //Render entity
-    if (entity.GetTexture())
+    if (entity.GetTexture()) {
         SDL_RenderCopy(m_renderer, entity.GetTexture(), &src, &dst);
-
-    //Render componentes
-    for (const Collider2D* collider : entity.GetAllColliders()) {
-        if (collider->GetbRenderBounds()) {
-            Render(&collider->GetRect());
-        }
     }
+
+
+    //TODO: Render componentes
+    //for (const CollisionComponent* collider : entity.GetAllColliders()) {
+    //    if (collider->GetbRenderBounds()) {
+    //        Render(&collider->GetRect());
+    //    }
+    //}
 }
 
 void RenderWindow::Render(const SDL_Rect* rect)

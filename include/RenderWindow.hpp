@@ -15,7 +15,7 @@ public:
 
     //Rendering
     void Clear();
-	void Render(class Entity& entity);
+	void Render(class GameObject& entity);
     void Render(const struct SDL_Rect* rect);
 	void Display();
 

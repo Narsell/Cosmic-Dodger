@@ -19,20 +19,26 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="include\Player.cpp" />
-    <ClCompile Include="src\Collider2D.cpp" />
-    <ClCompile Include="src\Entity.cpp" />
+    <ClCompile Include="src\components\Collider2D.cpp" />
+    <ClCompile Include="src\components\CollisionComponent.cpp" />
+    <ClCompile Include="src\components\Component.cpp" />
+    <ClCompile Include="src\entities\BaseEntity.cpp" />
+    <ClCompile Include="src\entities\GameObject.cpp" />
+    <ClCompile Include="src\entities\Player.cpp" />
     <ClCompile Include="src\GameManager.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Math.cpp" />
     <ClCompile Include="src\RenderWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Collider2D.hpp" />
-    <ClInclude Include="include\Entity.hpp" />
+    <ClInclude Include="include\components\Collider2D.hpp" />
+    <ClInclude Include="include\components\CollisionComponent.hpp" />
+    <ClInclude Include="include\components\Component.hpp" />
+    <ClInclude Include="include\entities\BaseEntity.hpp" />
+    <ClInclude Include="include\entities\GameObject.hpp" />
+    <ClInclude Include="include\entities\Player.hpp" />
     <ClInclude Include="include\GameManager.hpp" />
     <ClInclude Include="include\Math.hpp" />
-    <ClInclude Include="include\Player.hpp" />
     <ClInclude Include="include\RenderWindow.hpp" />
     <ClInclude Include="include\Utils.hpp" />
   </ItemGroup>
@@ -98,14 +104,14 @@
     <LibraryPath>$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)include;$(SolutionDir)include\entities;$(SolutionDir)include\components;$(IncludePath)</IncludePath>
     <SourcePath>$(SolutionDir)src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LibraryPath>$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)include;$(SolutionDir)include\entities;$(SolutionDir)include\components;$(IncludePath)</IncludePath>
     <SourcePath>$(SolutionDir)src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
