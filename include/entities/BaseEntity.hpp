@@ -4,15 +4,20 @@ class BaseEntity {
 
 public:
 
-	virtual void Update(const float deltaTime) = 0;
 	virtual ~BaseEntity() {};
 
 	bool operator!() {
 		return this == nullptr;
 	}
 
+protected:
+
+	BaseEntity();
+	BaseEntity(const char* entityId, const char* entityName);
+	virtual void Update(const float deltaTime) = 0;
+
 private:
 
-	const char* m_id = "0";
-	const char* m_displayName = "NA";
+	const char* m_id = "";
+	const char* m_displayName = "NA_BaseEntity";
 };

@@ -3,12 +3,17 @@
 
 #include "Player.hpp"
 #include "GameManager.hpp"
+#include "CollisionComponent.hpp"
 
 
 Player::Player(const Vector2& position, SDL_Texture* texture, const Vector2& textureDimensions)
-	:GameObject(position, texture, textureDimensions)
+	:
+	GameObject(position, texture, textureDimensions)
 {
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this));
+
+	auto t = GetComponentOfType<CollisionComponent>();
+
 }
 
 Player::~Player()

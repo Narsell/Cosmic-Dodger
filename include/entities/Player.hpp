@@ -1,7 +1,5 @@
 #pragma once
 #include "GameObject.hpp"
-#include "CollisionComponent.hpp"
-
 
 class Player : public GameObject {
 
@@ -20,5 +18,5 @@ public:
 
 private:
 
-	CollisionComponent* m_collisionComponent;
+	class CollisionComponent* m_collisionComponent;
 };

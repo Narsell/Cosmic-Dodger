@@ -5,6 +5,7 @@
 
 GameObject::GameObject()
 	:
+	BaseEntity("", "NA_GameObject"),
 	m_position(Vector2(0, 0)),
 	m_velocity(Vector2(0, 0)),
 	m_currentFrame(SDL_Rect({0, 0, 0, 0})),
@@ -13,7 +14,7 @@ GameObject::GameObject()
 }
 
 GameObject::GameObject(const Vector2& position, SDL_Texture* texture, const Vector2& textureDimensions)
-	:
+	:BaseEntity("", "NA_GameObject"),
 	m_position(position),
 	m_velocity(Vector2(0,0)),
 	m_currentFrame(SDL_Rect(0, 0, textureDimensions.x, textureDimensions.y)),
@@ -24,29 +25,9 @@ GameObject::GameObject(const Vector2& position, SDL_Texture* texture, const Vect
 
 GameObject::~GameObject()
 {	
+	//Note: GameObject doesn't have ownership of m_texture, no need to delete it
 
+	for (Component* component : m_components) {
+		delete component;
+	}
 }
-
-
-
-
-//void Entity::AddCollider(const Vector2& dimensions, const Vector2& relativePos, const bool renderBounds)
-//{
-//	m_colliders.emplace_back(
-//		new CollisionComponent(dimensions, relativePos, renderBounds)
-//	);
-//}
-//
-//const bool Entity::HasCollided(const Entity& otherEntity)
-//{
-//	for (const CollisionComponent* collider : m_colliders) {
-//		for (const CollisionComponent* otherCollider : otherEntity.GetAllColliders()) {
-//			if (collider->IsColliding(otherCollider)) {
-//				return true;
-//			}	
-//		}
-//	}
-//	return false;
-//}
-
-

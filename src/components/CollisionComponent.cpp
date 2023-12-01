@@ -11,6 +11,13 @@ CollisionComponent::CollisionComponent(GameObject* parent)
 {
 }
 
+CollisionComponent::~CollisionComponent()
+{
+	for (Collider2D* collider : m_colliders) {
+		delete collider;
+	}
+}
+
 void CollisionComponent::AddCollider(const Vector2& dimensions, const Vector2& relativePos, const bool renderBounds)
 {
 	m_colliders.emplace_back(

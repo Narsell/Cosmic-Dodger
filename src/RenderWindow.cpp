@@ -6,8 +6,6 @@
 #include "RenderWindow.hpp"
 #include "GameObject.hpp"
 #include "Math.hpp"
-#include "CollisionComponent.hpp"
-#include "GameManager.hpp"
 
 RenderWindow::RenderWindow(const char* title, const Vector2& windowDimensions)
     :m_window(nullptr), m_renderer(nullptr), m_windowDimensions(windowDimensions)
@@ -22,6 +20,7 @@ RenderWindow::RenderWindow(const char* title, const Vector2& windowDimensions)
 RenderWindow::~RenderWindow()
 {
     SDL_DestroyWindow(m_window);
+    SDL_DestroyRenderer(m_renderer);
 }
 
 SDL_Texture* RenderWindow::LoadTexture(const char* filePath){
@@ -39,31 +38,31 @@ void RenderWindow::Clear(){
     SDL_RenderClear(m_renderer);
 }
 
-void RenderWindow::Render(GameObject& entity){
+void RenderWindow::Render(GameObject& gameObject){
 
-    assert(entity);
+    assert(gameObject);
     SDL_Rect src { 
-        entity.GetCurrentFrame().x, 
-        entity.GetCurrentFrame().y, 
-        entity.GetCurrentFrame().w, 
-        entity.GetCurrentFrame().h
+        gameObject.GetCurrentFrame().x, 
+        gameObject.GetCurrentFrame().y, 
+        gameObject.GetCurrentFrame().w, 
+        gameObject.GetCurrentFrame().h
     };
 
     SDL_Rect dst {
-        entity.GetPosition().x,
-        entity.GetPosition().y,
-        entity.GetCurrentFrame().w,
-        entity.GetCurrentFrame().h
+        gameObject.GetPosition().x,
+        gameObject.GetPosition().y,
+        gameObject.GetCurrentFrame().w,
+        gameObject.GetCurrentFrame().h
     };
 
-    //Render entity
-    if (entity.GetTexture()) {
-        SDL_RenderCopy(m_renderer, entity.GetTexture(), &src, &dst);
+    //Render gameObject
+    if (gameObject.GetTexture()) {
+        SDL_RenderCopy(m_renderer, gameObject.GetTexture(), &src, &dst);
     }
 
 
     //TODO: Render componentes
-    //for (const CollisionComponent* collider : entity.GetAllColliders()) {
+    //for (const CollisionComponent* collider : gameObject.GetAllColliders()) {
     //    if (collider->GetbRenderBounds()) {
     //        Render(&collider->GetRect());
     //    }

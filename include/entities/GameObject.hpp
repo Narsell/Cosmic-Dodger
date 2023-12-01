@@ -5,8 +5,8 @@
 
 #include "Math.hpp"
 #include "BaseEntity.hpp"
-#include "Component.hpp"
 
+class Component;
 
 class GameObject : public BaseEntity
 {
@@ -19,7 +19,7 @@ public:
 	inline ComponentType* AddComponent(ComponentType* component);
 
 	template<typename ComponentType>
-	inline ComponentType* GetComponent();
+	inline ComponentType* GetComponentOfType();
 	
 	//Updates and "physics"
 	void Update(const float deltaTime) override {};
@@ -38,6 +38,7 @@ protected:
 	Vector2 m_velocity;
 	SDL_Rect m_currentFrame;
 	SDL_Texture* m_texture = nullptr;
+	//Has ownership of all components on child classes. This class will take care of freeing memory on all components
 	std::vector<Component*> m_components;
 };
 
@@ -51,7 +52,7 @@ ComponentType* GameObject::AddComponent(ComponentType* component)
 }
 
 template<typename ComponentType>
-ComponentType* GameObject::GetComponent() {
+ComponentType* GameObject::GetComponentOfType() {
 	ComponentType* result = nullptr;
 	for (Component* component : m_components)
 	{

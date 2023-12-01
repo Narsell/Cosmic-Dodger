@@ -12,6 +12,7 @@ class CollisionComponent : public Component {
 public:
 
 	CollisionComponent(class GameObject* parent);
+	~CollisionComponent();
 
 	void AddCollider(const Vector2& dimensions, const Vector2& relativePos = Vector2::ZERO, const bool renderBounds = false);
 	Collider2D* GetColliderByIndex(const size_t index) const { return m_colliders.at(index); };

@@ -57,10 +57,7 @@ void GameManager::Construction()
     Vector2 textureDimensions = Vector2(112, 75);
     player = new Player(playerPosition, playerTexture, textureDimensions);
 
-    //player->AddCollider(Vector2(112, 75), Vector2::ZERO, true);
-
-   m_gameObjects.push_back(player);
-   //m_entities.push_back(windowBounds);
+    m_gameObjects.push_back(player);
 }
 
 void GameManager::BeginPlay()
@@ -122,8 +119,12 @@ void GameManager::Render()
 
 GameManager::~GameManager()
 {
-    if(m_renderWindow)
-        delete m_renderWindow;
+    //Deleting all game objects
+    for (GameObject* gameObject : m_gameObjects) {
+        delete gameObject;
+    }
+
+    delete m_renderWindow;
 }
 
 std::vector<SDL_Event>& GameManager::GetFrameEvents()

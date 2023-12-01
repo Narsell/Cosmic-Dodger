@@ -1,5 +1,4 @@
 #pragma once
-#include "Math.hpp"
 #include "BaseEntity.hpp"
 
 class GameObject;
@@ -12,8 +11,7 @@ public:
 	virtual ~Component() {};
 
 protected:
-	//TODO: Remove default constructor?
-	Component() {};
+
 	Component(GameObject* parent);
 
 	GameObject* m_parent = nullptr;
