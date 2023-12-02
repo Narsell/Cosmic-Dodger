@@ -38,43 +38,6 @@ void RenderWindow::Clear(){
     SDL_RenderClear(m_renderer);
 }
 
-void RenderWindow::Render(GameObject& gameObject){
-
-    assert(gameObject);
-    SDL_Rect src { 
-        gameObject.GetCurrentFrame().x, 
-        gameObject.GetCurrentFrame().y, 
-        gameObject.GetCurrentFrame().w, 
-        gameObject.GetCurrentFrame().h
-    };
-
-    SDL_Rect dst {
-        gameObject.GetPosition().x,
-        gameObject.GetPosition().y,
-        gameObject.GetCurrentFrame().w,
-        gameObject.GetCurrentFrame().h
-    };
-
-    //Render gameObject
-    if (gameObject.GetTexture()) {
-        SDL_RenderCopy(m_renderer, gameObject.GetTexture(), &src, &dst);
-    }
-
-
-    //TODO: Render componentes
-    //for (const CollisionComponent* collider : gameObject.GetAllColliders()) {
-    //    if (collider->GetbRenderBounds()) {
-    //        Render(&collider->GetRect());
-    //    }
-    //}
-}
-
-void RenderWindow::Render(const SDL_Rect* rect)
-{
-    SDL_SetRenderDrawColor(m_renderer, 255, 0, 255, SDL_ALPHA_OPAQUE);
-    SDL_RenderDrawRect(m_renderer, rect);
-}
-
 void RenderWindow::Display(){
     SDL_RenderPresent(m_renderer);
 }

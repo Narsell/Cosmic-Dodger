@@ -21,8 +21,11 @@ public:
 	template<typename ComponentType>
 	inline ComponentType* GetComponentOfType();
 	
+	//Renders the game object texture and its components
+	virtual void Render(SDL_Renderer* renderer) override;
+
 	//Updates and "physics"
-	void Update(const float deltaTime) override {};
+	virtual void Update(const float deltaTime) override;
 
 	// Getters
 	const Vector2& GetPosition() const { return m_position; };
@@ -38,8 +41,9 @@ protected:
 	Vector2 m_velocity;
 	SDL_Rect m_currentFrame;
 	SDL_Texture* m_texture = nullptr;
-	//Has ownership of all components on child classes. This class will take care of freeing memory on all components
+	//Has ownership of all components. This class will take care of freeing memory on all components
 	std::vector<Component*> m_components;
+
 };
 
 

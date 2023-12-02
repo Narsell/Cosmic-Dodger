@@ -2,12 +2,14 @@
 #include "BaseEntity.hpp"
 
 class GameObject;
+struct SDL_Renderer;
 
 class Component : public BaseEntity {
 
 public:
 
-	virtual void Update(const float deltaTime) override {};
+	virtual void Render(SDL_Renderer* renderer) override = 0;
+	virtual void Update(const float deltaTime) override = 0;
 	virtual ~Component() {};
 
 protected:

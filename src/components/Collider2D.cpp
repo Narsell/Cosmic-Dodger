@@ -3,21 +3,15 @@
 
 #include "Collider2D.hpp"
 #include "GameObject.hpp"
+#include "CollisionComponent.hpp"
 
 
-Collider2D::Collider2D(const Vector2& dimensions, const Vector2& relativePos, const bool renderBounds)
+Collider2D::Collider2D(const Vector2& dimensions, CollisionComponent* parentComp, const Vector2& relativePos, const bool visible)
 	:
+	BaseEntity("", "NA_Collider2D", visible, true),
 	m_position(relativePos),
 	m_colliderRectangle({ 0, 0, dimensions.x, dimensions.y }),
-	bRenderBounds(renderBounds)
-{
-}
-
-Collider2D::Collider2D()
-	:
-	m_position(Vector2::ZERO),
-	m_colliderRectangle(SDL_Rect(0, 0, 0, 0)),
-	bRenderBounds(false)
+	m_parentComponent(parentComp)
 {
 }
 
@@ -25,10 +19,22 @@ Collider2D::~Collider2D()
 {
 }
 
+void Collider2D::Render(SDL_Renderer* renderer)
+{
+	assert(renderer);
+
+	if (!m_isVisible) return;
+
+	SDL_SetRenderDrawColor(renderer, 255, 0, 255, SDL_ALPHA_OPAQUE);
+	SDL_RenderDrawRect(renderer, &m_colliderRectangle);
+}
+
 void Collider2D::Update(const float deltaTime)
 {
-	//m_colliderRectangle.x = parent->GetPosition().x + m_position.x;
-	//m_colliderRectangle.y = parent->GetPosition().y + m_position.y;
+	if (!m_canUpdate) return;
+
+	m_colliderRectangle.x = m_parentComponent->GetPosition().x + m_position.x;
+	m_colliderRectangle.y = m_parentComponent->GetPosition().y + m_position.y;
 }
 
 SDL_bool Collider2D::IsColliding(const Collider2D* other) const

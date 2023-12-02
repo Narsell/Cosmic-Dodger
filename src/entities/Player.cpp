@@ -11,8 +11,10 @@ Player::Player(const Vector2& position, SDL_Texture* texture, const Vector2& tex
 	GameObject(position, texture, textureDimensions)
 {
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this));
-
-	auto t = GetComponentOfType<CollisionComponent>();
+	m_collisionComponent->AddCollider(Vector2(112, 75), Vector2::ZERO, true);
+	m_collisionComponent->AddCollider(Vector2(10, 10), Vector2(51, -20), true);
+	m_collisionComponent->SetCanRender(true);
+	//auto t = GetComponentOfType<CollisionComponent>();
 
 }
 
@@ -22,6 +24,9 @@ Player::~Player()
 
 void Player::Update(const float deltaTime)
 {
+
+	if (!m_canUpdate) return;
+
 	AddPositionDelta(m_velocity);
 
 	//Handle events

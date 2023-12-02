@@ -13,10 +13,9 @@ public:
     const Vector2& GetWindowDimensions() const { return m_windowDimensions; };
     SDL_Texture* LoadTexture(const char* filePath);
 
-    //Rendering
+    struct SDL_Renderer* GetRenderer() const { return m_renderer; };
+
     void Clear();
-	void Render(class GameObject& entity);
-    void Render(const struct SDL_Rect* rect);
 	void Display();
 
 private:

@@ -14,13 +14,16 @@ public:
 	CollisionComponent(class GameObject* parent);
 	~CollisionComponent();
 
-	void AddCollider(const Vector2& dimensions, const Vector2& relativePos = Vector2::ZERO, const bool renderBounds = false);
+	void AddCollider(const Vector2& dimensions, const Vector2& relativePos = Vector2::ZERO, const bool visible = false);
 	Collider2D* GetColliderByIndex(const size_t index) const { return m_colliders.at(index); };
 	const std::vector<Collider2D*> GetAllColliders() const { return m_colliders; };
 
 	//GameObject* OnCollision() const;
 
-	void Update(const float deltaTime) override;
+	virtual void Render(SDL_Renderer* renderer) override;
+	virtual void Update(const float deltaTime) override;
+
+	const Vector2& GetPosition() const { return m_position; };
 
 private:
 

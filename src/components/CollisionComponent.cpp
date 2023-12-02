@@ -9,6 +9,7 @@
 CollisionComponent::CollisionComponent(GameObject* parent)
 	:Component(parent)
 {
+
 }
 
 CollisionComponent::~CollisionComponent()
@@ -18,16 +19,30 @@ CollisionComponent::~CollisionComponent()
 	}
 }
 
-void CollisionComponent::AddCollider(const Vector2& dimensions, const Vector2& relativePos, const bool renderBounds)
+void CollisionComponent::AddCollider(const Vector2& dimensions, const Vector2& relativePos, const bool visible)
 {
 	m_colliders.emplace_back(
-		new Collider2D(dimensions, relativePos, renderBounds)
+		new Collider2D(dimensions, this, relativePos, visible)
 	);
+}
+
+void CollisionComponent::Render(SDL_Renderer* renderer)
+{
+	assert(renderer);
+
+	if (!m_isVisible) return;
+
+	for (Collider2D* collider : m_colliders) {
+		collider->Render(renderer);
+	}
 }
 
 void CollisionComponent::Update(const float deltaTime)
 {
 	assert(m_parent);
+
+	if (!m_canUpdate) return;
+
 	m_position.x = m_parent->GetPosition().x;
 	m_position.y = m_parent->GetPosition().y;
 	for (Collider2D* collider : m_colliders) {

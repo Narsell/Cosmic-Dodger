@@ -62,7 +62,7 @@ void GameManager::Construction()
 
 void GameManager::BeginPlay()
 {
-    player->SetVelocity(Vector2(5, 1));
+    player->SetVelocity(Vector2(1, 1));
 }
 
 void GameManager::HandleInput()
@@ -109,8 +109,8 @@ void GameManager::Render()
 {
     m_renderWindow->Clear();
 
-    for (GameObject* entity : m_gameObjects) {
-        m_renderWindow->Render(*entity);
+    for (GameObject* gameObject : m_gameObjects) {
+        gameObject->Render(m_renderWindow->GetRenderer());
     }
 
     m_renderWindow->Display();
