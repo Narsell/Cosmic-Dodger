@@ -4,7 +4,7 @@ class BaseEntity {
 
 public:
 
-	virtual ~BaseEntity() {};
+	virtual ~BaseEntity();
 
 	bool operator!() {
 		return this == nullptr;
@@ -18,6 +18,8 @@ public:
 
 	void SetCanRender(const bool canRender) { m_isVisible = canRender; };
 	void SetCanUpdate(const bool canUpdate) { m_canUpdate = canUpdate; };
+
+	const char* GetDisplayName() const { return m_displayName; };
 
 protected:
 

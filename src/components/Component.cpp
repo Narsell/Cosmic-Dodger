@@ -1,8 +1,8 @@
 #include "Component.hpp"
 
-Component::Component(GameObject* parent)
+Component::Component(GameObject* parent, const char* name)
 	:
-	BaseEntity("", "NA_Component", false, true),
+	BaseEntity("", name, false, true),
 	m_parent(parent)
 {
 }

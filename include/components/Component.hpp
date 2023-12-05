@@ -6,13 +6,9 @@ struct SDL_Renderer;
 
 class Component : public BaseEntity {
 
-public:
-
-	virtual ~Component() {};
-
 protected:
 
-	Component(GameObject* parent);
+	Component(GameObject* parent, const char* name = "NA_Component");
 
 	GameObject* m_parent = nullptr;
 };

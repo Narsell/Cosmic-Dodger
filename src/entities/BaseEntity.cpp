@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <iostream>
 
 #include "BaseEntity.hpp"
 
@@ -19,6 +20,11 @@ BaseEntity::BaseEntity(const char* entityId, const char* entityName, const bool 
 	m_canUpdate(canUpdate)
 
 {
+}
+
+BaseEntity::~BaseEntity()
+{
+	std::cout << GetDisplayName() << " destroyed on BaseEntity destructor!\n";
 }
 
 void BaseEntity::Render(SDL_Renderer* renderer)

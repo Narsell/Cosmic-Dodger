@@ -13,7 +13,7 @@ class GameObject : public BaseEntity
 public:
 	GameObject(const GameObject& copy) = delete;
 	const GameObject& operator=(const GameObject& other) = delete;
-	virtual ~GameObject();
+	~GameObject();
 
 	template<typename ComponentType>
 	inline ComponentType* AddComponent(ComponentType* component);
@@ -34,7 +34,7 @@ public:
 	SDL_Rect GetCurrentFrame() const { return m_currentFrame; };
 
 protected:
-	GameObject(const Vector2& position, SDL_Texture* texture, const Vector2& textureDimensions);
+	GameObject(const Vector2& position, SDL_Texture* texture, const Vector2& textureDimensions, const char* name = "NA_GameObject");
 	GameObject();
 
 	Vector2 m_position;

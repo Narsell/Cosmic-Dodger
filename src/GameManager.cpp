@@ -55,7 +55,7 @@ void GameManager::Construction()
 
     Vector2 playerPosition = Vector2(100, 100);
     Vector2 textureDimensions = Vector2(112, 75);
-    player = new Player(playerPosition, playerTexture, textureDimensions);
+    player = new Player(playerPosition, playerTexture, textureDimensions, "Player");
 
     m_gameObjects.push_back(player);
 }

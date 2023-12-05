@@ -6,9 +6,9 @@
 #include "CollisionComponent.hpp"
 
 
-Collider2D::Collider2D(const Vector2& dimensions, CollisionComponent* parentComp, const Vector2& relativePos, const bool visible)
+Collider2D::Collider2D(const Vector2& dimensions, CollisionComponent* parentComp, const Vector2& relativePos, const bool visible, const char* name)
 	:
-	BaseEntity("", "NA_Collider2D", visible, true),
+	BaseEntity("", name, visible, true),
 	m_position(relativePos),
 	m_colliderRectangle({ 0, 0, dimensions.x, dimensions.y }),
 	m_parentComponent(parentComp)
@@ -17,6 +17,8 @@ Collider2D::Collider2D(const Vector2& dimensions, CollisionComponent* parentComp
 
 Collider2D::~Collider2D()
 {
+	std::cout << GetDisplayName() << " destroyed on Collider destructor!\n";
+
 }
 
 void Collider2D::Render(SDL_Renderer* renderer)

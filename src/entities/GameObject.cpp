@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "GameObject.hpp"
 #include "CollisionComponent.hpp"
 #include "Math.hpp"
@@ -13,8 +15,8 @@ GameObject::GameObject()
 {
 }
 
-GameObject::GameObject(const Vector2& position, SDL_Texture* texture, const Vector2& textureDimensions)
-	:BaseEntity("", "NA_GameObject", true, true),
+GameObject::GameObject(const Vector2& position, SDL_Texture* texture, const Vector2& textureDimensions, const char* name)
+	:BaseEntity("", name, true, true),
 	m_position(position),
 	m_velocity(Vector2(0,0)),
 	m_currentFrame(SDL_Rect(0, 0, textureDimensions.x, textureDimensions.y)),
@@ -26,6 +28,8 @@ GameObject::GameObject(const Vector2& position, SDL_Texture* texture, const Vect
 GameObject::~GameObject()
 {	
 	//Note: GameObject doesn't have ownership of m_texture, no need to delete it
+
+    std::cout << GetDisplayName() << " destroyed on GameObject destructor!\n";
 
 	for (Component* component : m_components) {
 		delete component;

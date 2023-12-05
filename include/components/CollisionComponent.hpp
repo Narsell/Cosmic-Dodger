@@ -11,10 +11,10 @@ class CollisionComponent : public Component {
 
 public:
 
-	CollisionComponent(class GameObject* parent);
+	CollisionComponent(class GameObject* parent, const char* name = "NA_CollisionComponent");
 	~CollisionComponent();
 
-	void AddCollider(const Vector2& dimensions, const Vector2& relativePos = Vector2::ZERO, const bool visible = false);
+	void AddCollider(const Vector2& dimensions, const Vector2& relativePos = Vector2::ZERO, const bool visible = false, const char* name="Collider2D");
 	Collider2D* GetColliderByIndex(const size_t index) const { return m_colliders.at(index); };
 	const std::vector<Collider2D*> GetAllColliders() const { return m_colliders; };
 

@@ -6,21 +6,21 @@
 #include "CollisionComponent.hpp"
 
 
-Player::Player(const Vector2& position, SDL_Texture* texture, const Vector2& textureDimensions)
+Player::Player(const Vector2& position, SDL_Texture* texture, const Vector2& textureDimensions, const char* name)
 	:
-	GameObject(position, texture, textureDimensions)
+	GameObject(position, texture, textureDimensions, name)
 {
-	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this));
-	m_collisionComponent->AddCollider(Vector2(112, 75), Vector2::ZERO, true);
-	m_collisionComponent->AddCollider(Vector2(10, 10), Vector2(51, -20), false);
+	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));
+	m_collisionComponent->AddCollider(Vector2(112, 75), Vector2::ZERO, true, "Ship Collision");
+	m_collisionComponent->AddCollider(Vector2(10, 10), Vector2(51, -20), false, "Projectile Collision");
 
 	m_collisionComponent->SetCanRender(true);
-	//auto t = GetComponentOfType<CollisionComponent>();
-
 }
 
 Player::~Player()
 {
+	std::cout << GetDisplayName() << " destroyed on Player destructor!\n";
+
 }
 
 void Player::Update(const float deltaTime)

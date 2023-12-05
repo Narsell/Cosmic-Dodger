@@ -10,7 +10,7 @@ class CollisionComponent;
 class Collider2D : public BaseEntity {
 public:
 
-	Collider2D(const Vector2& dimensions, CollisionComponent* parentComp, const Vector2& relativePos = Vector2::ZERO, const bool visible = false);
+	Collider2D(const Vector2& dimensions, CollisionComponent* parentComp, const Vector2& relativePos = Vector2::ZERO, const bool visible = false, const char* name = "NA_Collider");
 	~Collider2D();
 
 	void Render(SDL_Renderer* renderer) override;
