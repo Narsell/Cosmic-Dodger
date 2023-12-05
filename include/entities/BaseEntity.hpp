@@ -10,6 +10,9 @@ public:
 		return this == nullptr;
 	}
 
+	virtual void Render(struct SDL_Renderer* renderer);
+	virtual void Update(const float deltaTime) = 0;
+
 	bool GetIsVisible() const { return m_isVisible; };
 	bool GetCanUpdate() const { return m_canUpdate; };
 
@@ -20,10 +23,6 @@ protected:
 
 	BaseEntity();
 	BaseEntity(const char* entityId, const char* entityName, const bool canRender=false, const bool canUpdate=true);
-
-	virtual void Render(struct SDL_Renderer* renderer) = 0;
-	virtual void Update(const float deltaTime) = 0;
-
 
 protected:
 

@@ -84,8 +84,10 @@ void GameManager::HandleInput()
 void GameManager::Update(const float deltaTime)
 {
 
-    for (GameObject* entity : m_gameObjects) {
-        entity->Update(deltaTime);
+    for (GameObject* gameObject : m_gameObjects) {
+        if (gameObject->GetCanUpdate()) {
+            gameObject->Update(deltaTime);
+        }
     }
 
     //TODO: refactor this inside collision component
@@ -110,7 +112,9 @@ void GameManager::Render()
     m_renderWindow->Clear();
 
     for (GameObject* gameObject : m_gameObjects) {
-        gameObject->Render(m_renderWindow->GetRenderer());
+        if (gameObject->GetIsVisible()) {
+            gameObject->Render(m_renderWindow->GetRenderer());
+        }
     }
 
     m_renderWindow->Display();

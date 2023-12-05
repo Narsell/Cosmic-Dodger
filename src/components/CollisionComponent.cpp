@@ -28,20 +28,18 @@ void CollisionComponent::AddCollider(const Vector2& dimensions, const Vector2& r
 
 void CollisionComponent::Render(SDL_Renderer* renderer)
 {
-	assert(renderer);
-
-	if (!m_isVisible) return;
+	Component::Render(renderer);
 
 	for (Collider2D* collider : m_colliders) {
-		collider->Render(renderer);
+		if (collider->GetIsVisible()) {
+			collider->Render(renderer);
+		}
 	}
 }
 
 void CollisionComponent::Update(const float deltaTime)
 {
-	assert(m_parent);
-
-	if (!m_canUpdate) return;
+	Component::Update(deltaTime);
 
 	m_position.x = m_parent->GetPosition().x;
 	m_position.y = m_parent->GetPosition().y;

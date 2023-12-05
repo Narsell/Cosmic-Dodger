@@ -34,9 +34,7 @@ GameObject::~GameObject()
 
 void GameObject::Render(SDL_Renderer* renderer)
 {
-    assert(renderer);
-
-    if (!m_isVisible) return;
+    BaseEntity::Render(renderer);
 
     SDL_Rect src{
         m_currentFrame.x,
@@ -57,11 +55,13 @@ void GameObject::Render(SDL_Renderer* renderer)
     }
 
     for (Component* component : m_components) {
-        component->Render(renderer);
+        if (component->GetIsVisible()) {
+            component->Render(renderer);
+        }
     }
 }
 
 void GameObject::Update(const float deltaTime)
 {
-    if (!m_canUpdate) return;
+    BaseEntity::Update(deltaTime);
 }

@@ -1,3 +1,5 @@
+#include <assert.h>
+
 #include "BaseEntity.hpp"
 
 BaseEntity::BaseEntity()
@@ -16,5 +18,14 @@ BaseEntity::BaseEntity(const char* entityId, const char* entityName, const bool 
 	m_isVisible(canRender),
 	m_canUpdate(canUpdate)
 
+{
+}
+
+void BaseEntity::Render(SDL_Renderer* renderer)
+{
+	assert(renderer);
+}
+
+void BaseEntity::Update(const float deltaTime)
 {
 }

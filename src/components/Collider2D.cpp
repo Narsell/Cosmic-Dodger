@@ -21,9 +21,7 @@ Collider2D::~Collider2D()
 
 void Collider2D::Render(SDL_Renderer* renderer)
 {
-	assert(renderer);
-
-	if (!m_isVisible) return;
+	BaseEntity::Render(renderer);
 
 	SDL_SetRenderDrawColor(renderer, 255, 0, 255, SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawRect(renderer, &m_colliderRectangle);
@@ -31,7 +29,7 @@ void Collider2D::Render(SDL_Renderer* renderer)
 
 void Collider2D::Update(const float deltaTime)
 {
-	if (!m_canUpdate) return;
+	BaseEntity::Update(deltaTime);
 
 	m_colliderRectangle.x = m_parentComponent->GetPosition().x + m_position.x;
 	m_colliderRectangle.y = m_parentComponent->GetPosition().y + m_position.y;
