@@ -3,6 +3,7 @@
 
 #include "GameManager.hpp"
 #include "RenderWindow.hpp"
+#include "WindowBounds.hpp"
 #include "Player.hpp"
 
 GameManager::GameManager()
@@ -41,23 +42,16 @@ void GameManager::GameStart(const char* gameTitle, int windowWidth, int windowHe
 
 void GameManager::Construction()
 {
-    // TODO: Refactor this into a new WindowBounds type of class
-    // constexpr int borderWidth = 10;
-    //Vector2 windowDimensions = m_renderWindow->GetWindowDimensions();
-    //windowBounds = new GameObject();
-    //windowBounds->AddCollider(Vector2(borderWidth, windowDimensions.y), Vector2(0, 0), true);
-    //windowBounds->AddCollider(Vector2(borderWidth, windowDimensions.y), Vector2(windowDimensions.x - borderWidth, 0), true);
-    //windowBounds->AddCollider(Vector2(windowDimensions.x, borderWidth), Vector2(0, 0), true);
-    //windowBounds->AddCollider(Vector2(windowDimensions.x, borderWidth), Vector2(0, windowDimensions.y - borderWidth), true);
+    windowBounds = new WindowBounds(m_renderWindow->GetWindowDimensions(), "Window Bounds");
 
     //TODO: Use sharedptr
     SDL_Texture* playerTexture = m_renderWindow->LoadTexture("assets/player_ship.png");
-
     Vector2 playerPosition = Vector2(100, 100);
     Vector2 textureDimensions = Vector2(112, 75);
     player = new Player(playerPosition, playerTexture, textureDimensions, "Player");
 
     m_gameObjects.push_back(player);
+    m_gameObjects.push_back(windowBounds);
 }
 
 void GameManager::BeginPlay()
@@ -112,7 +106,7 @@ void GameManager::Render()
     m_renderWindow->Clear();
 
     for (GameObject* gameObject : m_gameObjects) {
-        if (gameObject->GetIsVisible()) {
+        if (gameObject->GetCanRender()) {
             gameObject->Render(m_renderWindow->GetRenderer());
         }
     }

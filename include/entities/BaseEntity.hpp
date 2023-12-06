@@ -13,10 +13,10 @@ public:
 	virtual void Render(struct SDL_Renderer* renderer);
 	virtual void Update(const float deltaTime) = 0;
 
-	bool GetIsVisible() const { return m_isVisible; };
+	bool GetCanRender() const { return m_canRender; };
 	bool GetCanUpdate() const { return m_canUpdate; };
 
-	void SetCanRender(const bool canRender) { m_isVisible = canRender; };
+	void SetCanRender(const bool canRender) { m_canRender = canRender; };
 	void SetCanUpdate(const bool canUpdate) { m_canUpdate = canUpdate; };
 
 	const char* GetDisplayName() const { return m_displayName; };
@@ -28,7 +28,7 @@ protected:
 
 protected:
 
-	bool m_isVisible = false;
+	bool m_canRender = false;
 	bool m_canUpdate = true;
 
 private:

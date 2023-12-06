@@ -59,7 +59,7 @@ void GameObject::Render(SDL_Renderer* renderer)
     }
 
     for (Component* component : m_components) {
-        if (component->GetIsVisible()) {
+        if (component->GetCanRender()) {
             component->Render(renderer);
         }
     }
@@ -68,4 +68,9 @@ void GameObject::Render(SDL_Renderer* renderer)
 void GameObject::Update(const float deltaTime)
 {
     BaseEntity::Update(deltaTime);
+    for (Component* component : m_components) {
+        if (component->GetCanUpdate()) {
+            component->Update(deltaTime);
+        }
+    }
 }

@@ -34,7 +34,7 @@ void CollisionComponent::Render(SDL_Renderer* renderer)
 	Component::Render(renderer);
 
 	for (Collider2D* collider : m_colliders) {
-		if (collider->GetIsVisible()) {
+		if (collider->GetCanRender()) {
 			collider->Render(renderer);
 		}
 	}

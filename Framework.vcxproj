@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\entities\WindowBounds.cpp" />
     <ClCompile Include="src\components\Collider2D.cpp" />
     <ClCompile Include="src\components\CollisionComponent.cpp" />
     <ClCompile Include="src\components\Component.cpp" />
@@ -37,6 +38,7 @@
     <ClInclude Include="include\entities\BaseEntity.hpp" />
     <ClInclude Include="include\entities\GameObject.hpp" />
     <ClInclude Include="include\entities\Player.hpp" />
+    <ClInclude Include="include\entities\WindowBounds.hpp" />
     <ClInclude Include="include\GameManager.hpp" />
     <ClInclude Include="include\Math.hpp" />
     <ClInclude Include="include\RenderWindow.hpp" />

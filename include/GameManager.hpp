@@ -42,6 +42,6 @@ private:
 	// Game entities
 	std::list<class GameObject*> m_gameObjects;
 	class Player* player = nullptr;
-	class GameObject* windowBounds = nullptr;
+	class WindowBounds* windowBounds = nullptr;
 
 };
