@@ -6,6 +6,7 @@
 #include "BaseEntity.hpp"
 
 class CollisionComponent;
+struct HitInformation;
 
 class Collider2D : public BaseEntity {
 public:
@@ -16,8 +17,8 @@ public:
 	void Render(SDL_Renderer* renderer) override;
 	void Update(const float deltaTime) override;
 
-	SDL_bool IsColliding(const Collider2D* other) const;
-	SDL_bool IsColliding(const std::vector<Collider2D*> others) const;
+	bool IsColliding(Collider2D* other, HitInformation& OutHitInformation) const;
+	bool IsColliding(const std::vector<Collider2D*> others, HitInformation& OutHitInformation) const;
 
 	const SDL_Rect& GetRect() const { return m_colliderRectangle; };
 

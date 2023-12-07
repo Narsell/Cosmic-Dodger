@@ -37,17 +37,31 @@ void Collider2D::Update(const float deltaTime)
 	m_colliderRectangle.y = m_parentComponent->GetPosition().y + m_position.y;
 }
 
-SDL_bool Collider2D::IsColliding(const Collider2D* other) const
+bool Collider2D::IsColliding(Collider2D* other, HitInformation& OutHitInformation) const
 {
 	assert(other);
-	return SDL_HasIntersection(&m_colliderRectangle, &other->m_colliderRectangle);
+
+	if (SDL_HasIntersection(&m_colliderRectangle, &other->m_colliderRectangle)) {
+
+		CollisionComponent* parentCollisionComp = other->m_parentComponent;
+		assert(parentCollisionComp);
+
+		OutHitInformation.hasHit = true;
+		OutHitInformation.hitLocation = m_parentComponent->GetPosition();
+		OutHitInformation.hitCollider = other;
+		OutHitInformation.hitGameObject = parentCollisionComp->GetParent();
+
+		return true;
+	}
+	return false;
 }
 
-SDL_bool Collider2D::IsColliding(const std::vector<Collider2D*> others) const
+bool Collider2D::IsColliding(const std::vector<Collider2D*> others, HitInformation& OutHitInformation) const
 {
 	for (Collider2D* other : others) {
-		if (IsColliding(other))
-			return SDL_TRUE;
+		if (IsColliding(other, OutHitInformation)) {
+			return true;
+		}
 	}
-	return SDL_FALSE;
+	return false;
 }

@@ -46,62 +46,25 @@ void CollisionComponent::Update(const float deltaTime)
 
 	m_position.x = m_parent->GetPosition().x;
 	m_position.y = m_parent->GetPosition().y;
+
 	for (Collider2D* collider : m_colliders) {
 		collider->Update(deltaTime);
+		for (CollisionComponent* collisionCandidate : m_collisionCandidates) {
+			if (collider->IsColliding(collisionCandidate->GetAllColliders(), lastHitInformation)) {
+				if(OnCollisionDelegate)
+					OnCollisionDelegate(lastHitInformation);
+			}
+		}
 	}
 }
 
+void CollisionComponent::SetCollisionDelegate(std::function<void(HitInformation&)> delegate)
+{
+	OnCollisionDelegate = delegate;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-//CollisionComponent::CollisionComponent(const Vector2& dimensions, const Vector2& relativePos, const bool renderBounds)
-//	:
-//	m_position(relativePos),
-//	m_colliderRectangle({0, 0, dimensions.x, dimensions.y}),
-//	bRenderBounds(renderBounds)
-//{
-//}
-//
-//CollisionComponent::CollisionComponent()
-//	:
-//	m_position(Vector2::ZERO),
-//	m_colliderRectangle(SDL_Rect(0, 0, 0, 0)), 
-//	bRenderBounds(false)
-//{
-//}
-//
-//CollisionComponent::~CollisionComponent()
-//{
-//}
-//
-//void CollisionComponent::Update(const float deltaTime, const Entity* parent)
-//{
-//	m_colliderRectangle.x = parent->GetPosition().x + m_position.x;
-//	m_colliderRectangle.y = parent->GetPosition().y + m_position.y;
-//}
-//
-//SDL_bool CollisionComponent::IsColliding(const CollisionComponent* other) const
-//{
-//	assert(other);
-//	return SDL_HasIntersection(&m_colliderRectangle, &other->m_colliderRectangle);
-//}
-//
-//SDL_bool CollisionComponent::IsColliding(const std::vector<CollisionComponent*> others) const
-//{
-//	for (CollisionComponent* other : others) {
-//		if (IsColliding(other))
-//			return SDL_TRUE;
-//	}
-//	return SDL_FALSE;
-//}
+void CollisionComponent::ListenForCollisions(CollisionComponent* collisionCandidate)
+{
+	assert(collisionCandidate);
+	m_collisionCandidates.emplace_back(collisionCandidate);
+}

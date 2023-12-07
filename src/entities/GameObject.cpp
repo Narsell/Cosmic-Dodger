@@ -40,14 +40,14 @@ void GameObject::Render(SDL_Renderer* renderer)
 {
     BaseEntity::Render(renderer);
 
-    SDL_Rect src{
+    SDL_Rect src {
         m_currentFrame.x,
         m_currentFrame.y,
         m_currentFrame.w,
         m_currentFrame.h
     };
 
-    SDL_Rect dst{
+    SDL_Rect dst {
         m_position.x,
         m_position.y,
         m_currentFrame.w,
@@ -68,6 +68,7 @@ void GameObject::Render(SDL_Renderer* renderer)
 void GameObject::Update(const float deltaTime)
 {
     BaseEntity::Update(deltaTime);
+
     for (Component* component : m_components) {
         if (component->GetCanUpdate()) {
             component->Update(deltaTime);

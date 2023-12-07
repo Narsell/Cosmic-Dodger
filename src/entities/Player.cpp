@@ -15,6 +15,9 @@ Player::Player(const Vector2& position, SDL_Texture* texture, const Vector2& tex
 
 	m_collisionComponent->AddCollider(Vector2(112, 75), Vector2::ZERO, true, "Ship Collision");
 	m_collisionComponent->AddCollider(Vector2(10, 10), Vector2(51, -20), false, "Projectile Collision");
+
+	std::function<void(HitInformation&)> OnCollisionDelegate = std::bind(&Player::OnCollision, this, std::placeholders::_1);
+	m_collisionComponent->SetCollisionDelegate(OnCollisionDelegate);
 }
 
 Player::~Player()
@@ -35,6 +38,20 @@ void Player::Update(const float deltaTime)
 			std::cout << "SHOOT!\n";
 		}
 	}
+}
+
+void Player::OnCollision(HitInformation& hitInformation)
+{
+	if (hitInformation.hitCollider->GetDisplayName() == "UP"
+		|| hitInformation.hitCollider->GetDisplayName() == "DOWN") 
+	{
+		m_velocity = Vector2(m_velocity.x, -m_velocity.y);
+	}
+	else if (hitInformation.hitCollider->GetDisplayName() == "LEFT"
+		|| hitInformation.hitCollider->GetDisplayName() == "RIGHT") {
+		m_velocity = Vector2(-m_velocity.x, m_velocity.y);
+	}
+
 }
 
 void Player::AddPositionDelta(const Vector2& deltaPosition)

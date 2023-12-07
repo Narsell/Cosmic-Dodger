@@ -4,6 +4,7 @@
 #include "GameManager.hpp"
 #include "RenderWindow.hpp"
 #include "WindowBounds.hpp"
+#include "CollisionComponent.hpp"
 #include "Player.hpp"
 
 GameManager::GameManager()
@@ -56,7 +57,11 @@ void GameManager::Construction()
 
 void GameManager::BeginPlay()
 {
-    player->SetVelocity(Vector2(1, 1));
+    CollisionComponent* windowCollision = windowBounds->GetComponentOfType<CollisionComponent>();
+    player->GetCollisionComponent()->ListenForCollisions(windowCollision);
+
+
+    player->SetVelocity(Vector2(5, -3));
 }
 
 void GameManager::HandleInput()
@@ -83,22 +88,6 @@ void GameManager::Update(const float deltaTime)
             gameObject->Update(deltaTime);
         }
     }
-
-    //TODO: refactor this inside collision component
-    //if (windowBounds->GetColliderByIndex(0)->IsColliding(player->GetAllColliders()) ||
-    //    windowBounds->GetColliderByIndex(1)->IsColliding(player->GetAllColliders())
-    //    ) 
-    //{
-    //    Vector2 bounceVelocity(-player->GetVelocity().x, player->GetVelocity().y);
-    //    player->SetVelocity(bounceVelocity);
-    //}
-    //else if (windowBounds->GetColliderByIndex(2)->IsColliding(player->GetAllColliders()) ||
-    //         windowBounds->GetColliderByIndex(3)->IsColliding(player->GetAllColliders())
-    //    ) 
-    //{
-    //    Vector2 bounceVelocity(player->GetVelocity().x, -player->GetVelocity().y);
-    //    player->SetVelocity(bounceVelocity);
-    //}
 }
 
 void GameManager::Render()
