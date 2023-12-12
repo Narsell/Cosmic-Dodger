@@ -5,7 +5,11 @@
 #include "RenderWindow.hpp"
 #include "WindowBounds.hpp"
 #include "CollisionComponent.hpp"
+#include "MovementComponent.hpp"
 #include "Player.hpp"
+#include "Projectile.hpp"
+
+std::list<GameObject*> GameManager::m_gameObjects;
 
 GameManager::GameManager()
     :m_renderWindow(nullptr),
@@ -43,16 +47,26 @@ void GameManager::GameStart(const char* gameTitle, int windowWidth, int windowHe
 
 void GameManager::Construction()
 {
-    windowBounds = new WindowBounds(m_renderWindow->GetWindowDimensions(), "Window Bounds");
 
-    //TODO: Use sharedptr
-    SDL_Texture* playerTexture = m_renderWindow->LoadTexture("assets/player_ship.png");
-    Vector2 playerPosition = Vector2(100, 100);
+    Vector2 windowDimensions = m_renderWindow->GetWindowDimensions();
+
+    windowBounds = SpawnGameObject(
+        new WindowBounds(windowDimensions, "Window Bounds")
+    );
+
     Vector2 textureDimensions = Vector2(112, 75);
-    player = new Player(playerPosition, playerTexture, textureDimensions, "Player");
+    Vector2 playerPosition = Vector2(
+        windowDimensions.x / 2 - textureDimensions.x / 2, 
+        windowDimensions.y / 2 - textureDimensions.y / 2
+    );
 
-    m_gameObjects.push_back(player);
-    m_gameObjects.push_back(windowBounds);
+    RenderWindow::playerTexture = m_renderWindow->LoadTexture("assets/player_ship.png");
+    RenderWindow::projectileTexture = m_renderWindow->LoadTexture("assets/laser.png");
+
+    player = SpawnGameObject(
+        new Player(playerPosition, RenderWindow::playerTexture, textureDimensions, "Player")
+    );
+
 }
 
 void GameManager::BeginPlay()
@@ -60,8 +74,7 @@ void GameManager::BeginPlay()
     CollisionComponent* windowCollision = windowBounds->GetComponentOfType<CollisionComponent>();
     player->GetCollisionComponent()->ListenForCollisions(windowCollision);
 
-
-    player->SetVelocity(Vector2(5, -3));
+    player->SetVelocity(Vector2(2, 3));
 }
 
 void GameManager::HandleInput()

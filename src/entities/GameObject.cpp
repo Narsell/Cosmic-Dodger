@@ -26,9 +26,7 @@ GameObject::GameObject(const Vector2& position, SDL_Texture* texture, const Vect
 }
 
 GameObject::~GameObject()
-{	
-	//Note: GameObject doesn't have ownership of m_texture, no need to delete it
-
+{
     std::cout << GetDisplayName() << " destroyed on GameObject destructor!\n";
 
 	for (Component* component : m_components) {

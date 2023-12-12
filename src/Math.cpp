@@ -19,7 +19,7 @@ Vector2::Vector2(int p_x, int p_y)
 	:x(p_x), y(p_y)
 {}
 
-const Vector2& Vector2::operator+(const Vector2& other)
+const Vector2& Vector2::operator+(const Vector2& other) const
 {
 	return Vector2(x + other.x, y + other.y);
 }
@@ -28,7 +28,7 @@ void Vector2::operator+=(const Vector2& other) {
 	*this = *this + other;
 }
 
-const Vector2& Vector2::operator-(const Vector2& other)
+const Vector2& Vector2::operator-(const Vector2& other) const
 {
 	return Vector2(x - other.x, y - other.y);
 }
@@ -38,7 +38,7 @@ void Vector2::operator-=(const Vector2& other)
 	*this = *this - other;
 }
 
-const Vector2& Vector2::operator*(float scalar)
+const Vector2& Vector2::operator*(float scalar) const
 {
 	return Vector2(x * scalar, y * scalar);
 }

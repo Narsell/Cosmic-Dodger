@@ -13,13 +13,13 @@ public:
 
 	Vector2(int p_x, int p_y);
 
-	const Vector2& operator+(const Vector2& other);
+	const Vector2& operator+(const Vector2& other) const;
 	void operator+=(const Vector2& other);
 
-	const Vector2& operator-(const Vector2& other);
+	const Vector2& operator-(const Vector2& other) const;
 	void operator-=(const Vector2& other);
 
-	const Vector2& operator*(float scalar);
+	const Vector2& operator*(float scalar) const;
 	void operator*=(float scalar);
 
 	void Print() const;

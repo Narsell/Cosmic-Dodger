@@ -17,7 +17,7 @@ struct HitInformation {
 		hitGameObject(nullptr)
 	{}
 
-	void Print() {
+	void Print() const {
 		std::cout << "HitInformation:\n"
 			"\tCollision: " << hasHit << "\n"
 			"\tLocation: (" << hitLocation.x << "," << hitLocation.y << ")\n"

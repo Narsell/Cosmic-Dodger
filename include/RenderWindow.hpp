@@ -1,4 +1,5 @@
 #pragma once
+#include <list>
 
 #include "Math.hpp"
 
@@ -18,7 +19,11 @@ public:
     void Clear();
 	void Display();
 
+    static SDL_Texture* playerTexture;
+    static SDL_Texture* projectileTexture;
+
 private:
+
     struct SDL_Window* m_window;
     struct SDL_Renderer* m_renderer;
     const Vector2 m_windowDimensions;

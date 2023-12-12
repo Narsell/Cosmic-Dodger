@@ -7,6 +7,9 @@
 #include "GameObject.hpp"
 #include "Math.hpp"
 
+SDL_Texture* RenderWindow::playerTexture;
+SDL_Texture* RenderWindow::projectileTexture;
+
 RenderWindow::RenderWindow(const char* title, const Vector2& windowDimensions)
     :m_window(nullptr), m_renderer(nullptr), m_windowDimensions(windowDimensions)
 {

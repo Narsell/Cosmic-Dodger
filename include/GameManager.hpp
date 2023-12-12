@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <list>
 #include <vector>
+#include "GameObject.hpp"
 
 class GameManager {
 
@@ -10,6 +11,9 @@ public:
 	static GameManager* GetInstance();
 	//Calls the appropiate functions to setup the game loop.
 	void GameStart(const char* gameTitle, int windowWidth, int windowHeight);
+
+	template<typename T>
+	static T* SpawnGameObject(T* gameObject);
 
 	//Copy constructor, copy assigment and destructors.
 	GameManager(const GameManager& other) = delete;
@@ -40,8 +44,15 @@ private:
 	class RenderWindow* m_renderWindow = nullptr;
 
 	// Game entities
-	std::list<class GameObject*> m_gameObjects;
+	static std::list<class GameObject*> m_gameObjects;
 	class Player* player = nullptr;
 	class WindowBounds* windowBounds = nullptr;
 
 };
+
+template<typename T>
+T* GameManager::SpawnGameObject(T* object)
+{
+	m_gameObjects.emplace_back(object);
+	return object;
+}

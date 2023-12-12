@@ -1,20 +1,18 @@
 #pragma once
-#include <list>
 
 #include "GameObject.hpp"
 #include "CollisionComponent.hpp"
 
 class MovementComponent;
-class Projectile;
 
-class Player : public GameObject {
+class Projectile : public GameObject {
 
 public:
 
-	Player(const Vector2& position, SDL_Texture* texture, const Vector2& textureDimensions, const char* name = "NA_Player");
-	Player(const Player& copy) = delete;
-	const Player& operator=(const Player& other) = delete;
-	~Player() override;
+	Projectile(const Vector2& position, SDL_Texture* texture, const Vector2& textureDimensions, const char* name = "NA_Projectile");
+	Projectile(const Projectile& copy) = delete;
+	const Projectile& operator=(const Projectile& other) = delete;
+	~Projectile() override;
 
 	CollisionComponent* GetCollisionComponent() const { return m_collisionComponent; };
 	MovementComponent* GetMovementComponent() const { return m_movementComponent; };
@@ -24,10 +22,8 @@ public:
 private:
 
 	void OnCollision(HitInformation& hitInformation);
-	void ShootProjectile();
 
 	CollisionComponent* m_collisionComponent;
 	MovementComponent* m_movementComponent;
 
-	std::list<Projectile*> m_projectiles;
 };

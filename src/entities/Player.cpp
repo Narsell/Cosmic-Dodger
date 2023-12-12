@@ -3,7 +3,9 @@
 
 #include "Player.hpp"
 #include "GameManager.hpp"
-#include "CollisionComponent.hpp"
+#include "MovementComponent.hpp"
+#include "Projectile.hpp"
+#include "RenderWindow.hpp"
 
 
 Player::Player(const Vector2& position, SDL_Texture* texture, const Vector2& textureDimensions, const char* name)
@@ -11,31 +13,32 @@ Player::Player(const Vector2& position, SDL_Texture* texture, const Vector2& tex
 	GameObject(position, texture, textureDimensions, name)
 {
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));
+	m_collisionComponent->AddCollider(textureDimensions, Vector2::ZERO, true, "Ship Collision");
 	m_collisionComponent->SetCanRender(true);
-
-	m_collisionComponent->AddCollider(Vector2(112, 75), Vector2::ZERO, true, "Ship Collision");
-	m_collisionComponent->AddCollider(Vector2(10, 10), Vector2(51, -20), false, "Projectile Collision");
 
 	std::function<void(HitInformation&)> OnCollisionDelegate = std::bind(&Player::OnCollision, this, std::placeholders::_1);
 	m_collisionComponent->SetCollisionDelegate(OnCollisionDelegate);
+
+	m_movementComponent = AddComponent<MovementComponent>(new MovementComponent(this, "Movement Component"));
 }
 
 Player::~Player()
 {
 	std::cout << GetDisplayName() << " destroyed on Player destructor!\n";
 
+	for (Projectile* projectile : m_projectiles) {
+		delete projectile;
+	}
 }
 
 void Player::Update(const float deltaTime)
 {
 	GameObject::Update(deltaTime);
 
-	AddPositionDelta(m_velocity);
-
 	//Handle events
 	for (SDL_Event &frameEvent : GameManager::GetFrameEvents()) {
 		if (frameEvent.type == SDL_KEYDOWN && frameEvent.key.keysym.sym == SDLK_SPACE) {
-			std::cout << "SHOOT!\n";
+			ShootProjectile();
 		}
 	}
 }
@@ -54,7 +57,15 @@ void Player::OnCollision(HitInformation& hitInformation)
 
 }
 
-void Player::AddPositionDelta(const Vector2& deltaPosition)
+void Player::ShootProjectile()
 {
-	m_position += deltaPosition;
+	std::cout << "SHOOT!\n";
+	assert(RenderWindow::projectileTexture);
+
+	Projectile* projectile = new Projectile(m_position, RenderWindow::projectileTexture, Vector2(48, 46));
+	projectile->SetVelocity(Vector2(0, -5));
+	m_projectiles.emplace_back(
+		GameManager::SpawnGameObject(projectile)
+	);
+
 }

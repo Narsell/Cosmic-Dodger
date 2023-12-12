@@ -13,7 +13,7 @@ class GameObject : public BaseEntity
 public:
 	GameObject(const GameObject& copy) = delete;
 	const GameObject& operator=(const GameObject& other) = delete;
-	~GameObject();
+	~GameObject() override;
 
 	template<typename ComponentType>
 	inline ComponentType* AddComponent(ComponentType* component);
@@ -32,6 +32,10 @@ public:
 	const Vector2& GetVelocity() const { return m_velocity; };
 	SDL_Texture* GetTexture() const { return m_texture; };
 	SDL_Rect GetCurrentFrame() const { return m_currentFrame; };
+
+	// Setters
+	void SetPoisiton(const Vector2& newPosition) { m_position = newPosition; };
+	void SetVelocity(const Vector2& newVelocity) { m_velocity = newVelocity; };
 
 protected:
 	GameObject(const Vector2& position, SDL_Texture* texture, const Vector2& textureDimensions, const char* name = "NA_GameObject");
