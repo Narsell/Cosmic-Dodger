@@ -13,4 +13,13 @@ public:
 	virtual void Update(const float deltaTime) override;
 
 	void AddPositionDelta(const Vector2& deltaPosition);
+
+	void SetFollowRotation(const bool newFollowRotation);
+	void SetSpeed(const float newSpeed);
+
+private:
+
+	Vector2 velocity;
+	bool m_followRotation = true;
+	float m_speed = 0;
 };

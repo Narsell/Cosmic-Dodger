@@ -44,8 +44,8 @@ void CollisionComponent::Update(const float deltaTime)
 {
 	Component::Update(deltaTime);
 
-	m_position.x = m_parent->GetPosition().x;
-	m_position.y = m_parent->GetPosition().y;
+	m_position.x = m_parent->m_transform.GetPosition().x;
+	m_position.y = m_parent->m_transform.GetPosition().y;
 
 	for (Collider2D* collider : m_colliders) {
 		collider->Update(deltaTime);

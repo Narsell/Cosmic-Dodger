@@ -8,10 +8,13 @@
 #include "RenderWindow.hpp"
 
 
-Player::Player(const Vector2& position, SDL_Texture* texture, const Vector2& textureDimensions, const char* name)
+Player::Player(const Transform& transform, SDL_Texture* texture, const Vector2& textureDimensions, const char* name)
 	:
-	GameObject(position, texture, textureDimensions, name)
+	GameObject(transform, texture, textureDimensions, name),
+	projectileSpawnOffset(textureDimensions.x/2, -50)
 {
+	m_movementComponent = AddComponent<MovementComponent>(new MovementComponent(this, "Movement Component"));
+
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));
 	m_collisionComponent->AddCollider(textureDimensions, Vector2::ZERO, true, "Ship Collision");
 	m_collisionComponent->SetCanRender(true);
@@ -19,7 +22,6 @@ Player::Player(const Vector2& position, SDL_Texture* texture, const Vector2& tex
 	std::function<void(HitInformation&)> OnCollisionDelegate = std::bind(&Player::OnCollision, this, std::placeholders::_1);
 	m_collisionComponent->SetCollisionDelegate(OnCollisionDelegate);
 
-	m_movementComponent = AddComponent<MovementComponent>(new MovementComponent(this, "Movement Component"));
 }
 
 Player::~Player()
@@ -37,22 +39,33 @@ void Player::Update(const float deltaTime)
 
 	//Handle events
 	for (SDL_Event &frameEvent : GameManager::GetFrameEvents()) {
-		if (frameEvent.type == SDL_KEYDOWN && frameEvent.key.keysym.sym == SDLK_SPACE) {
-			ShootProjectile();
+		if (frameEvent.type == SDL_KEYDOWN)
+		{
+			SDL_Keycode pressedKey = frameEvent.key.keysym.sym;
+			if (pressedKey == SDLK_SPACE) {
+				ShootProjectile();
+			}
+
+			if (pressedKey == SDLK_d) {
+				velocity = Vector2::RIGHT * 5; 
+			}
+			else if (pressedKey == SDLK_a) {
+				velocity = Vector2::LEFT * 5;
+			}
+			
+		}
+		else if (frameEvent.type == SDL_KEYUP && frameEvent.key.keysym.sym != SDLK_SPACE) {
+			velocity = Vector2::ZERO;
 		}
 	}
+
+	m_movementComponent->AddPositionDelta(velocity);
 }
 
 void Player::OnCollision(HitInformation& hitInformation)
 {
-	if (hitInformation.hitCollider->GetDisplayName() == "UP"
-		|| hitInformation.hitCollider->GetDisplayName() == "DOWN") 
-	{
-		m_velocity = Vector2(m_velocity.x, -m_velocity.y);
-	}
-	else if (hitInformation.hitCollider->GetDisplayName() == "LEFT"
-		|| hitInformation.hitCollider->GetDisplayName() == "RIGHT") {
-		m_velocity = Vector2(-m_velocity.x, m_velocity.y);
+	if (hitInformation.hitGameObject->GetDisplayName() == "Window Bounds") {
+		m_transform.SetPosition(hitInformation.hitLocation);
 	}
 
 }
@@ -61,9 +74,10 @@ void Player::ShootProjectile()
 {
 	std::cout << "SHOOT!\n";
 	assert(RenderWindow::projectileTexture);
-
-	Projectile* projectile = new Projectile(m_position, RenderWindow::projectileTexture, Vector2(48, 46));
-	projectile->SetVelocity(Vector2(0, -5));
+	Vector2 projectileTextureDim(48, 46);
+	Vector2 projectileTextOffset(projectileTextureDim.x / 2, 0);
+	Transform spawnTransform = Transform(m_transform.GetPosition() + projectileSpawnOffset - projectileTextOffset, -90.f);
+	Projectile* projectile = new Projectile(spawnTransform, RenderWindow::projectileTexture, projectileTextureDim);
 	m_projectiles.emplace_back(
 		GameManager::SpawnGameObject(projectile)
 	);

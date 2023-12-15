@@ -10,7 +10,7 @@ public:
 	//Gets the GameManager instance
 	static GameManager* GetInstance();
 	//Calls the appropiate functions to setup the game loop.
-	void GameStart(const char* gameTitle, int windowWidth, int windowHeight);
+	void GameStart(const char* gameTitle, const float windowWidth, const float windowHeight);
 
 	template<typename T>
 	static T* SpawnGameObject(T* gameObject);

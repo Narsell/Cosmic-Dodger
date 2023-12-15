@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\components\MovementComponent.cpp" />
+    <ClCompile Include="src\components\Transform.cpp" />
     <ClCompile Include="src\entities\Projectile.cpp" />
     <ClCompile Include="src\entities\WindowBounds.cpp" />
     <ClCompile Include="src\components\Collider2D.cpp" />
@@ -38,6 +39,7 @@
     <ClInclude Include="include\components\CollisionComponent.hpp" />
     <ClInclude Include="include\components\Component.hpp" />
     <ClInclude Include="include\components\MovementComponent.hpp" />
+    <ClInclude Include="include\components\Transform.hpp" />
     <ClInclude Include="include\entities\BaseEntity.hpp" />
     <ClInclude Include="include\entities\GameObject.hpp" />
     <ClInclude Include="include\entities\Player.hpp" />

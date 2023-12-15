@@ -8,6 +8,7 @@
 #include "MovementComponent.hpp"
 #include "Player.hpp"
 #include "Projectile.hpp"
+#include "Transform.hpp"
 
 std::list<GameObject*> GameManager::m_gameObjects;
 
@@ -29,7 +30,7 @@ GameManager* GameManager::GetInstance()
     return &app;
 }
 
-void GameManager::GameStart(const char* gameTitle, int windowWidth, int windowHeight)
+void GameManager::GameStart(const char* gameTitle, const float windowWidth, const float windowHeight)
 {
     //TODO: Make render window a singleton too, initialize on initialization list!
     m_renderWindow = new RenderWindow(gameTitle, Vector2(windowWidth, windowHeight));
@@ -55,18 +56,24 @@ void GameManager::Construction()
     );
 
     Vector2 textureDimensions = Vector2(112, 75);
-    Vector2 playerPosition = Vector2(
-        windowDimensions.x / 2 - textureDimensions.x / 2, 
-        windowDimensions.y / 2 - textureDimensions.y / 2
-    );
+    Vector2 playerPosition(windowDimensions.x / 2 - textureDimensions.x / 2, 
+                           windowDimensions.y - textureDimensions.y - 5);
+    Transform playerTransform = Transform(playerPosition);
 
     RenderWindow::playerTexture = m_renderWindow->LoadTexture("assets/player_ship.png");
     RenderWindow::projectileTexture = m_renderWindow->LoadTexture("assets/laser.png");
 
     player = SpawnGameObject(
-        new Player(playerPosition, RenderWindow::playerTexture, textureDimensions, "Player")
+        new Player(playerTransform, RenderWindow::playerTexture, textureDimensions, "Player")
     );
 
+
+    //Vector2 test(100, 100);
+    //const double l = test.Lenght();
+    //const double r = Math::GetAngleFromDirection(test);
+    //const double angle = 45;
+    //const Vector2 dir = Math::GetDirectionFromAngle(angle);
+    //test.Normalize();
 }
 
 void GameManager::BeginPlay()
@@ -74,7 +81,6 @@ void GameManager::BeginPlay()
     CollisionComponent* windowCollision = windowBounds->GetComponentOfType<CollisionComponent>();
     player->GetCollisionComponent()->ListenForCollisions(windowCollision);
 
-    player->SetVelocity(Vector2(2, 3));
 }
 
 void GameManager::HandleInput()

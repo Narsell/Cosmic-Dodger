@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <assert.h>
+#include <cmath>
 
 #include "Collider2D.hpp"
 #include "GameObject.hpp"
@@ -10,7 +11,7 @@ Collider2D::Collider2D(const Vector2& dimensions, CollisionComponent* parentComp
 	:
 	BaseEntity("", name, visible, true),
 	m_position(relativePos),
-	m_colliderRectangle({ 0, 0, dimensions.x, dimensions.y }),
+	m_colliderRectangle({ 0, 0, (int)ceil(dimensions.x), (int)ceil(dimensions.y) }),
 	m_parentComponent(parentComp)
 {
 }

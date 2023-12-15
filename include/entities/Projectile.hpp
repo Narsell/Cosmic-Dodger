@@ -9,7 +9,7 @@ class Projectile : public GameObject {
 
 public:
 
-	Projectile(const Vector2& position, SDL_Texture* texture, const Vector2& textureDimensions, const char* name = "NA_Projectile");
+	Projectile(const Transform& transform, SDL_Texture* texture, const Vector2& textureDimensions, const char* name = "NA_Projectile");
 	Projectile(const Projectile& copy) = delete;
 	const Projectile& operator=(const Projectile& other) = delete;
 	~Projectile() override;

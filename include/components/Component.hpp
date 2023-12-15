@@ -12,7 +12,7 @@ public:
 
 protected:
 
-	Component(GameObject* parent, const char* name = "NA_Component");
+	Component(GameObject* parent, const char* name = "NA_Component", bool canRender = false, bool canUpdate = true);
 
 	GameObject* m_parent = nullptr;
 };

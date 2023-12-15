@@ -5,6 +5,7 @@
 
 #include "Math.hpp"
 #include "BaseEntity.hpp"
+#include "Transform.hpp"
 
 class Component;
 
@@ -15,11 +16,7 @@ public:
 	const GameObject& operator=(const GameObject& other) = delete;
 	~GameObject() override;
 
-	template<typename ComponentType>
-	inline ComponentType* AddComponent(ComponentType* component);
-
-	template<typename ComponentType>
-	inline ComponentType* GetComponentOfType();
+	Transform m_transform;
 	
 	//Renders the game object texture and its components
 	virtual void Render(SDL_Renderer* renderer) override;
@@ -27,26 +24,27 @@ public:
 	//Updates and "physics"
 	virtual void Update(const float deltaTime) override;
 
-	// Getters
-	const Vector2& GetPosition() const { return m_position; };
-	const Vector2& GetVelocity() const { return m_velocity; };
 	SDL_Texture* GetTexture() const { return m_texture; };
 	SDL_Rect GetCurrentFrame() const { return m_currentFrame; };
 
-	// Setters
-	void SetPoisiton(const Vector2& newPosition) { m_position = newPosition; };
-	void SetVelocity(const Vector2& newVelocity) { m_velocity = newVelocity; };
+	template<typename ComponentType>
+	inline ComponentType* AddComponent(ComponentType* component);
+
+	template<typename ComponentType>
+	inline ComponentType* GetComponentOfType();
 
 protected:
-	GameObject(const Vector2& position, SDL_Texture* texture, const Vector2& textureDimensions, const char* name = "NA_GameObject");
+
+	GameObject(const Transform& transform, SDL_Texture* texture, const Vector2& textureDimensions, const char* name = "NA_GameObject");
 	GameObject();
 
-	Vector2 m_position;
-	Vector2 m_velocity;
+private:
+
 	SDL_Rect m_currentFrame;
 	SDL_Texture* m_texture = nullptr;
 	//Has ownership of all components. This class will take care of freeing memory on all components
 	std::vector<Component*> m_components;
+
 
 };
 
