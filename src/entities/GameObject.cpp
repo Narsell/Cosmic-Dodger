@@ -3,6 +3,7 @@
 #include "GameObject.hpp"
 #include "CollisionComponent.hpp"
 #include "Math.hpp"
+#include "Renderer.hpp"
 
 
 GameObject::GameObject()
@@ -13,17 +14,17 @@ GameObject::GameObject()
 {
 }
 
-GameObject::GameObject(const Transform& transform, SDL_Texture* texture, const Vector2& textureDimensions, const char* name)
+GameObject::GameObject(const Transform& transform, TextureResource* texture, const char* name)
 	:BaseEntity("", name, true, true),
     m_transform(transform),
-	m_currentFrame(SDL_Rect(0, 0, textureDimensions.x, textureDimensions.y)),
+	m_currentFrame(SDL_Rect(0, 0, texture->GetDimensions().x, texture->GetDimensions().y)),
 	m_texture(texture)
 {
 }
 
 GameObject::~GameObject()
 {
-    std::cout << GetDisplayName() << " destroyed on GameObject destructor!\n";
+    //std::cout << GetDisplayName() << " destroyed on GameObject destructor!\n";
 
 	for (Component* component : m_components) {
 		delete component;
@@ -52,7 +53,7 @@ void GameObject::Render(SDL_Renderer* renderer)
 
     if (m_texture) {
         //SDL_RenderCopy(renderer, m_texture, &src, &dst);
-        SDL_RenderCopyEx(renderer, m_texture, &src, &dst, m_transform.GetRotation(), &center, SDL_FLIP_NONE);
+        SDL_RenderCopyEx(renderer, m_texture->GetTexture(), &src, &dst, m_transform.GetRotation(), &center, SDL_FLIP_NONE);
     }
 
     for (Component* component : m_components) {

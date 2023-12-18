@@ -18,7 +18,7 @@ Collider2D::Collider2D(const Vector2& dimensions, CollisionComponent* parentComp
 
 Collider2D::~Collider2D()
 {
-	std::cout << GetDisplayName() << " destroyed on Collider destructor!\n";
+	//std::cout << GetDisplayName() << " destroyed on Collider destructor!\n";
 
 }
 

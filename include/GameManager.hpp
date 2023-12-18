@@ -15,6 +15,9 @@ public:
 	template<typename T>
 	static T* SpawnGameObject(T* gameObject);
 
+	template<typename T>
+	static void DestroyGameObject(T* gameObject);
+
 	//Copy constructor, copy assigment and destructors.
 	GameManager(const GameManager& other) = delete;
 	const GameManager& operator=(const GameManager& other) = delete;
@@ -41,7 +44,7 @@ private:
 
 private:
 	bool m_isGameRunning = true;
-	class RenderWindow* m_renderWindow = nullptr;
+	class Renderer* m_renderer = nullptr;
 
 	// Game entities
 	static std::list<class GameObject*> m_gameObjects;
@@ -51,8 +54,18 @@ private:
 };
 
 template<typename T>
-T* GameManager::SpawnGameObject(T* object)
+T* GameManager::SpawnGameObject(T* gameObject)
 {
-	m_gameObjects.emplace_back(object);
-	return object;
+	assert(gameObject);
+	m_gameObjects.emplace_back(gameObject);
+	return gameObject;
+}
+
+template<typename T>
+inline void GameManager::DestroyGameObject(T* gameObject)
+{
+	//TODO: Rework this so objets are destroyed on the next tick!
+	assert(gameObject);
+	m_gameObjects.remove(gameObject);
+	delete gameObject;
 }

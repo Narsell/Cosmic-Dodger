@@ -1,9 +1,10 @@
 #include "WindowBounds.hpp"
 #include "CollisionComponent.hpp"
+#include "Renderer.hpp"
 
 
 WindowBounds::WindowBounds(const Vector2& windowDimensions, const char* name)
-    :GameObject(Transform(), nullptr, Vector2::ZERO, name)
+    :GameObject(Transform(), new TextureResource("Window", Vector2::ZERO, nullptr), name)
 {
 
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));

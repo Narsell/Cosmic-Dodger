@@ -3,44 +3,46 @@
 #include <iostream>
 #include <assert.h>
 
-#include "RenderWindow.hpp"
+#include "Renderer.hpp"
 #include "GameObject.hpp"
 #include "Math.hpp"
 
-SDL_Texture* RenderWindow::playerTexture;
-SDL_Texture* RenderWindow::projectileTexture;
+TextureResource* Renderer::playerTexture;
+TextureResource* Renderer::projectileTexture;
 
-RenderWindow::RenderWindow(const char* title, const Vector2& windowDimensions)
+Renderer::Renderer(const char* title, const Vector2& windowDimensions)
     :m_window(nullptr), m_renderer(nullptr), m_windowDimensions(windowDimensions)
 {
-    m_window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowDimensions.x, windowDimensions.y, SDL_WINDOW_SHOWN);
+    m_window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, (int)windowDimensions.x, (int)windowDimensions.y, SDL_WINDOW_SHOWN);
     if (!m_window){
         std::cout << "Window failed to init. ERROR: " << SDL_GetError() << std::endl;
     }
     m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 }
 
-RenderWindow::~RenderWindow()
+Renderer::~Renderer()
 {
     SDL_DestroyWindow(m_window);
     SDL_DestroyRenderer(m_renderer);
+    delete playerTexture;
+    delete projectileTexture;
 }
 
-SDL_Texture* RenderWindow::LoadTexture(const char* filePath){
+TextureResource* Renderer::LoadTexture(const char* name, const Vector2& dim, const char* filePath){
     SDL_Texture* texture = nullptr;
 	texture = IMG_LoadTexture(m_renderer, filePath);
 
 	if (!texture)
 		std::cout << "Failed to load texture. Error: " << SDL_GetError() << std::endl;
 
-	return texture;
+    return new TextureResource(name, dim, texture);
 }
 
-void RenderWindow::Clear(){
+void Renderer::Clear(){
     SDL_SetRenderDrawColor(m_renderer, 0x0, 0x0, 0x0, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(m_renderer);
 }
 
-void RenderWindow::Display(){
+void Renderer::Display(){
     SDL_RenderPresent(m_renderer);
 }

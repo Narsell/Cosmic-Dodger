@@ -4,18 +4,15 @@
 
 #include "CollisionComponent.hpp"
 #include "Collider2D.hpp"
-#include "GameObject.hpp"
 
 
 CollisionComponent::CollisionComponent(GameObject* parent, const char* name)
 	:Component(parent, name)
-{
-
-}
+{}
 
 CollisionComponent::~CollisionComponent()
 {
-	std::cout << GetDisplayName() << " destroyed on CollisionComponent destructor!\n";
+	//std::cout << GetDisplayName() << " destroyed on CollisionComponent destructor!\n";
 
 	for (Collider2D* collider : m_colliders) {
 		delete collider;
@@ -63,8 +60,14 @@ void CollisionComponent::SetCollisionDelegate(std::function<void(HitInformation&
 	OnCollisionDelegate = delegate;
 }
 
-void CollisionComponent::ListenForCollisions(CollisionComponent* collisionCandidate)
+void CollisionComponent::ListenForCollisions(GameObject* collisionCandidate)
 {
 	assert(collisionCandidate);
-	m_collisionCandidates.emplace_back(collisionCandidate);
+	CollisionComponent* collisionComponent = collisionCandidate->GetComponentOfType<CollisionComponent>();
+	if (collisionComponent) {
+		m_collisionCandidates.emplace_back(collisionComponent);
+	}
+	else {
+		std::cout << "Unable to get collision component from object " << collisionCandidate->GetDisplayName() << "\n";
+	}
 }

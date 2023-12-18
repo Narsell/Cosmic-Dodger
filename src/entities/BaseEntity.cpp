@@ -24,7 +24,7 @@ BaseEntity::BaseEntity(const char* entityId, const char* entityName, const bool 
 
 BaseEntity::~BaseEntity()
 {
-	std::cout << GetDisplayName() << " destroyed on BaseEntity destructor!\n";
+	//std::cout << GetDisplayName() << " destroyed on BaseEntity destructor!\n";
 }
 
 void BaseEntity::Render(SDL_Renderer* renderer)

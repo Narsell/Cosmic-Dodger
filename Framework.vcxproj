@@ -32,7 +32,7 @@
     <ClCompile Include="src\GameManager.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Math.cpp" />
-    <ClCompile Include="src\RenderWindow.cpp" />
+    <ClCompile Include="src\Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\components\Collider2D.hpp" />
@@ -47,7 +47,7 @@
     <ClInclude Include="include\entities\WindowBounds.hpp" />
     <ClInclude Include="include\GameManager.hpp" />
     <ClInclude Include="include\Math.hpp" />
-    <ClInclude Include="include\RenderWindow.hpp" />
+    <ClInclude Include="include\Renderer.hpp" />
     <ClInclude Include="include\Utils.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -7,6 +7,7 @@
 #include "BaseEntity.hpp"
 #include "Transform.hpp"
 
+struct TextureResource;
 class Component;
 
 class GameObject : public BaseEntity
@@ -24,7 +25,6 @@ public:
 	//Updates and "physics"
 	virtual void Update(const float deltaTime) override;
 
-	SDL_Texture* GetTexture() const { return m_texture; };
 	SDL_Rect GetCurrentFrame() const { return m_currentFrame; };
 
 	template<typename ComponentType>
@@ -35,13 +35,13 @@ public:
 
 protected:
 
-	GameObject(const Transform& transform, SDL_Texture* texture, const Vector2& textureDimensions, const char* name = "NA_GameObject");
+	GameObject(const Transform& transform, TextureResource* texture, const char* name = "NA_GameObject");
 	GameObject();
 
 private:
 
 	SDL_Rect m_currentFrame;
-	SDL_Texture* m_texture = nullptr;
+	TextureResource* m_texture = nullptr;
 	//Has ownership of all components. This class will take care of freeing memory on all components
 	std::vector<Component*> m_components;
 
