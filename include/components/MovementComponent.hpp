@@ -11,15 +11,20 @@ public:
 	~MovementComponent() override;
 
 	virtual void Update(const float deltaTime) override;
-
 	void AddPositionDelta(const Vector2& deltaPosition);
 
-	void SetFollowRotation(const bool newFollowRotation);
+
+	const Vector2& GetVelocity() const { return m_velocity; };
+
+	void SetVelocity(const Vector2& newVelocity) { m_velocity = newVelocity; };
+	void SetRotationFollowsVelocity(const bool newFollowVelocity);
 	void SetSpeed(const float newSpeed);
 
 private:
 
-	Vector2 velocity;
-	bool m_followRotation = true;
-	float m_speed = 0;
+	//Unit vector, direction of movement.
+	Vector2 m_velocity;
+	float m_speed = 0.f;
+	bool m_rotationFollowsVelocity = true;
+
 };

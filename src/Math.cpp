@@ -31,9 +31,19 @@ const double Vector2::Lenght() const
 	return std::sqrt(std::pow(x, 2) + std::pow(y, 2));
 }
 
-void Vector2::Normalize()
+const float Vector2::Dot(const Vector2& other) const {
+	return this->x * other.x + this->y * other.y;
+}
+
+const float Vector2::AngleTo(const Vector2& other) const {
+	Vector2 corrected = Vector2(this->x, -this->y);
+	return Math::RadiansToDegrees(std::acos(corrected.Dot(other) / (corrected.Lenght() * other.Lenght())));
+}
+
+const Vector2& Vector2::Normalized() const
 {
-	*this = *this / Lenght();
+	const float lenght = Lenght() > 0.0 ? Lenght() : 1.f;
+	return *new Vector2(*this / lenght);
 }
 
 const Vector2& Vector2::operator+(const Vector2& other) const
@@ -89,7 +99,25 @@ const Vector2& Math::GetDirectionFromAngle(const float angle)
 
 const double Math::GetAngleFromDirection(const Vector2& direction)
 {
-	return RadiansToDegrees(std::acos(direction.x / direction.Lenght()));
+	float angle = 0.0f;
+	const Vector2 normalDirection = direction.Normalized();
+	if (normalDirection.x > 0.0 && normalDirection.y > 0.0 || normalDirection.x > 0.0 && normalDirection.y < 0.0) {
+		angle = std::asin(-normalDirection.y);
+	}
+	else if (normalDirection.x < 0.0 && normalDirection.y > 0.0) {
+		angle = -std::acos(normalDirection.x);
+	}
+	else if (normalDirection.x < 0.0 && normalDirection.y < 0.0) {
+		angle = std::acos(normalDirection.x);
+	}
+
+	return RadiansToDegrees(angle);
+}
+
+const bool Math::IsNearlyEqual(const double x, const double y)
+{
+	const double epsilon = 1e-5;
+	return std::abs(x - y) <= epsilon;
 }
 
 const double Math::RadiansToDegrees(const double radians) {

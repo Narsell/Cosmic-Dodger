@@ -16,7 +16,11 @@ Player::Player(const Transform& transform, TextureResource* texture, const char*
 	m_projectileSpawnPoint(texture->GetDimensions().x / 2, -50),
 	m_windowBounds(nullptr)
 {
+	m_transform.SetRotation(90.0);
+
 	m_movementComponent = AddComponent<MovementComponent>(new MovementComponent(this, "Movement Component"));
+	m_movementComponent->SetSpeed(5.f);
+	m_movementComponent->SetRotationFollowsVelocity(false);
 
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));
 	m_collisionComponent->AddCollider(texture->GetDimensions(), Vector2::ZERO, true, "Ship Collision");
@@ -47,19 +51,17 @@ void Player::Update(const float deltaTime)
 			}
 
 			if (pressedKey == SDLK_d) {
-				m_velocity = Vector2::RIGHT * 5; 
+				m_movementComponent->SetVelocity(Vector2::RIGHT);
 			}
 			else if (pressedKey == SDLK_a) {
-				m_velocity = Vector2::LEFT * 5;
+				m_movementComponent->SetVelocity(Vector2::LEFT);
 			}
 			
 		}
 		else if (frameEvent.type == SDL_KEYUP && frameEvent.key.keysym.sym != SDLK_SPACE) {
-			m_velocity = Vector2::ZERO;
+			m_movementComponent->SetVelocity(Vector2::ZERO);
 		}
 	}
-
-	m_movementComponent->AddPositionDelta(m_velocity);
 }
 
 void Player::SetWindowBounds(WindowBounds* windowBounds)
@@ -79,11 +81,20 @@ void Player::ShootProjectile()
 {
 	assert(Renderer::projectileTexture);
 
-	Vector2 projectileOffset(Renderer::projectileTexture->GetDimensions().x / 2, 0);
-	Transform spawnTransform = Transform(m_transform.GetPosition() + m_projectileSpawnPoint - projectileOffset, -90.f);
+	int* mouseX = new int(0);
+	int* mouseY = new int(0);
 
-	Projectile* projectile = new Projectile(spawnTransform, Renderer::projectileTexture);
+	SDL_GetMouseState(mouseX, mouseY);
+	const Vector2 mousePosition = Vector2(*mouseX, *mouseY);
+	const Vector2 velocity = (mousePosition - m_transform.GetPosition()).Normalized();
+	float angle = Math::GetAngleFromDirection(velocity);
+
+	Transform spawnTransform = Transform(m_transform.GetPosition() + m_projectileSpawnPoint, angle);
+
+	Projectile* projectile = new Projectile(spawnTransform, Renderer::projectileTexture, "Projectile");
+	projectile->GetMovementComponent()->SetVelocity(velocity);
 	projectile->GetCollisionComponent()->ListenForCollisions(m_windowBounds);
+
 	m_projectiles.emplace_back(
 		GameManager::SpawnGameObject(projectile)
 	);

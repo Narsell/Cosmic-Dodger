@@ -59,20 +59,12 @@ void GameManager::Construction()
                            windowDimensions.y - playerDimensions.y - 5);
     Transform playerTransform = Transform(playerPosition);
 
-    Renderer::playerTexture = m_renderer->LoadTexture("Player", Vector2(112, 75), "assets/player_ship.png");
-    Renderer::projectileTexture = m_renderer->LoadTexture("Projectile", Vector2(48, 46), "assets/laser.png");
+    Renderer::playerTexture = m_renderer->LoadTexture("Player", playerDimensions, "assets/player_ship.png");
+    Renderer::projectileTexture = m_renderer->LoadTexture("Projectile", Vector2(9, 37), "assets/laser.png");
 
     player = SpawnGameObject(
         new Player(playerTransform, Renderer::playerTexture, "Player")
     );
-
-
-    //Vector2 test(100, 100);
-    //const double l = test.Lenght();
-    //const double r = Math::GetAngleFromDirection(test);
-    //const double angle = 45;
-    //const Vector2 dir = Math::GetDirectionFromAngle(angle);
-    //test.Normalize();
 }
 
 void GameManager::BeginPlay()

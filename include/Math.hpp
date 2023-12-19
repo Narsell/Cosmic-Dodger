@@ -17,7 +17,11 @@ public:
 
 	const double Lenght() const;
 
-	void Normalize();
+	const float Dot(const Vector2& other) const;
+
+	const float AngleTo(const Vector2& other) const;
+
+	const Vector2& Normalized() const;
 
 	const Vector2& operator+(const Vector2& other) const;
 	void operator+=(const Vector2& other);
@@ -47,6 +51,7 @@ public:
 class Math {
 
 public:
+	static const bool IsNearlyEqual(const double x, const double b);
 	//Radians to Degrees conversion.
 	static const double RadiansToDegrees(const double radians);
 	//Degrees to Radians conversion.

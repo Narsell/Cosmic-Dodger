@@ -16,7 +16,8 @@ Projectile::Projectile(const Transform& transform, TextureResource* texture, con
 	m_collisionComponent->SetCollisionDelegate(OnCollisionDelegate);
 
 	m_movementComponent = AddComponent<MovementComponent>(new MovementComponent(this, "Movement Component"));
-	m_movementComponent->SetSpeed(5.f);
+	m_movementComponent->SetSpeed(3.f);
+	m_movementComponent->SetRotationFollowsVelocity(true);
 }
 
 Projectile::~Projectile()
@@ -27,28 +28,23 @@ Projectile::~Projectile()
 void Projectile::Update(const float deltaTime)
 {
 	GameObject::Update(deltaTime);
-
 }
 
 void Projectile::OnCollision(HitInformation& hitInformation)
 {
-	//std::cout << "Projectile Collision!\n";
 	if (hitInformation.hitGameObject->GetDisplayName() == "Window Bounds") {
-		if (hitInformation.hitCollider->GetDisplayName() == "UP" ||
-			hitInformation.hitCollider->GetDisplayName() == "DOWN") {
 
-			/*
-				TODO: Rework it like this
-				Have a velocity vector (in MovementComponent) which points to the direction of movement (RIGHT by default)
-				Have rotation angle/vector which simply controls texture rotation
-				Then have rotationFollowsVelocity variable to make object rotate towards direction of movement every tick.
-			*/
+		const Vector2 currentVelocity = m_movementComponent->GetVelocity();
 
+		if (hitInformation.hitCollider->GetDisplayName() == "UP" || hitInformation.hitCollider->GetDisplayName() == "DOWN") {
+			const Vector2 newVelocity = Vector2(currentVelocity.x, -currentVelocity.y);
+			m_movementComponent->SetVelocity(newVelocity);
 		}
-		else if (hitInformation.hitCollider->GetDisplayName() == "RIGHT" ||
-				 hitInformation.hitCollider->GetDisplayName() == "LEFT") {
+		else if (hitInformation.hitCollider->GetDisplayName() == "RIGHT" || hitInformation.hitCollider->GetDisplayName() == "LEFT") {
 
+			const Vector2 newVelocity = Vector2(-currentVelocity.x, currentVelocity.y);
+			m_movementComponent->SetVelocity(newVelocity);
 		}
-
 	}
+
 }

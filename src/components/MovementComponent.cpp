@@ -4,7 +4,9 @@
 
 MovementComponent::MovementComponent(GameObject* parent, const char* name)
 	:Component(parent, name),
-	m_followRotation(true)
+	m_velocity(Vector2::ZERO),
+	m_speed(0.f),
+	m_rotationFollowsVelocity(false)
 {
 }
 
@@ -14,14 +16,12 @@ MovementComponent::~MovementComponent()
 
 void MovementComponent::Update(const float deltaTime)
 {
-	if (m_followRotation) {
-		const float rotation = m_parent->m_transform.GetRotation();
-		velocity = Math::GetDirectionFromAngle(rotation);
+	if (m_rotationFollowsVelocity and !Math::IsNearlyEqual(m_velocity.Lenght(), 0.0)) {
+		const float angle = Math::GetAngleFromDirection(m_velocity);
+		m_parent->m_transform.SetRotation(angle);
 	}
-	else {
-		velocity = Vector2::RIGHT;
-	}
-	AddPositionDelta(velocity * m_speed);
+	AddPositionDelta(m_velocity * m_speed);
+
 }
 
 void MovementComponent::AddPositionDelta(const Vector2& deltaPosition)
@@ -30,9 +30,9 @@ void MovementComponent::AddPositionDelta(const Vector2& deltaPosition)
 	m_parent->m_transform.SetPosition(newPosition);
 }
 
-void MovementComponent::SetFollowRotation(const bool newFollowRotation)
+void MovementComponent::SetRotationFollowsVelocity(const bool newFollowVelocity)
 {
-	m_followRotation = newFollowRotation;
+	m_rotationFollowsVelocity = newFollowVelocity;
 }
 
 void MovementComponent::SetSpeed(const float newSpeed)

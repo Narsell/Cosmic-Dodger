@@ -39,7 +39,7 @@ TextureResource* Renderer::LoadTexture(const char* name, const Vector2& dim, con
 }
 
 void Renderer::Clear(){
-    SDL_SetRenderDrawColor(m_renderer, 0x0, 0x0, 0x0, SDL_ALPHA_OPAQUE);
+    SDL_SetRenderDrawColor(m_renderer, 0xF, 0xF, 0xF, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(m_renderer);
 }
 
