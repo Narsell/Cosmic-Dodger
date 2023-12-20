@@ -19,7 +19,7 @@ public:
 
 	const float Dot(const Vector2& other) const;
 
-	const float AngleTo(const Vector2& other) const;
+	const double AngleTo(const Vector2& other) const;
 
 	const Vector2& Normalized() const;
 

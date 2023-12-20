@@ -20,11 +20,11 @@ public:
 	bool IsColliding(Collider2D* other, HitInformation& OutHitInformation) const;
 	bool IsColliding(const std::vector<Collider2D*> others, HitInformation& OutHitInformation) const;
 
-	const SDL_Rect& GetRect() const { return m_colliderRectangle; };
+	const SDL_FRect& GetRect() const { return m_colliderRectangle; };
 
 private:
 	Vector2 m_position{ 0,0 };
-	SDL_Rect m_colliderRectangle;
+	SDL_FRect m_colliderRectangle;
 	CollisionComponent* m_parentComponent = nullptr;
 
 };

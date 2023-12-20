@@ -160,6 +160,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)thirdparty\SDL2\include\;$(SolutionDir)thirdparty\SDL2_Image\include\;$(SolutionDir)thirdparty\SDL2_ttf\include;$(SolutionDir)include\</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -178,6 +179,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)thirdparty\SDL2\include\;$(SolutionDir)thirdparty\SDL2_Image\include\;$(SolutionDir)thirdparty\SDL2_ttf\include;$(SolutionDir)include\</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

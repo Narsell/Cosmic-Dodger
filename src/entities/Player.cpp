@@ -24,7 +24,7 @@ Player::Player(const Transform& transform, TextureResource* texture, const char*
 
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));
 	m_collisionComponent->AddCollider(texture->GetDimensions(), Vector2::ZERO, true, "Ship Collision");
-	m_collisionComponent->SetCanRender(true);
+	m_collisionComponent->SetCanRender(false);
 
 	std::function<void(HitInformation&)> OnCollisionDelegate = std::bind(&Player::OnCollision, this, std::placeholders::_1);
 	m_collisionComponent->SetCollisionDelegate(OnCollisionDelegate);
@@ -56,6 +56,12 @@ void Player::Update(const float deltaTime)
 			else if (pressedKey == SDLK_a) {
 				m_movementComponent->SetVelocity(Vector2::LEFT);
 			}
+			else if (pressedKey == SDLK_w) {
+				m_movementComponent->SetVelocity(Vector2::UP);
+			}
+			else if (pressedKey == SDLK_s) {
+				m_movementComponent->SetVelocity(Vector2::DOWN);
+			}
 			
 		}
 		else if (frameEvent.type == SDL_KEYUP && frameEvent.key.keysym.sym != SDLK_SPACE) {
@@ -85,11 +91,12 @@ void Player::ShootProjectile()
 	int* mouseY = new int(0);
 
 	SDL_GetMouseState(mouseX, mouseY);
-	const Vector2 mousePosition = Vector2(*mouseX, *mouseY);
-	const Vector2 velocity = (mousePosition - m_transform.GetPosition()).Normalized();
-	float angle = Math::GetAngleFromDirection(velocity);
+	const Vector2 mousePosition = Vector2(static_cast<float>(*mouseX), static_cast<float>(*mouseY));
+	const Vector2 spawnPosition = m_transform.GetPosition() + m_projectileSpawnPoint;
+	const Vector2 velocity = (mousePosition - spawnPosition).Normalized();
+	const double angle = Math::GetAngleFromDirection(velocity);
 
-	Transform spawnTransform = Transform(m_transform.GetPosition() + m_projectileSpawnPoint, angle);
+	Transform spawnTransform = Transform(spawnPosition, angle);
 
 	Projectile* projectile = new Projectile(spawnTransform, Renderer::projectileTexture, "Projectile");
 	projectile->GetMovementComponent()->SetVelocity(velocity);

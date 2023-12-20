@@ -11,7 +11,7 @@ Collider2D::Collider2D(const Vector2& dimensions, CollisionComponent* parentComp
 	:
 	BaseEntity("", name, visible, true),
 	m_position(relativePos),
-	m_colliderRectangle({ 0, 0, (int)ceil(dimensions.x), (int)ceil(dimensions.y) }),
+	m_colliderRectangle({ 0, 0, dimensions.x, dimensions.y }),
 	m_parentComponent(parentComp)
 {
 }
@@ -27,7 +27,7 @@ void Collider2D::Render(SDL_Renderer* renderer)
 	BaseEntity::Render(renderer);
 
 	SDL_SetRenderDrawColor(renderer, 255, 0, 255, SDL_ALPHA_OPAQUE);
-	SDL_RenderDrawRect(renderer, &m_colliderRectangle);
+	SDL_RenderDrawRectF(renderer, &m_colliderRectangle);
 }
 
 void Collider2D::Update(const float deltaTime)
@@ -42,7 +42,7 @@ bool Collider2D::IsColliding(Collider2D* other, HitInformation& OutHitInformatio
 {
 	assert(other);
 
-	if (SDL_HasIntersection(&m_colliderRectangle, &other->m_colliderRectangle)) {
+	if (SDL_HasIntersectionF(&m_colliderRectangle, &other->m_colliderRectangle)) {
 
 		CollisionComponent* parentCollisionComp = other->m_parentComponent;
 		assert(parentCollisionComp);

@@ -25,7 +25,7 @@ public:
 	//Updates and "physics"
 	virtual void Update(const float deltaTime) override;
 
-	SDL_Rect GetCurrentFrame() const { return m_currentFrame; };
+	const SDL_FRect& GetCurrentFrame() const { return m_currentFrame; };
 
 	template<typename ComponentType>
 	inline ComponentType* AddComponent(ComponentType* component);
@@ -40,7 +40,7 @@ protected:
 
 private:
 
-	SDL_Rect m_currentFrame;
+	SDL_FRect m_currentFrame;
 	TextureResource* m_texture = nullptr;
 	//Has ownership of all components. This class will take care of freeing memory on all components
 	std::vector<Component*> m_components;

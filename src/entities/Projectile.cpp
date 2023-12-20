@@ -10,13 +10,13 @@ Projectile::Projectile(const Transform& transform, TextureResource* texture, con
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));
 	m_collisionComponent->SetCanRender(true);
 
-	m_collisionComponent->AddCollider(texture->GetDimensions(), Vector2::ZERO, true, "Basic Collision");
+	m_collisionComponent->AddCollider(Vector2(9, 9), Vector2::ZERO, false, "Basic Collision");
 
 	std::function<void(HitInformation&)> OnCollisionDelegate = std::bind(&Projectile::OnCollision, this, std::placeholders::_1);
 	m_collisionComponent->SetCollisionDelegate(OnCollisionDelegate);
 
 	m_movementComponent = AddComponent<MovementComponent>(new MovementComponent(this, "Movement Component"));
-	m_movementComponent->SetSpeed(3.f);
+	m_movementComponent->SetSpeed(5.f);
 	m_movementComponent->SetRotationFollowsVelocity(true);
 }
 
