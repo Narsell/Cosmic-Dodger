@@ -6,11 +6,14 @@
 #include "WindowBounds.hpp"
 #include "CollisionComponent.hpp"
 #include "MovementComponent.hpp"
+#include "PlayerInputComponent.hpp"
 #include "Player.hpp"
 #include "Projectile.hpp"
 #include "Transform.hpp"
+#include "Utils.hpp"
 
 std::list<GameObject*> GameManager::m_gameObjects;
+std::vector<PlayerInputComponent*> GameManager::suscribedPlayerInputComponents;
 
 GameManager::GameManager()
     :m_renderer(nullptr),
@@ -37,10 +40,10 @@ void GameManager::GameStart(const char* gameTitle, const float windowWidth, cons
     Construction();
     BeginPlay();
     while (m_isGameRunning) {
+        utils::HireTimeInSeconds();
         HandleInput();
         Update(1.f);
         Render();
-        ClearFrameEvents();
     }
     SDL_Quit();
 }
@@ -75,15 +78,17 @@ void GameManager::BeginPlay()
 void GameManager::HandleInput()
 {
     SDL_Event event;
-    while (SDL_PollEvent(&event) != 0)
+    while (SDL_PollEvent(&event))
     {
-        GetFrameEvents().push_back(event);
-    }
-
-    for (SDL_Event& frameEvent : GetFrameEvents()) {
-        if (frameEvent.type == SDL_QUIT) {
+        if (event.type == SDL_QUIT) {
             m_isGameRunning = false;
         }
+    }
+
+    const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
+
+    for (PlayerInputComponent* inputComp : suscribedPlayerInputComponents) {
+        inputComp->UpdateKeyboardState(keyboardState);
     }
 }
 
@@ -122,13 +127,9 @@ GameManager::~GameManager()
     delete m_renderer;
 }
 
-std::vector<SDL_Event>& GameManager::GetFrameEvents()
+void GameManager::SuscribeToKeyboardEvents(PlayerInputComponent* PlayerInputComponent)
 {
-    static std::vector<SDL_Event> frameEvents;
-    return frameEvents;
+    suscribedPlayerInputComponents.push_back(PlayerInputComponent);
 }
 
-void GameManager::ClearFrameEvents()
-{
-    GetFrameEvents().clear();
-}
+

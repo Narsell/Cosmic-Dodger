@@ -4,6 +4,11 @@
 #include <vector>
 #include "GameObject.hpp"
 
+class PlayerInputComponent;
+class Renderer;
+class Player;
+class WindowBounds;
+
 class GameManager {
 
 public:
@@ -22,11 +27,8 @@ public:
 	GameManager(const GameManager& other) = delete;
 	const GameManager& operator=(const GameManager& other) = delete;
 	~GameManager();
-	
-	//Gets the queue of events available for that frame.
-	static std::vector<SDL_Event>& GetFrameEvents();
-	//Clears the event queue, should be done after finishing a frame.
-	void ClearFrameEvents();
+
+	static void SuscribeToKeyboardEvents(PlayerInputComponent* PlayerInputComponent);
 
 private:
 	//Private constructor to avoid unwanted initialization.
@@ -44,14 +46,17 @@ private:
 
 private:
 	bool m_isGameRunning = true;
-	class Renderer* m_renderer = nullptr;
+	Renderer* m_renderer = nullptr;
+	static std::vector<PlayerInputComponent*> suscribedPlayerInputComponents;
 
 	// Game entities
 	static std::list<class GameObject*> m_gameObjects;
-	class Player* player = nullptr;
-	class WindowBounds* windowBounds = nullptr;
+	Player* player = nullptr;
+	WindowBounds* windowBounds = nullptr;
 
 };
+
+/* TEMPLATE DEFINITIONS */
 
 template<typename T>
 T* GameManager::SpawnGameObject(T* gameObject)

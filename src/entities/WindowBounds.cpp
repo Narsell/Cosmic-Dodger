@@ -8,7 +8,7 @@ WindowBounds::WindowBounds(const Vector2& windowDimensions, const char* name)
 {
 
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));
-    m_collisionComponent->SetCanRender(true);
+    m_collisionComponent->SetCanRender(false);
 
     const float boundsWidth = 1.f;
 

@@ -6,6 +6,7 @@
 #include "Renderer.hpp"
 
 class MovementComponent;
+class PlayerInputComponent;
 class Projectile;
 class WindowBounds;
 struct TextureResource;
@@ -24,18 +25,19 @@ public:
 
 	void Update(const float deltaTime) override;
 	void SetWindowBounds(WindowBounds* windowBounds);
-
-private:
-	void OnCollision(HitInformation& hitInformation);
 	void ShootProjectile();
 
 private:
+	void OnCollision(HitInformation& hitInformation);
 
-	Vector2 m_velocity;
+private:
+
+	Vector2 inputVector;
 	Vector2 m_projectileSpawnPoint;
 	WindowBounds* m_windowBounds;
 	CollisionComponent* m_collisionComponent;
 	MovementComponent* m_movementComponent;
+	PlayerInputComponent* m_inputComponent;
 
 	std::list<Projectile*> m_projectiles;
 };
