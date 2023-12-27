@@ -40,24 +40,34 @@ const double Vector2::AngleTo(const Vector2& other) const {
 	return Math::RadiansToDegrees(std::acos(corrected.Dot(other) / (corrected.Lenght() * other.Lenght())));
 }
 
-const Vector2& Vector2::Normalized() const
+const Vector2 Vector2::Normalized() const
 {
 	const double lenght = Lenght() > 0.0 ? Lenght() : 1.0;
-	return *new Vector2(*this / static_cast<float>(lenght));
+	return Vector2(*this / static_cast<float>(lenght));
 }
 
-const Vector2& Vector2::operator+(const Vector2& other) const
+const Vector2 Vector2::operator+(const Vector2& other) const
 {
-	return *new Vector2(x + other.x, y + other.y);
+	return Vector2(x + other.x, y + other.y);
+}
+
+const Vector2 Vector2::operator-(const Vector2& other) const
+{
+	return Vector2(x - other.x, y - other.y);
+}
+
+const Vector2 Vector2::operator*(float scalar) const
+{
+	return Vector2(x * scalar, y * scalar);
+}
+
+const Vector2 Vector2::operator/(float scalar) const
+{
+	return Vector2(x / scalar, y / scalar);
 }
 
 void Vector2::operator+=(const Vector2& other) {
 	*this = *this + other;
-}
-
-const Vector2& Vector2::operator-(const Vector2& other) const
-{
-	return *new Vector2(x - other.x, y - other.y);
 }
 
 void Vector2::operator-=(const Vector2& other)
@@ -65,19 +75,9 @@ void Vector2::operator-=(const Vector2& other)
 	*this = *this - other;
 }
 
-const Vector2& Vector2::operator*(float scalar) const
-{
-	return *new Vector2(x * scalar, y * scalar);
-}
-
 void Vector2::operator*=(float scalar)
 {
 	*this = *this * scalar;
-}
-
-const Vector2& Vector2::operator/(float scalar) const
-{
-	return *new Vector2(x / scalar, y / scalar);
 }
 
 void Vector2::Print() const {
@@ -86,7 +86,7 @@ void Vector2::Print() const {
 
 /* MATH */
 
-const Vector2& Math::GetDirectionFromAngle(const float angle)
+const Vector2 Math::GetDirectionFromAngle(const float angle)
 {
 	float safeAngle = angle;
 	if (angle < 0) {
@@ -94,7 +94,7 @@ const Vector2& Math::GetDirectionFromAngle(const float angle)
 	}
 	const double x = std::cos(DegreesToRadians(safeAngle));
 	const double y = std::sin(DegreesToRadians(safeAngle));
-	return *new Vector2(static_cast<float>(x), static_cast<float>(y));
+	return Vector2(static_cast<float>(x), static_cast<float>(y));
 }
 
 const double Math::GetAngleFromDirection(const Vector2& direction)

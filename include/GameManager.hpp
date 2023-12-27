@@ -6,6 +6,7 @@
 
 class PlayerInputComponent;
 class Renderer;
+class GameObject;
 class Player;
 class WindowBounds;
 
@@ -48,9 +49,10 @@ private:
 	bool m_isGameRunning = true;
 	Renderer* m_renderer = nullptr;
 	static std::vector<PlayerInputComponent*> suscribedPlayerInputComponents;
+	static std::list<GameObject*> m_destroyQueue;
 
 	// Game entities
-	static std::list<class GameObject*> m_gameObjects;
+	static std::list<GameObject*> m_gameObjects;
 	Player* player = nullptr;
 	WindowBounds* windowBounds = nullptr;
 
@@ -67,10 +69,8 @@ T* GameManager::SpawnGameObject(T* gameObject)
 }
 
 template<typename T>
-inline void GameManager::DestroyGameObject(T* gameObject)
+void GameManager::DestroyGameObject(T* gameObject)
 {
-	//TODO: Rework this so objets are destroyed on the next tick!
 	assert(gameObject);
-	m_gameObjects.remove(gameObject);
-	delete gameObject;
+	m_destroyQueue.push_back(gameObject);
 }

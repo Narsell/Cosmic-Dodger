@@ -23,6 +23,11 @@ private:
 
 	void OnCollision(HitInformation& hitInformation);
 
+private:
+
+	float m_distanceTraveled = 0.f;
+	Vector2 m_startPosition;
+
 	CollisionComponent* m_collisionComponent;
 	MovementComponent* m_movementComponent;
 

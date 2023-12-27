@@ -39,5 +39,4 @@ private:
 	MovementComponent* m_movementComponent;
 	PlayerInputComponent* m_inputComponent;
 
-	std::list<Projectile*> m_projectiles;
 };

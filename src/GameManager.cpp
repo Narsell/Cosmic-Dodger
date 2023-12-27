@@ -13,6 +13,7 @@
 #include "Utils.hpp"
 
 std::list<GameObject*> GameManager::m_gameObjects;
+std::list<GameObject*> GameManager::m_destroyQueue;
 std::vector<PlayerInputComponent*> GameManager::suscribedPlayerInputComponents;
 
 GameManager::GameManager()
@@ -95,12 +96,21 @@ void GameManager::HandleInput()
 
 void GameManager::Update(const float deltaTime)
 {
+    for (GameObject* destroyedGameObj : m_destroyQueue) {
+        assert(destroyedGameObj);
+        m_gameObjects.remove(destroyedGameObj);
+        delete destroyedGameObj;
+    }
+    m_destroyQueue.clear();
 
     for (GameObject* gameObject : m_gameObjects) {
+        assert(gameObject);
         if (gameObject->GetCanUpdate()) {
             gameObject->Update(deltaTime);
         }
     }
+   
+    std::cout << "Using " << AllocationMetrics::GetInstance()->CurrentUsage() << " bytes\n";
 }
 
 void GameManager::Render()
@@ -125,6 +135,8 @@ GameManager::~GameManager()
     }
 
     delete m_renderer;
+    std::cout << AllocationMetrics::GetInstance()->CurrentUsage() << std::endl;
+
 }
 
 void GameManager::SuscribeToKeyboardEvents(PlayerInputComponent* PlayerInputComponent)

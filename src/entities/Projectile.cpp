@@ -18,16 +18,24 @@ Projectile::Projectile(const Transform& transform, TextureResource* texture, con
 	m_movementComponent = AddComponent<MovementComponent>(new MovementComponent(this, "Movement Component"));
 	m_movementComponent->SetSpeed(5.f);
 	m_movementComponent->SetRotationFollowsVelocity(true);
+
+	m_startPosition = m_transform.GetPosition();
+
 }
 
 Projectile::~Projectile()
 {
-	//std::cout << GetDisplayName() << " destroyed on Player destructor!\n";
 }
 
 void Projectile::Update(const float deltaTime)
 {
 	GameObject::Update(deltaTime);
+
+	Vector2 m_currentPosition = m_transform.GetPosition();
+
+	if ((m_currentPosition - m_startPosition).Lenght() > 500.f) {
+		GameManager::DestroyGameObject(this);
+	}
 }
 
 void Projectile::OnCollision(HitInformation& hitInformation)
