@@ -40,10 +40,14 @@ void GameManager::GameStart(const char* gameTitle, const float windowWidth, cons
 
     Construction();
     BeginPlay();
+    Uint64 frameEndTime = SDL_GetPerformanceCounter();
+    Uint64 frameStartTime = 0;
+
     while (m_isGameRunning) {
-        utils::HireTimeInSeconds();
+        frameStartTime = frameEndTime;
+        frameEndTime = SDL_GetPerformanceCounter();
         HandleInput();
-        Update(1.f);
+        Update((float)(frameEndTime - frameStartTime) / (float)SDL_GetPerformanceFrequency());
         Render();
     }
     SDL_Quit();
@@ -110,7 +114,7 @@ void GameManager::Update(const float deltaTime)
         }
     }
    
-    std::cout << "Using " << AllocationMetrics::GetInstance()->CurrentUsage() << " bytes\n";
+    std::cout << "fps: " << 1 / (deltaTime) << " seconds\n";
 }
 
 void GameManager::Render()
