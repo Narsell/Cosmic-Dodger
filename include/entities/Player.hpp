@@ -3,7 +3,7 @@
 
 #include "GameObject.hpp"
 #include "CollisionComponent.hpp"
-#include "Renderer.hpp"
+#include "Window.hpp"
 
 class MovementComponent;
 class PlayerInputComponent;
@@ -25,18 +25,20 @@ public:
 
 	void Update(const float deltaTime) override;
 	void SetWindowBounds(WindowBounds* windowBounds);
-	void ShootProjectile();
+	void ShootProjectile() const;
 
 private:
-	void OnCollision(HitInformation& hitInformation);
+	void OnCollision(HitInfo& hitInformation);
 
 private:
 
 	Vector2 inputVector;
 	Vector2 m_projectileSpawnPoint;
-	WindowBounds* m_windowBounds;
-	CollisionComponent* m_collisionComponent;
-	MovementComponent* m_movementComponent;
-	PlayerInputComponent* m_inputComponent;
+	WindowBounds* m_windowBounds = nullptr;
+	Collider2D* m_collider = nullptr;
+
+	CollisionComponent* m_collisionComponent = nullptr;
+	MovementComponent* m_movementComponent = nullptr;
+	PlayerInputComponent* m_inputComponent = nullptr;
 
 };

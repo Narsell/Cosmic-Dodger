@@ -18,6 +18,7 @@ public:
 
 	void SetVelocity(const Vector2& newVelocity) { m_velocity = newVelocity; };
 	void SetRotationFollowsVelocity(const bool newFollowVelocity);
+	void SetClampToScreen(const bool clampToScreen) { m_clampToScreen = clampToScreen; };
 	void SetSpeed(const float newSpeed);
 
 private:
@@ -26,5 +27,6 @@ private:
 	Vector2 m_velocity;
 	float m_speed = 0.f;
 	bool m_rotationFollowsVelocity = true;
+	bool m_clampToScreen = true;
 
 };

@@ -36,12 +36,36 @@ void Collider2D::Update(const float deltaTime)
 
 	m_colliderRectangle.x = m_parentComponent->GetPosition().x + m_position.x;
 	m_colliderRectangle.y = m_parentComponent->GetPosition().y + m_position.y;
+
+	for (Collider2D* collisionCandidate : m_collisionCandidates) {
+		if (IsColliding(collisionCandidate, m_lastHitInformation) && GetCanUpdate() && OnCollisionDelegate) {
+			OnCollisionDelegate(m_lastHitInformation);
+		}
+	}
 }
 
-bool Collider2D::IsColliding(Collider2D* other, HitInformation& OutHitInformation) const
+void Collider2D::ListenForCollisions(Collider2D* collisionCandidate)
+{
+	assert(collisionCandidate);
+	m_collisionCandidates.emplace_back(collisionCandidate);
+}
+
+void Collider2D::ListenForCollisions(std::vector<Collider2D*> newCollisionCandidates)
+{
+	m_collisionCandidates.reserve(m_collisionCandidates.size() + newCollisionCandidates.size());
+	m_collisionCandidates.insert(m_collisionCandidates.end(), newCollisionCandidates.begin(), newCollisionCandidates.end());
+}
+
+void Collider2D::SetCollisionDelegate(std::function<void(HitInfo&)> delegate)
+{
+	OnCollisionDelegate = delegate;
+}
+
+bool Collider2D::IsColliding(Collider2D* other, HitInfo& OutHitInformation) const
 {
 	assert(other);
 
+	//TODO: Implement own intersection detection as to determine the exact point the collision happened.
 	if (SDL_HasIntersectionF(&m_colliderRectangle, &other->m_colliderRectangle)) {
 
 		CollisionComponent* parentCollisionComp = other->m_parentComponent;
@@ -57,12 +81,12 @@ bool Collider2D::IsColliding(Collider2D* other, HitInformation& OutHitInformatio
 	return false;
 }
 
-bool Collider2D::IsColliding(const std::vector<Collider2D*> others, HitInformation& OutHitInformation) const
+void HitInfo::Print() const
 {
-	for (Collider2D* other : others) {
-		if (IsColliding(other, OutHitInformation)) {
-			return true;
-		}
-	}
-	return false;
+	std::cout << "HitInfo:\n"
+		"\tCollision: " << hasHit << "\n"
+		"\tLocation: (" << hitLocation.x << "," << hitLocation.y << ")\n"
+		"\tCollider: " << hitCollider->GetDisplayName() << "\n"
+		"\tObject: " << hitGameObject->GetDisplayName() << "\n"
+		<< "===========================================\n";
 }

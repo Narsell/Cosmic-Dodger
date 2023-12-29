@@ -26,16 +26,16 @@ void PlayerInputComponent::Update(const float deltaTime)
 
 	if (m_keyboardState[SDL_SCANCODE_D] || m_keyboardState[SDL_SCANCODE_A] || m_keyboardState[SDL_SCANCODE_S] || m_keyboardState[SDL_SCANCODE_W]) {
 		if (m_keyboardState[SDL_SCANCODE_D]){
-			m_inputVector.x = 1;
+			m_inputVector = Vector2::RIGHT;
 		}
 		if (m_keyboardState[SDL_SCANCODE_A]) {
-			m_inputVector.x = -1;
+			m_inputVector = Vector2::LEFT;
 		}
 		if (m_keyboardState[SDL_SCANCODE_W]) {
-			m_inputVector.y = -1;
+			m_inputVector = Vector2::UP;
 		}
 		if (m_keyboardState[SDL_SCANCODE_S]) {
-			m_inputVector.y = 1;
+			m_inputVector = Vector2::DOWN;
 		}
 
 	}

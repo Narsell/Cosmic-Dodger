@@ -25,6 +25,9 @@ public:
 	//Updates and "physics"
 	virtual void Update(const float deltaTime) override;
 
+	//Makes an object unable to update and render, as well as its child components.
+	void Disable();
+
 	const SDL_FRect& GetCurrentFrame() const { return m_currentFrame; };
 
 	template<typename ComponentType>
@@ -44,7 +47,6 @@ private:
 	TextureResource* m_texture = nullptr;
 	//Has ownership of all components. This class will take care of freeing memory on all components
 	std::vector<Component*> m_components;
-
 
 };
 

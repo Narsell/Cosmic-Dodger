@@ -19,11 +19,12 @@ CollisionComponent::~CollisionComponent()
 	}
 }
 
-void CollisionComponent::AddCollider(const Vector2& dimensions, const Vector2& relativePos, const bool visible, const char* name)
+Collider2D* CollisionComponent::AddCollider(const Vector2& dimensions, const Vector2& relativePos, const bool visible, const char* name)
 {
 	m_colliders.emplace_back(
 		new Collider2D(dimensions, this, relativePos, visible, name)
 	);
+	return m_colliders.back();
 }
 
 void CollisionComponent::Render(SDL_Renderer* renderer)
@@ -44,29 +45,18 @@ void CollisionComponent::Update(const float deltaTime)
 	m_position = m_parent->m_transform.GetPosition();
 
 	for (Collider2D* collider : m_colliders) {
-		collider->Update(deltaTime);
-		for (CollisionComponent* collisionCandidate : m_collisionCandidates) {
-			if (collider->IsColliding(collisionCandidate->GetAllColliders(), lastHitInformation)) {
-				if(OnCollisionDelegate)
-					OnCollisionDelegate(lastHitInformation);
-			}
+		if (collider->GetCanUpdate()) {
+			collider->Update(deltaTime);
 		}
 	}
 }
 
-void CollisionComponent::SetCollisionDelegate(std::function<void(HitInformation&)> delegate)
+void CollisionComponent::SetCanUpdate(const bool canUpdate)
 {
-	OnCollisionDelegate = delegate;
+	Component::SetCanUpdate(canUpdate);
+
+	for (Collider2D* collider : m_colliders) {
+		collider->SetCanUpdate(canUpdate);
+	}
 }
 
-void CollisionComponent::ListenForCollisions(GameObject* collisionCandidate)
-{
-	assert(collisionCandidate);
-	CollisionComponent* collisionComponent = collisionCandidate->GetComponentOfType<CollisionComponent>();
-	if (collisionComponent) {
-		m_collisionCandidates.emplace_back(collisionComponent);
-	}
-	else {
-		std::cout << "Unable to get collision component from object " << collisionCandidate->GetDisplayName() << "\n";
-	}
-}

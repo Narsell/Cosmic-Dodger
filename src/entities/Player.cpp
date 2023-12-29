@@ -6,29 +6,28 @@
 #include "MovementComponent.hpp"
 #include "PlayerInputComponent.hpp"
 #include "Projectile.hpp"
-#include "Renderer.hpp"
+#include "Window.hpp"
 #include "WindowBounds.hpp"
-#include "Renderer.hpp"
+#include "Window.hpp"
 
 
 Player::Player(const Transform& transform, TextureResource* texture, const char* name)
 	:
 	GameObject(transform, texture, name),
-	m_projectileSpawnPoint((texture->GetDimensions().x / 2) - 5, -20),
-	m_windowBounds(nullptr)
+	m_projectileSpawnPoint((texture->GetDimensions().x / 2) - 5, -20)
 {
 	m_transform.SetRotation(90.0);
 
 	m_movementComponent = AddComponent<MovementComponent>(new MovementComponent(this, "Movement Component"));
-	m_movementComponent->SetSpeed(5.f);
+	m_movementComponent->SetSpeed(500.f);
 	m_movementComponent->SetRotationFollowsVelocity(false);
 
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));
-	m_collisionComponent->AddCollider(texture->GetDimensions(), Vector2::ZERO, true, "Ship Collision");
 	m_collisionComponent->SetCanRender(false);
-
-	std::function<void(HitInformation&)> OnCollisionDelegate = std::bind(&Player::OnCollision, this, std::placeholders::_1);
-	m_collisionComponent->SetCollisionDelegate(OnCollisionDelegate);
+	m_collider = m_collisionComponent->AddCollider(texture->GetDimensions(), Vector2::ZERO, true, "Ship Collision");
+	
+	std::function<void(HitInfo&)> OnCollisionDelegate = std::bind(&Player::OnCollision, this, std::placeholders::_1);
+	m_collider->SetCollisionDelegate(OnCollisionDelegate);
 
 	m_inputComponent = AddComponent<PlayerInputComponent>(new PlayerInputComponent(this, "Input Component"));
 
@@ -48,19 +47,17 @@ void Player::Update(const float deltaTime)
 void Player::SetWindowBounds(WindowBounds* windowBounds)
 {
 	m_windowBounds = windowBounds;
-	m_collisionComponent->ListenForCollisions(m_windowBounds);
+	m_collider->ListenForCollisions(m_windowBounds->GetCollisionComponent()->GetAllColliders());
 }
 
-void Player::OnCollision(HitInformation& hitInformation)
+void Player::OnCollision(HitInfo& hitInformation)
 {
-	if (hitInformation.hitGameObject->GetDisplayName() == "Window Bounds") {
-		m_transform.SetPosition(hitInformation.hitLocation);
-	}
+
 }
 
-void Player::ShootProjectile()
+void Player::ShootProjectile() const
 {
-	assert(Renderer::projectileTexture);
+	assert(Window::projectileTexture);
 
 	int mouseX = 0;
 	int mouseY = 0;
@@ -73,9 +70,9 @@ void Player::ShootProjectile()
 
 	Transform spawnTransform = Transform(spawnPosition, angle);
 
-	Projectile* projectile = new Projectile(spawnTransform, Renderer::projectileTexture, "Projectile");
+	Projectile* projectile = new Projectile(spawnTransform, Window::projectileTexture, "Projectile");
 	projectile->GetMovementComponent()->SetVelocity(velocity);
-	projectile->GetCollisionComponent()->ListenForCollisions(m_windowBounds);
+	projectile->GetBodyCollider()->ListenForCollisions(m_windowBounds->GetCollisionComponent()->GetAllColliders());
 
 	GameManager::SpawnGameObject(projectile);
 }

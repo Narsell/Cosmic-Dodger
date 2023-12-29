@@ -31,16 +31,18 @@ private:
     SDL_Texture* m_texture;
 };
 
-class Renderer {
+class Window {
 
 public:
-    //TODO: Make it a singleton
-    Renderer(const char* title, const Vector2& windowDimensions);
-    Renderer(const Vector2& other) = delete;
+    //TODO: Make it a singleton... or not????
+    Window(const char* title);
+    Window(const Vector2& other) = delete;
     const Vector2& operator=(const Vector2& other) = delete;
-    ~Renderer();
+    ~Window();
 
-    const Vector2& GetWindowDimensions() const { return m_windowDimensions; };
+    static int s_width;
+    static int s_height;
+
     TextureResource* LoadTexture(const char* name, const Vector2& dim, const char* filePath);
 
     struct SDL_Renderer* GetRenderer() const { return m_renderer; };
@@ -55,5 +57,4 @@ private:
 
     struct SDL_Window* m_window;
     struct SDL_Renderer* m_renderer;
-    const Vector2 m_windowDimensions;
 };

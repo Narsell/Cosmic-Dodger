@@ -3,24 +3,29 @@
 #include <iostream>
 #include <assert.h>
 
-#include "Renderer.hpp"
+#include "Window.hpp"
 #include "GameObject.hpp"
 #include "Math.hpp"
 
-TextureResource* Renderer::playerTexture;
-TextureResource* Renderer::projectileTexture;
+/* WINDOW DIMENSIONS */
+int Window::s_width = 1280;
+int Window::s_height = 720;
 
-Renderer::Renderer(const char* title, const Vector2& windowDimensions)
-    :m_window(nullptr), m_renderer(nullptr), m_windowDimensions(windowDimensions)
+/* TEXTURE RESOURCES INSTANCES */
+TextureResource* Window::playerTexture;
+TextureResource* Window::projectileTexture;
+
+Window::Window(const char* title)
+    :m_window(nullptr), m_renderer(nullptr)
 {
-    m_window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, (int)windowDimensions.x, (int)windowDimensions.y, SDL_WINDOW_SHOWN);
+    m_window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, s_width, s_height, SDL_WINDOW_SHOWN);
     if (!m_window){
         std::cout << "Window failed to init. ERROR: " << SDL_GetError() << std::endl;
     }
     m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 }
 
-Renderer::~Renderer()
+Window::~Window()
 {
     SDL_DestroyWindow(m_window);
     SDL_DestroyRenderer(m_renderer);
@@ -28,7 +33,7 @@ Renderer::~Renderer()
     delete projectileTexture;
 }
 
-TextureResource* Renderer::LoadTexture(const char* name, const Vector2& dim, const char* filePath){
+TextureResource* Window::LoadTexture(const char* name, const Vector2& dim, const char* filePath){
     SDL_Texture* texture = nullptr;
 	texture = IMG_LoadTexture(m_renderer, filePath);
 
@@ -38,11 +43,11 @@ TextureResource* Renderer::LoadTexture(const char* name, const Vector2& dim, con
     return new TextureResource(name, dim, texture);
 }
 
-void Renderer::Clear(){
+void Window::Clear(){
     SDL_SetRenderDrawColor(m_renderer, 0xF, 0xF, 0xF, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(m_renderer);
 }
 
-void Renderer::Display(){
+void Window::Display(){
     SDL_RenderPresent(m_renderer);
 }

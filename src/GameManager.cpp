@@ -2,7 +2,7 @@
 #include <SDL_image.h>
 
 #include "GameManager.hpp"
-#include "Renderer.hpp"
+#include "Window.hpp"
 #include "WindowBounds.hpp"
 #include "CollisionComponent.hpp"
 #include "MovementComponent.hpp"
@@ -17,7 +17,7 @@ std::list<GameObject*> GameManager::m_destroyQueue;
 std::vector<PlayerInputComponent*> GameManager::suscribedPlayerInputComponents;
 
 GameManager::GameManager()
-    :m_renderer(nullptr),
+    :m_window(nullptr),
     m_isGameRunning(true)
 {
     if (SDL_Init(SDL_INIT_VIDEO) > 0) {
@@ -34,9 +34,9 @@ GameManager* GameManager::GetInstance()
     return &app;
 }
 
-void GameManager::GameStart(const char* gameTitle, const float windowWidth, const float windowHeight)
+void GameManager::GameStart(const char* gameTitle)
 {
-    m_renderer = new Renderer(gameTitle, Vector2(windowWidth, windowHeight));
+    m_window = new Window(gameTitle);
 
     Construction();
     BeginPlay();
@@ -55,23 +55,18 @@ void GameManager::GameStart(const char* gameTitle, const float windowWidth, cons
 
 void GameManager::Construction()
 {
-
-    Vector2 windowDimensions = m_renderer->GetWindowDimensions();
-
-    windowBounds = SpawnGameObject(
-        new WindowBounds(windowDimensions, "Window Bounds")
-    );
+    windowBounds = SpawnGameObject(new WindowBounds("Window Bounds"));
 
     Vector2 playerDimensions = Vector2(112, 75);
-    Vector2 playerPosition(windowDimensions.x / 2 - playerDimensions.x / 2,
-                           windowDimensions.y - playerDimensions.y - 5);
+    Vector2 playerPosition(Window::s_width / 2 - playerDimensions.x / 2,
+                           Window::s_height - playerDimensions.y - 5);
     Transform playerTransform = Transform(playerPosition);
 
-    Renderer::playerTexture = m_renderer->LoadTexture("Player", playerDimensions, "assets/player_ship.png");
-    Renderer::projectileTexture = m_renderer->LoadTexture("Projectile", Vector2(9, 37), "assets/laser.png");
+    Window::playerTexture = m_window->LoadTexture("Player", playerDimensions, "assets/player_ship.png");
+    Window::projectileTexture = m_window->LoadTexture("Projectile", Vector2(9, 37), "assets/laser.png");
 
     player = SpawnGameObject(
-        new Player(playerTransform, Renderer::playerTexture, "Player")
+        new Player(playerTransform, Window::playerTexture, "Player")
     );
 }
 
@@ -102,8 +97,8 @@ void GameManager::Update(const float deltaTime)
 {
     for (GameObject* destroyedGameObj : m_destroyQueue) {
         assert(destroyedGameObj);
-        m_gameObjects.remove(destroyedGameObj);
         delete destroyedGameObj;
+        m_gameObjects.remove(destroyedGameObj);
     }
     m_destroyQueue.clear();
 
@@ -114,20 +109,21 @@ void GameManager::Update(const float deltaTime)
         }
     }
    
-    std::cout << "fps: " << 1 / (deltaTime) << " seconds\n";
+    //std::cout << "fps: " << 1 / (deltaTime) << "\n";
+    //std::cout << AllocationMetrics::GetInstance()->CurrentUsage() << std::endl;
 }
 
 void GameManager::Render()
 {
-    m_renderer->Clear();
+    m_window->Clear();
 
     for (GameObject* gameObject : m_gameObjects) {
         if (gameObject->GetCanRender()) {
-            gameObject->Render(m_renderer->GetRenderer());
+            gameObject->Render(m_window->GetRenderer());
         }
     }
 
-    m_renderer->Display();
+    m_window->Display();
 }
 
 
@@ -138,7 +134,7 @@ GameManager::~GameManager()
         delete gameObject;
     }
 
-    delete m_renderer;
+    delete m_window;
     std::cout << AllocationMetrics::GetInstance()->CurrentUsage() << std::endl;
 
 }

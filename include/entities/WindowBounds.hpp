@@ -1,15 +1,21 @@
 #pragma once
 #include "GameObject.hpp"
 
+class CollisionComponent;
+class Collider2D;
+
 class WindowBounds : public GameObject {
 
 public:
-	WindowBounds(const Vector2& windowDimensions, const char* name = "NA_WindowBounds");
+	WindowBounds(const char* name = "NA_WindowBounds");
 	WindowBounds(const WindowBounds& copy) = delete;
 	const WindowBounds& operator=(const WindowBounds& other) = delete;
 	~WindowBounds() {};
 
+	const CollisionComponent* GetCollisionComponent() const { return m_collisionComponent; };
+
 private:
-	class CollisionComponent* m_collisionComponent;
+
+	CollisionComponent* m_collisionComponent = nullptr;
 
 };

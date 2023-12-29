@@ -1,4 +1,6 @@
 #pragma once
+#include <sstream>
+#include <iostream>
 
 class BaseEntity {
 
@@ -16,10 +18,13 @@ public:
 	bool GetCanRender() const { return m_canRender; };
 	bool GetCanUpdate() const { return m_canUpdate; };
 
-	void SetCanRender(const bool canRender) { m_canRender = canRender; };
-	void SetCanUpdate(const bool canUpdate) { m_canUpdate = canUpdate; };
+	virtual void SetCanRender(const bool canRender) { m_canRender = canRender; };
+	virtual void SetCanUpdate(const bool canUpdate) { m_canUpdate = canUpdate; };
 
-	const char* GetDisplayName() const { return m_displayName; };
+	const std::string& GetDisplayName() const { return m_displayName; };
+	const std::string& GetIdName() const { return m_id; };
+
+	void SetIdName(const std::string& idName) { m_id = idName; };
 
 protected:
 
@@ -33,7 +38,7 @@ protected:
 
 private:
 
-	const char* m_id = "";
-	const char* m_displayName = "NA_BaseEntity";
+	std::string m_id = "";
+	std::string m_displayName = "NA_BaseEntity";
 
 };

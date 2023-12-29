@@ -6,7 +6,8 @@ MovementComponent::MovementComponent(GameObject* parent, const char* name)
 	:Component(parent, name),
 	m_velocity(Vector2::ZERO),
 	m_speed(0.f),
-	m_rotationFollowsVelocity(false)
+	m_rotationFollowsVelocity(false),
+	m_clampToScreen(true)
 {
 }
 
@@ -20,7 +21,32 @@ void MovementComponent::Update(const float deltaTime)
 		const double angle = Math::GetAngleFromDirection(m_velocity);
 		m_parent->m_transform.SetRotation(angle);
 	}
-	AddPositionDelta(m_velocity * m_speed);
+	AddPositionDelta(m_velocity * m_speed * deltaTime);
+
+	/*
+	TODO: Figure out a better way to clamp an object to the screen, refactor this into a method or something, maybe belongs on collisionComponent?
+		  Also, need to detect object bounds based on a collision and not the object texture.
+		  Possible could store a reference to the movement component and use the collision bounds (if there is any)
+		  Problem for future self...
+	*/
+	if (m_clampToScreen) {
+		if (m_parent->m_transform.GetPosition().x <= 0) {
+			m_parent->m_transform.SetPosition(Vector2(0.f, m_parent->m_transform.GetPosition().y));
+		}
+		else if (m_parent->m_transform.GetPosition().x + m_parent->GetCurrentFrame().w >= 1280.f) {
+			m_parent->m_transform.SetPosition(Vector2(1280.f - m_parent->GetCurrentFrame().w, m_parent->m_transform.GetPosition().y));
+		} 
+		/*
+		Commented out until TODO above is addressed as this is causing a bug with the projectile's collision.
+		
+		else if (m_parent->m_transform.GetPosition().y <= 0) {
+			m_parent->m_transform.SetPosition(Vector2(m_parent->m_transform.GetPosition().x, 0.f));
+		}
+		else if (m_parent->m_transform.GetPosition().y + m_parent->GetCurrentFrame().h >= 720.f) {
+			m_parent->m_transform.SetPosition(Vector2(m_parent->m_transform.GetPosition().x, 720.f - m_parent->GetCurrentFrame().h));
+		}
+		*/
+	}
 
 }
 

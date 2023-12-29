@@ -2,10 +2,12 @@
 #include <SDL.h>
 #include <list>
 #include <vector>
+#include <sstream>
+
 #include "GameObject.hpp"
 
 class PlayerInputComponent;
-class Renderer;
+class Window;
 class GameObject;
 class Player;
 class WindowBounds;
@@ -16,7 +18,7 @@ public:
 	//Gets the GameManager instance
 	static GameManager* GetInstance();
 	//Calls the appropiate functions to setup the game loop.
-	void GameStart(const char* gameTitle, const float windowWidth, const float windowHeight);
+	void GameStart(const char* gameTitle);
 
 	template<typename T>
 	static T* SpawnGameObject(T* gameObject);
@@ -47,7 +49,7 @@ private:
 
 private:
 	bool m_isGameRunning = true;
-	Renderer* m_renderer = nullptr;
+	Window* m_window = nullptr;
 	static std::vector<PlayerInputComponent*> suscribedPlayerInputComponents;
 	static std::list<GameObject*> m_destroyQueue;
 
@@ -64,6 +66,9 @@ template<typename T>
 T* GameManager::SpawnGameObject(T* gameObject)
 {
 	assert(gameObject);
+	std::string idName = gameObject->GetDisplayName() + "_" + std::to_string(m_gameObjects.size());
+	gameObject->SetIdName(idName);
+	//std::cout << "Spawned " << gameObject->GetIdName() << "\n";
 	m_gameObjects.emplace_back(gameObject);
 	return gameObject;
 }
@@ -72,5 +77,7 @@ template<typename T>
 void GameManager::DestroyGameObject(T* gameObject)
 {
 	assert(gameObject);
+	gameObject->Disable();
+	//std::cout << "Destroyed " << gameObject->GetIdName() << "\n";
 	m_destroyQueue.push_back(gameObject);
 }
