@@ -42,6 +42,7 @@ Player::~Player()
 void Player::Update(const float deltaTime)
 {
 	GameObject::Update(deltaTime);
+	timeSinceLastShot += deltaTime;
 }
 
 void Player::SetWindowBounds(WindowBounds* windowBounds)
@@ -55,8 +56,12 @@ void Player::OnCollision(HitInfo& hitInformation)
 
 }
 
-void Player::ShootProjectile() const
+void Player::ShootProjectile()
 {
+	if (timeSinceLastShot < 0.3f) {
+		return;
+	}
+
 	assert(Window::projectileTexture);
 
 	int mouseX = 0;
@@ -75,4 +80,6 @@ void Player::ShootProjectile() const
 	projectile->GetBodyCollider()->ListenForCollisions(m_windowBounds->GetCollisionComponent()->GetAllColliders());
 
 	GameManager::SpawnGameObject(projectile);
+
+	timeSinceLastShot = 0.f;
 }

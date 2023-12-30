@@ -13,7 +13,7 @@
 #include "Utils.hpp"
 
 std::list<GameObject*> GameManager::m_gameObjects;
-std::list<GameObject*> GameManager::m_destroyQueue;
+std::vector<GameObject*> GameManager::m_destroyQueue;
 std::vector<PlayerInputComponent*> GameManager::suscribedPlayerInputComponents;
 
 GameManager::GameManager()
@@ -108,7 +108,7 @@ void GameManager::Update(const float deltaTime)
             gameObject->Update(deltaTime);
         }
     }
-   
+
     //std::cout << "fps: " << 1 / (deltaTime) << "\n";
     //std::cout << AllocationMetrics::GetInstance()->CurrentUsage() << std::endl;
 }

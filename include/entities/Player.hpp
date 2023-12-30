@@ -25,13 +25,14 @@ public:
 
 	void Update(const float deltaTime) override;
 	void SetWindowBounds(WindowBounds* windowBounds);
-	void ShootProjectile() const;
+	void ShootProjectile();
 
 private:
 	void OnCollision(HitInfo& hitInformation);
 
 private:
 
+	float timeSinceLastShot = 0.f;
 	Vector2 inputVector;
 	Vector2 m_projectileSpawnPoint;
 	WindowBounds* m_windowBounds = nullptr;

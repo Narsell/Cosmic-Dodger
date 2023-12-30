@@ -53,7 +53,7 @@ void CollisionComponent::Update(const float deltaTime)
 
 void CollisionComponent::SetCanUpdate(const bool canUpdate)
 {
-	Component::SetCanUpdate(canUpdate);
+	BaseEntity::SetCanUpdate(canUpdate);
 
 	for (Collider2D* collider : m_colliders) {
 		collider->SetCanUpdate(canUpdate);

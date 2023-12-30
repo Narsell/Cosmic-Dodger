@@ -38,8 +38,12 @@ void Collider2D::Update(const float deltaTime)
 	m_colliderRectangle.y = m_parentComponent->GetPosition().y + m_position.y;
 
 	for (Collider2D* collisionCandidate : m_collisionCandidates) {
-		if (IsColliding(collisionCandidate, m_lastHitInformation) && GetCanUpdate() && OnCollisionDelegate) {
+		const bool isColliding = IsColliding(collisionCandidate, m_lastHitInformation);
+		if (isColliding && GetCanUpdate() && OnCollisionDelegate) {
 			OnCollisionDelegate(m_lastHitInformation);
+		}
+		else if(isColliding && (!GetCanUpdate() || !OnCollisionDelegate)) {
+			std::cout << "[WARNING] Unable to call collision delegate\n";
 		}
 	}
 }
@@ -65,7 +69,6 @@ bool Collider2D::IsColliding(Collider2D* other, HitInfo& OutHitInformation) cons
 {
 	assert(other);
 
-	//TODO: Implement own intersection detection as to determine the exact point the collision happened.
 	if (SDL_HasIntersectionF(&m_colliderRectangle, &other->m_colliderRectangle)) {
 
 		CollisionComponent* parentCollisionComp = other->m_parentComponent;

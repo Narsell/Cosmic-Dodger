@@ -29,6 +29,9 @@ void MovementComponent::Update(const float deltaTime)
 		  Possible could store a reference to the movement component and use the collision bounds (if there is any)
 		  Problem for future self...
 	*/
+
+	//Commented out until TODO above is addressed as this is causing a bug with the projectile's collision.
+	/*
 	if (m_clampToScreen) {
 		if (m_parent->m_transform.GetPosition().x <= 0) {
 			m_parent->m_transform.SetPosition(Vector2(0.f, m_parent->m_transform.GetPosition().y));
@@ -36,8 +39,6 @@ void MovementComponent::Update(const float deltaTime)
 		else if (m_parent->m_transform.GetPosition().x + m_parent->GetCurrentFrame().w >= 1280.f) {
 			m_parent->m_transform.SetPosition(Vector2(1280.f - m_parent->GetCurrentFrame().w, m_parent->m_transform.GetPosition().y));
 		} 
-		/*
-		Commented out until TODO above is addressed as this is causing a bug with the projectile's collision.
 		
 		else if (m_parent->m_transform.GetPosition().y <= 0) {
 			m_parent->m_transform.SetPosition(Vector2(m_parent->m_transform.GetPosition().x, 0.f));
@@ -45,8 +46,8 @@ void MovementComponent::Update(const float deltaTime)
 		else if (m_parent->m_transform.GetPosition().y + m_parent->GetCurrentFrame().h >= 720.f) {
 			m_parent->m_transform.SetPosition(Vector2(m_parent->m_transform.GetPosition().x, 720.f - m_parent->GetCurrentFrame().h));
 		}
-		*/
 	}
+	*/
 
 }
 

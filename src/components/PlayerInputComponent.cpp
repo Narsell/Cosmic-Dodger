@@ -6,6 +6,7 @@
 #include "MovementComponent.hpp"
 #include "GameManager.hpp"
 #include "Player.hpp"
+#include "Utils.hpp"
 
 PlayerInputComponent::PlayerInputComponent(GameObject* parent, const char* name)
     :Component(parent, name),
@@ -22,6 +23,11 @@ void PlayerInputComponent::Update(const float deltaTime)
 
 	if (m_keyboardState[SDL_SCANCODE_SPACE]) {
 		m_player->ShootProjectile();
+	}
+
+	if (m_keyboardState[SDL_SCANCODE_M])
+	{
+		std::cout << AllocationMetrics::GetInstance()->CurrentUsage() << std::endl;
 	}
 
 	if (m_keyboardState[SDL_SCANCODE_D] || m_keyboardState[SDL_SCANCODE_A] || m_keyboardState[SDL_SCANCODE_S] || m_keyboardState[SDL_SCANCODE_W]) {

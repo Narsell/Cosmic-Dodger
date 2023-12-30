@@ -51,7 +51,7 @@ private:
 	bool m_isGameRunning = true;
 	Window* m_window = nullptr;
 	static std::vector<PlayerInputComponent*> suscribedPlayerInputComponents;
-	static std::list<GameObject*> m_destroyQueue;
+	static std::vector<GameObject*> m_destroyQueue;
 
 	// Game entities
 	static std::list<GameObject*> m_gameObjects;
@@ -77,7 +77,7 @@ template<typename T>
 void GameManager::DestroyGameObject(T* gameObject)
 {
 	assert(gameObject);
-	gameObject->Disable();
 	//std::cout << "Destroyed " << gameObject->GetIdName() << "\n";
 	m_destroyQueue.push_back(gameObject);
+	gameObject->Disable();
 }

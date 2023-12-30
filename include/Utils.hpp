@@ -13,7 +13,7 @@ struct AllocationMetrics
 	size_t s_totalAllocated = 0;
 	size_t s_totalFreed = 0;
 
-	size_t CurrentUsage() { return s_totalAllocated - s_totalFreed; };
+	size_t CurrentUsage() const { return s_totalAllocated - s_totalFreed; };
 
 	void operator=(const AllocationMetrics& other) = delete;
 	AllocationMetrics(const AllocationMetrics& other) = delete;
