@@ -10,7 +10,8 @@
 Collider2D::Collider2D(const Vector2& dimensions, CollisionComponent* parentComp, const Vector2& relativePos, const bool visible, const char* name)
 	:
 	BaseEntity("", name, visible, true),
-	m_position(relativePos),
+	m_absTransform(Transform()),
+	m_relTransform(relativePos, 0.f, 1.f),
 	m_colliderRectangle({ 0, 0, dimensions.x, dimensions.y }),
 	m_parentComponent(parentComp)
 {
@@ -34,8 +35,10 @@ void Collider2D::Update(const float deltaTime)
 {
 	BaseEntity::Update(deltaTime);
 
-	m_colliderRectangle.x = m_parentComponent->GetPosition().x + m_position.x;
-	m_colliderRectangle.y = m_parentComponent->GetPosition().y + m_position.y;
+	m_absTransform = m_parentComponent->m_transform;
+
+	m_colliderRectangle.x = m_absTransform.GetPosition().x + m_relTransform.GetPosition().x;
+	m_colliderRectangle.y = m_absTransform.GetPosition().y + m_relTransform.GetPosition().y;
 
 	for (Collider2D* collisionCandidate : m_collisionCandidates) {
 		const bool isColliding = IsColliding(collisionCandidate, m_lastHitInformation);
@@ -75,7 +78,7 @@ bool Collider2D::IsColliding(Collider2D* other, HitInfo& OutHitInformation) cons
 		assert(parentCollisionComp);
 
 		OutHitInformation.hasHit = true;
-		OutHitInformation.hitLocation = m_parentComponent->GetPosition();
+		OutHitInformation.hitLocation = m_parentComponent->m_transform.GetPosition();
 		OutHitInformation.hitCollider = other;
 		OutHitInformation.hitGameObject = parentCollisionComp->GetParent();
 

@@ -33,8 +33,7 @@ private:
 private:
 
 	float timeSinceLastShot = 0.f;
-	Vector2 inputVector;
-	Vector2 m_projectileSpawnPoint;
+	Vector2 m_centerPoint;
 	WindowBounds* m_windowBounds = nullptr;
 	Collider2D* m_collider = nullptr;
 

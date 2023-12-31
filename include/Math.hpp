@@ -21,13 +21,15 @@ public:
 
 	Vector2(float p_x, float p_y);
 
-	const double Lenght() const;
+	const float Lenght() const;
 
 	const float Dot(const Vector2& other) const;
 
-	const double AngleTo(const Vector2& other) const;
+	const float AngleTo(const Vector2& other) const;
 
 	const Vector2 Normalized() const;
+
+	void RotateBy(const float angle, const Vector2& point);
 
 	const Vector2 operator+(const Vector2& other) const;
 	const Vector2 operator-(const Vector2& other) const;
@@ -47,15 +49,15 @@ class Math {
 
 public:
 	//Determines if two floats are nearly equal (by some epsilon)
-	static const bool IsNearlyEqual(const double x, const double b);
+	static const bool IsNearlyEqual(const float x, const float b);
 	//Radians to Degrees conversion.
-	static const double RadiansToDegrees(const double radians);
+	static const float RadiansToDegrees(const float radians);
 	//Degrees to Radians conversion.
-	static const double DegreesToRadians(const double radians);
+	static const float DegreesToRadians(const float radians);
 	//Gets a Vector2 direction from a given angle (degrees).
 	static const Vector2 GetDirectionFromAngle(const float angle);
 	//Gets an angle (degrees) in degs from a given Vector2 direction.
-	static const double GetAngleFromDirection(const Vector2& direction);
+	static const float GetAngleFromDirection(const Vector2& direction);
 };
 
 

@@ -32,6 +32,7 @@ public:
 	Collider2D(const Vector2& dimensions, CollisionComponent* parentComp, const Vector2& relativePos = Vector2::ZERO, const bool visible = false, const char* name = "NA_Collider");
 	~Collider2D();
 
+
 	void Render(SDL_Renderer* renderer) override;
 	void Update(const float deltaTime) override;
 
@@ -43,7 +44,8 @@ public:
 	const SDL_FRect& GetRect() const { return m_colliderRectangle; };
 
 private:
-	Vector2 m_position{ 0,0 };
+	Transform m_absTransform;
+	Transform m_relTransform;
 	SDL_FRect m_colliderRectangle;
 	CollisionComponent* m_parentComponent = nullptr;
 	std::function<void(HitInfo&)> OnCollisionDelegate;

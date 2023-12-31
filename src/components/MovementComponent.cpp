@@ -17,8 +17,8 @@ MovementComponent::~MovementComponent()
 
 void MovementComponent::Update(const float deltaTime)
 {
-	if (m_rotationFollowsVelocity and !Math::IsNearlyEqual(m_velocity.Lenght(), 0.0)) {
-		const double angle = Math::GetAngleFromDirection(m_velocity);
+	if (m_rotationFollowsVelocity and !Math::IsNearlyEqual(m_velocity.Lenght(), 0.f)) {
+		const float angle = Math::GetAngleFromDirection(m_velocity);
 		m_parent->m_transform.SetRotation(angle);
 	}
 	AddPositionDelta(m_velocity * m_speed * deltaTime);

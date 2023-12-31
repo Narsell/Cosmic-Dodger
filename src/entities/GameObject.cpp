@@ -34,6 +34,7 @@ GameObject::~GameObject()
 
 void GameObject::Render(SDL_Renderer* renderer)
 {
+    //TODO: Consider texture offset to draw objects centered
     BaseEntity::Render(renderer);
 
     SDL_Rect src {
@@ -55,11 +56,11 @@ void GameObject::Render(SDL_Renderer* renderer)
     if (m_texture->GetTexture()) {
         SDL_RenderCopyExF(renderer, m_texture->GetTexture(), &src, &dst, 90 - m_transform.GetRotation(), &center, SDL_FLIP_NONE);
         
-        // Draw rotation center point
-        //float absoluteCenter_x = m_transform.GetPosition().x + center.x;
-        //float absoluteCenter_y = m_transform.GetPosition().y + center.y;
-        //SDL_RenderDrawLineF(renderer, absoluteCenter_x - 5, absoluteCenter_y, absoluteCenter_x + 5, absoluteCenter_y);
-        //SDL_RenderDrawLineF(renderer, absoluteCenter_x, absoluteCenter_y - 5, absoluteCenter_x, absoluteCenter_y + 5);
+        //Draw rotation center point
+        float absoluteCenter_x = m_transform.GetPosition().x + center.x;
+        float absoluteCenter_y = m_transform.GetPosition().y + center.y;
+        SDL_RenderDrawLineF(renderer, absoluteCenter_x - 5, absoluteCenter_y, absoluteCenter_x + 5, absoluteCenter_y);
+        SDL_RenderDrawLineF(renderer, absoluteCenter_x, absoluteCenter_y - 5, absoluteCenter_x, absoluteCenter_y + 5);
     
     }
 

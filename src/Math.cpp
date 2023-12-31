@@ -26,24 +26,43 @@ Vector2::Vector2(float p_x, float p_y)
 	:x(p_x), y(p_y)
 {}
 
-const double Vector2::Lenght() const
+const float Vector2::Lenght() const
 {
-	return std::sqrt(std::pow(x, 2) + std::pow(y, 2));
+	const float sqr = static_cast<float>(std::sqrt(std::pow(x, 2) + std::pow(y, 2)));
+	return sqr;
 }
 
 const float Vector2::Dot(const Vector2& other) const {
 	return this->x * other.x + this->y * other.y;
 }
 
-const double Vector2::AngleTo(const Vector2& other) const {
+const float Vector2::AngleTo(const Vector2& other) const {
 	Vector2 corrected = Vector2(this->x, -this->y);
 	return Math::RadiansToDegrees(std::acos(corrected.Dot(other) / (corrected.Lenght() * other.Lenght())));
 }
 
 const Vector2 Vector2::Normalized() const
 {
-	const double lenght = Lenght() > 0.0 ? Lenght() : 1.0;
-	return Vector2(*this / static_cast<float>(lenght));
+	const float lenght = Lenght() > 0.f ? Lenght() : 1.f;
+	return Vector2(*this / lenght);
+}
+
+void Vector2::RotateBy(const float angle, const Vector2& pivot)
+{
+	float s = sin(angle);
+	float c = cos(angle);
+
+	// translate point back to origin:
+	Vector2 tempPoint = *this;
+	tempPoint -= pivot;
+
+	// rotate point
+	Vector2 direction = Math::GetDirectionFromAngle(angle);
+	Vector2 newV(tempPoint.x * direction.x - tempPoint.y * direction.y, tempPoint.x * direction.y + direction.x * tempPoint.y);
+
+	// translate point back:
+	Vector2 rotatedVector = newV + pivot;
+	*this = rotatedVector;
 }
 
 const Vector2 Vector2::operator+(const Vector2& other) const
@@ -89,15 +108,17 @@ void Vector2::Print() const {
 const Vector2 Math::GetDirectionFromAngle(const float angle)
 {
 	float safeAngle = angle;
-	if (angle < 0) {
-		safeAngle = 360 + angle;
+	if (angle < 0.f) {
+		safeAngle = 360.f + angle;
 	}
-	const double x = std::cos(DegreesToRadians(safeAngle));
-	const double y = std::sin(DegreesToRadians(safeAngle));
-	return Vector2(static_cast<float>(x), static_cast<float>(y));
+	
+	const float y = -std::sin(DegreesToRadians(safeAngle));
+	const float x = std::cos(DegreesToRadians(safeAngle));
+
+	return Vector2(x, y);
 }
 
-const double Math::GetAngleFromDirection(const Vector2& direction)
+const float Math::GetAngleFromDirection(const Vector2& direction)
 {
 	float angle = 0.0f;
 	const Vector2 normalDirection = direction.Normalized();
@@ -114,18 +135,17 @@ const double Math::GetAngleFromDirection(const Vector2& direction)
 	return RadiansToDegrees(angle);
 }
 
-const bool Math::IsNearlyEqual(const double x, const double y)
+const bool Math::IsNearlyEqual(const float x, const float y)
 {
-	const double epsilon = 1e-5;
+	const float epsilon = 1e-5f;
 	return std::abs(x - y) <= epsilon;
 }
 
-const double Math::RadiansToDegrees(const double radians) {
-	return radians * (180.0 / M_PI);
+const float Math::RadiansToDegrees(const float radians) {
+	return radians * (180.f / static_cast<float>(M_PI));
 }
 
-const double Math::DegreesToRadians(const double degrees) {
-	return degrees * (M_PI / 180.0);
+const float Math::DegreesToRadians(const float degrees) {
+	return degrees * (static_cast<float>(M_PI) / 180.f);
 }
-
 
