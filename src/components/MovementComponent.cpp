@@ -21,10 +21,6 @@ void MovementComponent::Update(const float deltaTime)
 	if (m_rotationFollowsVelocity && !Math::IsNearlyEqual(m_velocity.Lenght(), 0.f)) {
 		const float angle = Math::GetAngleFromDirection(m_velocity);
 		m_parent->m_transform.SetRotation(angle);
-		m_lookAtDirection = m_velocity;
-	}
-	if (m_parent->GetDisplayName() == "Player") {
-		m_velocity.Print();
 	}
 	AddPositionDelta(m_velocity * m_speed * deltaTime);
 

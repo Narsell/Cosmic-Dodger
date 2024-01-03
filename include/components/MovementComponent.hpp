@@ -31,7 +31,6 @@ public:
 private:
 
 	//Unit vector, direction of movement.
-	Vector2 m_lookAtDirection;
 	Vector2 m_velocity;
 	float m_speed = 0.f;
 	float m_max_speed = 500.f;

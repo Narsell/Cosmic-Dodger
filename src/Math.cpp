@@ -135,6 +135,12 @@ const float Math::GetAngleFromDirection(const Vector2& direction)
 	return RadiansToDegrees(angle);
 }
 
+const Vector2 Math::Lerp(const Vector2& a, const Vector2& target, const float factor)
+{
+	const Vector2 difference = target - a;
+	return difference * factor + a;
+}
+
 const bool Math::IsNearlyEqual(const float x, const float y)
 {
 	const float epsilon = 1e-5f;

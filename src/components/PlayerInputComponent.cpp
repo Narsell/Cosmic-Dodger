@@ -30,10 +30,5 @@ void PlayerInputComponent::Update(const float deltaTime)
 		std::cout << AllocationMetrics::GetInstance()->CurrentUsage() << std::endl;
 	}
 
-	if (m_keyboardState[SDL_SCANCODE_W]) {
-		m_player->GetMovementComponent()->SetSpeed(500);
-	}
-	else {
-		m_player->GetMovementComponent()->SetSpeed(0.f);
-	}
+	m_player->SetCanMove(m_keyboardState[SDL_SCANCODE_W]);
 }

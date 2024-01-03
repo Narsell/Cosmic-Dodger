@@ -20,7 +20,6 @@ Player::Player(const Transform& transform, TextureResource* texture, const char*
 
 	m_movementComponent = AddComponent<MovementComponent>(new MovementComponent(this, "Movement Component"));
 	m_movementComponent->SetMaxSpeed(500.f);
-	m_movementComponent->SetRotationFollowsVelocity(true);
 
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));
 	m_collisionComponent->SetCanRender(false);
@@ -52,19 +51,26 @@ void Player::Update(const float deltaTime)
 	const Vector2 mousePosition = Vector2(static_cast<float>(mouseX), static_cast<float>(mouseY));
 	const Vector2 absoluteCenter = m_transform.GetPosition() + m_centerPoint;
 	const Vector2 playerToMouse = mousePosition - absoluteCenter;
-	m_mouseCheck = playerToMouse.Lenght() >= 50.f;
-	if (m_mouseCheck) {
-		const float currentSpeed = m_movementComponent->GetSpeed();
-		const Vector2 currentVelocity = Math::GetDirectionFromAngle(m_transform.GetRotation()) * ((currentSpeed > 0.f) ? currentSpeed : 1.f);
-		currentVelocity.Print();
-		const Vector2 desiredVelocity = playerToMouse.Normalized() * ((currentSpeed > 0.f) ? currentSpeed : 1.f);
-		const Vector2 difference = desiredVelocity - currentVelocity;
-		const Vector2 newDirection = (difference * 0.1f + currentVelocity);
-		m_lookAtDirection = newDirection.Normalized();
-		
-		m_movementComponent->SetVelocity(newDirection.Normalized());
-		
+	m_isMouseFar = playerToMouse.Lenght() >= 50.f;
+	if (m_isMouseFar) {
+
+		const Vector2 currentDirection = Math::GetDirectionFromAngle(m_transform.GetRotation());
+		const Vector2 desiredDirection = playerToMouse.Normalized();
+		m_lookAtDirection = Math::Lerp(currentDirection, desiredDirection, 0.1f);
+
+		m_transform.SetRotation(Math::GetAngleFromDirection(m_lookAtDirection));		
 	}
+
+	if (m_canMove && playerToMouse.Lenght() >= 100.f) {
+		const float currentSpeed = m_movementComponent->GetSpeed();
+		m_movementComponent->SetVelocity(m_lookAtDirection);
+		m_movementComponent->SetSpeed(currentSpeed + 15);
+	}
+	else {
+		const float currentSpeed = m_movementComponent->GetSpeed();
+		m_movementComponent->SetSpeed(currentSpeed - 15);
+	}
+
 }
 
 void Player::SetWindowBounds(WindowBounds* windowBounds)
@@ -80,7 +86,7 @@ void Player::OnCollision(HitInfo& hitInformation)
 
 void Player::ShootProjectile()
 {
-	if (m_timeSinceLastShot < 0.15f || !m_mouseCheck) {
+	if (m_timeSinceLastShot < m_shootingReloadTime || !m_isMouseFar) {
 		return;
 	}
 

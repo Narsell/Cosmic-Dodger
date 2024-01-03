@@ -26,19 +26,22 @@ public:
 	void Update(const float deltaTime) override;
 	void SetWindowBounds(WindowBounds* windowBounds);
 	void ShootProjectile();
+	void SetCanMove(const bool canMove) { m_canMove = canMove; };
 
 private:
 	void OnCollision(HitInfo& hitInformation);
 
 private:
 
+	const float m_shootingReloadTime = 0.15f;
 	float m_timeSinceLastShot = 0.f;
 	const float m_projetileSpawnDistance = 50.f;
 	//True if the mouse is out of the player bounds to avoid unexpected behavior.
-	bool m_mouseCheck = true;
+	bool m_isMouseFar = true;
 
 	Vector2 m_lookAtDirection = Vector2::ZERO;
 	Vector2 m_centerPoint = Vector2::ZERO;
+	bool m_canMove = false;
 
 	WindowBounds* m_windowBounds = nullptr;
 	Collider2D* m_collider = nullptr;

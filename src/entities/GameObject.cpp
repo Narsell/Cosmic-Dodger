@@ -34,7 +34,6 @@ GameObject::~GameObject()
 
 void GameObject::Render(SDL_Renderer* renderer)
 {
-    //TODO: Consider texture offset to draw objects centered
     BaseEntity::Render(renderer);
 
     SDL_Rect src {
