@@ -19,7 +19,6 @@ public:
 private: 
 
 	Player* m_player;
-	Vector2 m_inputVector;
 	const Uint8* m_keyboardState;
 
 };

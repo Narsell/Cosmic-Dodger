@@ -30,25 +30,10 @@ void PlayerInputComponent::Update(const float deltaTime)
 		std::cout << AllocationMetrics::GetInstance()->CurrentUsage() << std::endl;
 	}
 
-	if (m_keyboardState[SDL_SCANCODE_D] || m_keyboardState[SDL_SCANCODE_A] || m_keyboardState[SDL_SCANCODE_S] || m_keyboardState[SDL_SCANCODE_W]) {
-		if (m_keyboardState[SDL_SCANCODE_D]){
-			m_inputVector = Vector2::RIGHT;
-		}
-		if (m_keyboardState[SDL_SCANCODE_A]) {
-			m_inputVector = Vector2::LEFT;
-		}
-		if (m_keyboardState[SDL_SCANCODE_W]) {
-			m_inputVector = Vector2::UP;
-		}
-		if (m_keyboardState[SDL_SCANCODE_S]) {
-			m_inputVector = Vector2::DOWN;
-		}
-
+	if (m_keyboardState[SDL_SCANCODE_W]) {
+		m_player->GetMovementComponent()->SetSpeed(500);
 	}
 	else {
-		m_inputVector = Vector2::ZERO;
+		m_player->GetMovementComponent()->SetSpeed(0.f);
 	}
-
-	m_player->GetMovementComponent()->SetVelocity(m_inputVector.Normalized());
-
 }

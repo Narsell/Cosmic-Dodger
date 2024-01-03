@@ -32,8 +32,14 @@ private:
 
 private:
 
-	float timeSinceLastShot = 0.f;
-	Vector2 m_centerPoint;
+	float m_timeSinceLastShot = 0.f;
+	const float m_projetileSpawnDistance = 50.f;
+	//True if the mouse is out of the player bounds to avoid unexpected behavior.
+	bool m_mouseCheck = true;
+
+	Vector2 m_lookAtDirection = Vector2::ZERO;
+	Vector2 m_centerPoint = Vector2::ZERO;
+
 	WindowBounds* m_windowBounds = nullptr;
 	Collider2D* m_collider = nullptr;
 

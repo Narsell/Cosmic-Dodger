@@ -8,13 +8,14 @@ Projectile::Projectile(const Transform& transform, TextureResource* texture, con
 	GameObject(transform, texture, name)
 {
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));
-	m_collisionComponent->SetCanRender(true);
+	m_collisionComponent->SetCanRender(false);
 	m_collider = m_collisionComponent->AddCollider(Vector2(9, 9), Vector2::ZERO, true, "Basic Collision");
 	std::function<void(HitInfo&)> OnCollisionDelegate = std::bind(&Projectile::OnCollision, this, std::placeholders::_1);
 	m_collider->SetCollisionDelegate(OnCollisionDelegate);
 
 	m_movementComponent = AddComponent<MovementComponent>(new MovementComponent(this, "Movement Component"));
-	m_movementComponent->SetSpeed(1000.f);
+	m_movementComponent->SetMaxSpeed(2000.f);
+	m_movementComponent->SetSpeed(2000.f);
 	m_movementComponent->SetRotationFollowsVelocity(true);
 
 	m_startPosition = m_transform.GetPosition();

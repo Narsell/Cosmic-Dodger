@@ -1,3 +1,4 @@
+#include <algorithm>
 
 #include "MovementComponent.hpp"
 #include "GameObject.hpp"
@@ -17,9 +18,13 @@ MovementComponent::~MovementComponent()
 
 void MovementComponent::Update(const float deltaTime)
 {
-	if (m_rotationFollowsVelocity and !Math::IsNearlyEqual(m_velocity.Lenght(), 0.f)) {
+	if (m_rotationFollowsVelocity && !Math::IsNearlyEqual(m_velocity.Lenght(), 0.f)) {
 		const float angle = Math::GetAngleFromDirection(m_velocity);
 		m_parent->m_transform.SetRotation(angle);
+		m_lookAtDirection = m_velocity;
+	}
+	if (m_parent->GetDisplayName() == "Player") {
+		m_velocity.Print();
 	}
 	AddPositionDelta(m_velocity * m_speed * deltaTime);
 
@@ -62,7 +67,8 @@ void MovementComponent::SetRotationFollowsVelocity(const bool newFollowVelocity)
 	m_rotationFollowsVelocity = newFollowVelocity;
 }
 
-void MovementComponent::SetSpeed(const float newSpeed)
+void MovementComponent::SetSpeed(const float speed)
 {
-	m_speed = newSpeed;
+	m_speed = std::clamp<float>(speed, 0.f, m_max_speed);
+
 }
