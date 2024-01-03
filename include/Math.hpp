@@ -58,7 +58,7 @@ public:
 	static const Vector2 GetDirectionFromAngle(const float angle);
 	//Gets an angle (degrees) in degs from a given Vector2 direction.
 	static const float GetAngleFromDirection(const Vector2& direction);
-	//Moves a towars target by a factor of f
+	//Moves a vector a towards a target vector by a factor of f
 	static const Vector2 Lerp(const Vector2& a, const Vector2& target, const float f=0.5f);
 };
 

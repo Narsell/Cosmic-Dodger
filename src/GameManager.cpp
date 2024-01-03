@@ -14,7 +14,8 @@
 
 std::list<GameObject*> GameManager::m_gameObjects;
 std::vector<GameObject*> GameManager::m_destroyQueue;
-std::vector<PlayerInputComponent*> GameManager::suscribedPlayerInputComponents;
+std::vector<SDL_Event> GameManager::m_inputEventQueue;
+const Uint8* GameManager::m_keyboardState;
 
 GameManager::GameManager()
     :m_window(nullptr),
@@ -40,14 +41,15 @@ void GameManager::GameStart(const char* gameTitle)
 
     Construction();
     BeginPlay();
-    Uint64 frameEndTime = SDL_GetPerformanceCounter();
-    Uint64 frameStartTime = 0;
+    float frameEndTime = static_cast<float>(SDL_GetPerformanceCounter());
+    float frameStartTime = 0;
 
     while (m_isGameRunning) {
         frameStartTime = frameEndTime;
-        frameEndTime = SDL_GetPerformanceCounter();
+        frameEndTime = static_cast<float>(SDL_GetPerformanceCounter());
         HandleInput();
-        Update((float)(frameEndTime - frameStartTime) / (float)SDL_GetPerformanceFrequency());
+        Update((frameEndTime - frameStartTime) / SDL_GetPerformanceFrequency());
+        ClearEventQueue();
         Render();
     }
     SDL_Quit();
@@ -80,16 +82,15 @@ void GameManager::HandleInput()
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
+        m_inputEventQueue.push_back(event);
+
         if (event.type == SDL_QUIT) {
             m_isGameRunning = false;
         }
     }
 
-    const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
-
-    for (PlayerInputComponent* inputComp : suscribedPlayerInputComponents) {
-        inputComp->UpdateKeyboardState(keyboardState);
-    }
+    m_keyboardState = SDL_GetKeyboardState(NULL);
+    
 }
 
 
@@ -111,6 +112,11 @@ void GameManager::Update(const float deltaTime)
 
     //std::cout << "fps: " << 1 / (deltaTime) << "\n";
     //std::cout << AllocationMetrics::GetInstance()->CurrentUsage() << std::endl;
+}
+
+void GameManager::ClearEventQueue()
+{
+    m_inputEventQueue.clear();
 }
 
 void GameManager::Render()
@@ -139,9 +145,5 @@ GameManager::~GameManager()
 
 }
 
-void GameManager::SuscribeToKeyboardEvents(PlayerInputComponent* PlayerInputComponent)
-{
-    suscribedPlayerInputComponents.push_back(PlayerInputComponent);
-}
 
 

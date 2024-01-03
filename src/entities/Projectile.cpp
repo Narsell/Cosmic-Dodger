@@ -33,8 +33,6 @@ void Projectile::Update(const float deltaTime)
 void Projectile::OnCollision(HitInfo& hitInformation)
 {
 
-	std::cout << GetIdName() << " collision!\n";
-
 	++m_bouncesCounter;
 	if (m_bouncesCounter >= m_maxBounces) {
 		GameManager::DestroyGameObject(this);

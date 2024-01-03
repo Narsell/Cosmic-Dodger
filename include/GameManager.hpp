@@ -31,7 +31,8 @@ public:
 	const GameManager& operator=(const GameManager& other) = delete;
 	~GameManager();
 
-	static void SuscribeToKeyboardEvents(PlayerInputComponent* PlayerInputComponent);
+	static std::vector<SDL_Event>& GetInputEventQueue() { return m_inputEventQueue; };
+	static const Uint8*& GetInputKeyboardState() { return m_keyboardState; };
 
 private:
 	//Private constructor to avoid unwanted initialization.
@@ -44,14 +45,17 @@ private:
 	void HandleInput();
 	//Updates each entity. i.e. Calls each entity Update function and deals with collisions.
 	void Update(const float deltaTime);
+	//Clears the input event queue.
+	void ClearEventQueue();
 	//Renders each entity.
 	void Render();
 
 private:
 	bool m_isGameRunning = true;
 	Window* m_window = nullptr;
-	static std::vector<PlayerInputComponent*> suscribedPlayerInputComponents;
 	static std::vector<GameObject*> m_destroyQueue;
+	static std::vector<SDL_Event> m_inputEventQueue;
+	static const Uint8* m_keyboardState;
 
 	// Game entities
 	static std::list<GameObject*> m_gameObjects;

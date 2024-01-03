@@ -1,4 +1,6 @@
 #pragma once
+#include "SDL.h"
+#include <vector>
 
 #include "Component.hpp"
 #include "Math.hpp"
@@ -14,11 +16,11 @@ public:
 
 	virtual void Update(const float deltaTime) override;
 
-	void UpdateKeyboardState(const Uint8* keyboardState) { m_keyboardState = keyboardState; };
-
 private: 
 
 	Player* m_player;
+	bool m_isShooting = false;
+	std::vector<SDL_Event> m_eventQueue;
 	const Uint8* m_keyboardState;
 
 };

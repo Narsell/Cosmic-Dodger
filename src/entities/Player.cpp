@@ -51,7 +51,7 @@ void Player::Update(const float deltaTime)
 	const Vector2 mousePosition = Vector2(static_cast<float>(mouseX), static_cast<float>(mouseY));
 	const Vector2 absoluteCenter = m_transform.GetPosition() + m_centerPoint;
 	const Vector2 playerToMouse = mousePosition - absoluteCenter;
-	m_isMouseFar = playerToMouse.Lenght() >= 50.f;
+	m_isMouseFar = playerToMouse.Lenght() >= 40.f;
 	if (m_isMouseFar) {
 
 		const Vector2 currentDirection = Math::GetDirectionFromAngle(m_transform.GetRotation());
