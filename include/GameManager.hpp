@@ -36,7 +36,7 @@ public:
 
 private:
 	//Private constructor to avoid unwanted initialization.
-	GameManager();
+	GameManager(const Uint32 subSystems);
 	//To construct game entities and set them up.
 	void Construction();
 	//To set the initial state of entities and other actors of the game.

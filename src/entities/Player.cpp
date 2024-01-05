@@ -14,12 +14,13 @@
 Player::Player(const Transform& transform, TextureResource* texture, const char* name)
 	:
 	GameObject(transform, texture, name),
-	m_centerPoint((texture->GetDimensions().x / 2), (texture->GetDimensions().y / 2))
+	m_centerPoint((texture->GetDimensions().x / 2), (texture->GetDimensions().y / 2)),
+	m_shootingSound("assets/shoot2.wav")
 {
 	m_transform.SetRotation(90.0);
 
 	m_movementComponent = AddComponent<MovementComponent>(new MovementComponent(this, "Movement Component"));
-	m_movementComponent->SetMaxSpeed(500.f);
+	m_movementComponent->SetMaxSpeed(700.f);
 
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));
 	m_collisionComponent->SetCanRender(false);
@@ -102,6 +103,7 @@ void Player::ShootProjectile()
 	projectile->GetBodyCollider()->ListenForCollisions(m_windowBounds->GetCollisionComponent()->GetAllColliders());
 
 	GameManager::SpawnGameObject(projectile);
+	m_shootingSound.PlaySound();
 
 	m_timeSinceLastShot = 0.f;
 }

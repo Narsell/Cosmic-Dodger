@@ -4,6 +4,7 @@
 #include "GameObject.hpp"
 #include "CollisionComponent.hpp"
 #include "Window.hpp"
+#include "Sound.hpp"
 
 class MovementComponent;
 class PlayerInputComponent;
@@ -33,10 +34,10 @@ private:
 
 private:
 
+	Sound m_shootingSound;
 	const float m_shootingReloadTime = 0.15f;
 	float m_timeSinceLastShot = 0.f;
 	const float m_projetileSpawnDistance = 50.f;
-	//True if the mouse is out of the player bounds to avoid unexpected behavior.
 	bool m_isMouseFar = true;
 
 	Vector2 m_lookAtDirection = Vector2::ZERO;

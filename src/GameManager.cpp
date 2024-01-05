@@ -17,21 +17,19 @@ std::vector<GameObject*> GameManager::m_destroyQueue;
 std::vector<SDL_Event> GameManager::m_inputEventQueue;
 const Uint8* GameManager::m_keyboardState;
 
-GameManager::GameManager()
+GameManager::GameManager(const Uint32 subSystems)
     :m_window(nullptr),
     m_isGameRunning(true)
 {
-    if (SDL_Init(SDL_INIT_VIDEO) > 0) {
-        std::cout << "SDL_Init HA FAILED. SDL_ERROR: " << SDL_GetError() << std::endl;
+    if (SDL_Init(subSystems) < 0) {
+        std::cout << "SDL_Init HAS FAILED. SDL_ERROR: " << SDL_GetError() << std::endl;
     }
-    if (!(IMG_Init(IMG_INIT_PNG))) {
-        std::cout << "IMG_Init has failed. Error: " << SDL_GetError() << std::endl;
-    }
+
 }
 
 GameManager* GameManager::GetInstance()
 {
-    static GameManager app;
+    static GameManager app(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
     return &app;
 }
 
