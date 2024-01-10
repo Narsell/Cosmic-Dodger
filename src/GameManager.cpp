@@ -12,7 +12,7 @@
 #include "entities/Projectile.hpp"
 #include "utilities/Performance.hpp"
 #include "utilities/ResourceManager.hpp"
-#include "userinterface/StaticText.hpp"
+#include "userinterface/HUD.hpp"
 
 std::list<GameObject*> GameManager::m_gameObjects;
 std::vector<GameObject*> GameManager::m_destroyQueue;
@@ -59,9 +59,9 @@ void GameManager::GameStart(const char* gameTitle)
 
 void GameManager::Construction()
 {
-    windowBounds = SpawnGameObject(new WindowBounds("Window Bounds"));
+    m_hud = new HUD(m_window);
 
-    testText = new StaticText(m_window, "HELLO WORLD", Transform(Vector2(200.f, 200.f)), Vector2(200.f, 50.f));
+    windowBounds = SpawnGameObject(new WindowBounds("Window Bounds"));
 
     Vector2 playerDimensions = Vector2(112, 75);
     Vector2 playerPosition(Window::s_width / 2 - playerDimensions.x / 2,
@@ -133,7 +133,7 @@ void GameManager::Render()
         }
     }
 
-    testText->Draw();
+    m_hud->Render(m_window->GetRenderer());
 
     m_window->Display();
 }
@@ -148,6 +148,7 @@ GameManager::~GameManager()
 
     delete m_window;
     delete m_resourceManager;
+    delete m_hud;
 
     std::cout << AllocationMetrics::GetInstance()->CurrentUsage() << std::endl;
 

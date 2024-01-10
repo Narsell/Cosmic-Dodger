@@ -4,8 +4,9 @@
 
 bool StaticText::s_fontInitialized = false;
 
-StaticText::StaticText(Window* window, const char* text, Transform transform, Vector2 dimensions)
-	:m_text(text),
+StaticText::StaticText(Window* window, const char* text, Transform transform, Vector2 dimensions, const char* name)
+	:BaseEntity("", name, true, true),
+	m_text(text),
 	m_window(window),
 	m_transform(transform),
 	m_dimensions(dimensions)
@@ -18,11 +19,10 @@ StaticText::~StaticText()
 	SDL_DestroyTexture(m_fontTexture);
 }
 
-void StaticText::Draw()
+void StaticText::Render(SDL_Renderer* renderer)
 {
-	SDL_Renderer* renderer = m_window->GetRenderer();
 
-	m_fontSurface = TTF_RenderText_Solid(ResourceManager::textFont, m_text, { 255,255,255 });
+	m_fontSurface = TTF_RenderText_Solid(ResourceManager::textFont, m_text, { 0,0,0 });
 	m_fontTexture = SDL_CreateTextureFromSurface(renderer, m_fontSurface);
 
 	SDL_FreeSurface(m_fontSurface);

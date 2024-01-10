@@ -28,7 +28,7 @@ Window::~Window()
 }
 
 void Window::Clear(){
-    SDL_SetRenderDrawColor(m_renderer, 0xF, 0xF, 0xF, SDL_ALPHA_OPAQUE);
+    SDL_SetRenderDrawColor(m_renderer, 48, 14, 65, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(m_renderer);
 }
 

@@ -1,18 +1,21 @@
 #pragma once
 #include "Transform.hpp"
+#include "BaseEntity.hpp"
 
 struct SDL_Texture;
 struct SDL_Surface;
+struct SDL_Renderer;
 class Window;
 
-class StaticText {
+class StaticText : public BaseEntity {
 
 public:
 
-	StaticText(Window* window, const char* text, Transform transform = Transform(), Vector2 dimensions = Vector2(10.f, 10.f));
+	StaticText(Window* window, const char* text, Transform transform = Transform(), Vector2 dimensions = Vector2(10.f, 10.f), const char* name = "NA_StaticText");
 	~StaticText();
 
-	void Draw();
+	virtual void Render(SDL_Renderer* renderer) override;
+	virtual void Update(const float deltaTime) override {};
 
 	Transform m_transform;
 private:

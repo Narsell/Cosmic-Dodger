@@ -32,6 +32,7 @@
     <ClCompile Include="src\entities\Player.cpp" />
     <ClCompile Include="src\GameManager.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\userinterface\Hud.cpp" />
     <ClCompile Include="src\userinterface\StaticText.cpp" />
     <ClCompile Include="src\utlities\Math.cpp" />
     <ClCompile Include="src\components\Sound.cpp" />
@@ -52,6 +53,7 @@
     <ClInclude Include="include\entities\WindowBounds.hpp" />
     <ClInclude Include="include\GameManager.hpp" />
     <ClInclude Include="include\components\Sound.hpp" />
+    <ClInclude Include="include\userinterface\Hud.hpp" />
     <ClInclude Include="include\utilities\Math.hpp" />
     <ClInclude Include="include\utilities\ResourceManager.hpp" />
     <ClInclude Include="include\userinterface\StaticText.hpp" />
