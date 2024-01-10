@@ -48,7 +48,7 @@ TextureResource* ResourceManager::LoadTexture(const char* name, const Vector2& d
 	return new TextureResource(name, dimensions, texture);
 }
 
-const TTF_Font* ResourceManager::LoadFont(const char* path, int size)
+TTF_Font* ResourceManager::LoadFont(const char* path, int size)
 {
 	if (!textFont) {
 		textFont = TTF_OpenFont(path, size);

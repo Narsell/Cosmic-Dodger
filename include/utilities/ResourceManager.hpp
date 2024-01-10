@@ -45,7 +45,7 @@ public:
     static ResourceManager* InitResourceManager(SDL_Renderer* renderer);
 
 	TextureResource* LoadTexture(const char* name, const Vector2& dimensions, const char* path);
-    const TTF_Font* LoadFont(const char* path, int size);
+    static TTF_Font* LoadFont(const char* path, int size);
 
     static TextureResource* playerTexture;
     static TextureResource* projectileTexture;

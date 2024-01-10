@@ -23,7 +23,7 @@ Player::Player(const Transform& transform, TextureResource* texture, const char*
 	m_movementComponent->SetMaxSpeed(700.f);
 
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));
-	m_collisionComponent->SetCanRender(true);
+	m_collisionComponent->SetCanRender(false);
 	m_collider = m_collisionComponent->AddCollider(texture->GetDimensions(), Vector2(0.5, 0.5), true, "Ship Collision");
 	
 	std::function<void(HitInfo&)> OnCollisionDelegate = std::bind(&Player::OnCollision, this, std::placeholders::_1);
@@ -62,14 +62,14 @@ void Player::Update(const float deltaTime)
 		m_transform.SetRotation(Math::GetAngleFromDirection(m_lookAtDirection));		
 	}
 
-	if (m_canMove && playerToMouse.Lenght() >= 100.f) {
+	if (m_canMove && playerToMouse.Lenght() >= 120.f) {
 		const float currentSpeed = m_movementComponent->GetSpeed();
 		m_movementComponent->SetVelocity(m_lookAtDirection);
 		m_movementComponent->SetSpeed(currentSpeed + 15);
 	}
 	else {
 		const float currentSpeed = m_movementComponent->GetSpeed();
-		m_movementComponent->SetSpeed(currentSpeed - 15);
+		m_movementComponent->SetSpeed(currentSpeed - 25);
 	}
 
 }
@@ -103,7 +103,8 @@ void Player::ShootProjectile()
 	projectile->GetBodyCollider()->ListenForCollisions(m_windowBounds->GetCollisionComponent()->GetAllColliders());
 
 	GameManager::SpawnGameObject(projectile);
-	m_shootingSound.PlaySound();
 
+	m_shootingSound.PlaySound();
+	
 	m_timeSinceLastShot = 0.f;
 }

@@ -12,6 +12,7 @@ class GameObject;
 class Player;
 class WindowBounds;
 class ResourceManager;
+class StaticText;
 
 class GameManager {
 
@@ -61,6 +62,7 @@ private:
 	// Game entities
 	static std::list<GameObject*> m_gameObjects;
 	static std::vector<GameObject*> m_destroyQueue;
+	StaticText* testText = nullptr;
 	Player* player = nullptr;
 	WindowBounds* windowBounds = nullptr;
 
