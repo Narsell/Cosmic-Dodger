@@ -2,8 +2,8 @@
 #include <assert.h>
 #include <iostream>
 
-#include "CollisionComponent.hpp"
-#include "Collider2D.hpp"
+#include "components/CollisionComponent.hpp"
+#include "components/Collider2D.hpp"
 
 
 CollisionComponent::CollisionComponent(GameObject* parent, const char* name)

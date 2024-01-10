@@ -3,9 +3,9 @@
 #include <vector>
 #include <functional>
 
-#include "Math.hpp"
-#include "BaseEntity.hpp"
-#include "GameObject.hpp"
+#include "utilities/Math.hpp"
+#include "entities/BaseEntity.hpp"
+#include "entities/GameObject.hpp"
 
 class CollisionComponent;
 

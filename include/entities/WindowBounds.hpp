@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.hpp"
+#include "entities/GameObject.hpp"
 
 class CollisionComponent;
 class Collider2D;

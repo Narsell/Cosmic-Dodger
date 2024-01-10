@@ -1,10 +1,7 @@
 #pragma once
 
-#include "Math.hpp"
-#include "Component.hpp"
-
-//Remove this!
-#include "GameObject.hpp"
+#include "utilities/Math.hpp"
+#include "components/Component.hpp"
 
 class MovementComponent : public Component {
 

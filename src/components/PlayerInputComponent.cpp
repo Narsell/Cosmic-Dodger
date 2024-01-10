@@ -2,11 +2,11 @@
 #include <iostream>
 #include <assert.h>
 
-#include "PlayerInputComponent.hpp"
-#include "MovementComponent.hpp"
+#include "components/PlayerInputComponent.hpp"
+#include "components/MovementComponent.hpp"
 #include "GameManager.hpp"
-#include "Player.hpp"
-#include "Utils.hpp"
+#include "entities/Player.hpp"
+#include "utilities/Performance.hpp"
 
 PlayerInputComponent::PlayerInputComponent(GameObject* parent, const char* name)
     :Component(parent, name),

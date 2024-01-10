@@ -4,16 +4,12 @@
 #include <assert.h>
 
 #include "Window.hpp"
-#include "GameObject.hpp"
-#include "Math.hpp"
+#include "entities/GameObject.hpp"
+#include "utilities/Math.hpp"
 
 /* WINDOW DIMENSIONS */
 int Window::s_width = 1280;
 int Window::s_height = 720;
-
-/* TEXTURE RESOURCES INSTANCES */
-TextureResource* Window::playerTexture;
-TextureResource* Window::projectileTexture;
 
 Window::Window(const char* title)
     :m_window(nullptr), m_renderer(nullptr)
@@ -29,18 +25,6 @@ Window::~Window()
 {
     SDL_DestroyWindow(m_window);
     SDL_DestroyRenderer(m_renderer);
-    delete playerTexture;
-    delete projectileTexture;
-}
-
-TextureResource* Window::LoadTexture(const char* name, const Vector2& dim, const char* filePath){
-    SDL_Texture* texture = nullptr;
-	texture = IMG_LoadTexture(m_renderer, filePath);
-
-	if (!texture)
-		std::cout << "Failed to load texture. Error: " << SDL_GetError() << std::endl;
-
-    return new TextureResource(name, dim, texture);
 }
 
 void Window::Clear(){

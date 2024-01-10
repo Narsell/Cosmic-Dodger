@@ -1,13 +1,14 @@
 #pragma once
 #include <list>
 
-#include "GameObject.hpp"
-#include "CollisionComponent.hpp"
+#include "entities/GameObject.hpp"
+#include "components/Collider2D.hpp"
 #include "Window.hpp"
-#include "Sound.hpp"
+#include "components/Sound.hpp"
 
 class MovementComponent;
 class PlayerInputComponent;
+class CollisionComponent;
 class Projectile;
 class WindowBounds;
 struct TextureResource;

@@ -3,7 +3,7 @@
 #include <math.h>
 #include <cmath>
 
-#include "Math.hpp"
+#include "utilities/Math.hpp"
 
 
 /* VECTOR2 */

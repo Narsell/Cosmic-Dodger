@@ -1,5 +1,6 @@
-#include "WindowBounds.hpp"
-#include "CollisionComponent.hpp"
+#include "entities/WindowBounds.hpp"
+#include "components/CollisionComponent.hpp"
+#include "utilities/ResourceManager.hpp"
 #include "Window.hpp"
 
 

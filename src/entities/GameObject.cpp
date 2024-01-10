@@ -1,9 +1,9 @@
 #include <iostream>
 
-#include "GameObject.hpp"
-#include "CollisionComponent.hpp"
-#include "Math.hpp"
-#include "Window.hpp"
+#include "entities/GameObject.hpp"
+#include "components/Component.hpp"
+#include "utilities/Math.hpp"
+#include "utilities/ResourceManager.hpp"
 
 
 GameObject::GameObject()

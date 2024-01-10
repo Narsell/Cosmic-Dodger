@@ -2,8 +2,8 @@
 #include "SDL.h"
 #include <vector>
 
-#include "Component.hpp"
-#include "Math.hpp"
+#include "components/Component.hpp"
+#include "utilities/Math.hpp"
 
 class GameObject;
 class Player;

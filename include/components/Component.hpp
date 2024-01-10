@@ -1,5 +1,5 @@
 #pragma once
-#include "BaseEntity.hpp"
+#include "entities/BaseEntity.hpp"
 
 class GameObject;
 struct SDL_Renderer;

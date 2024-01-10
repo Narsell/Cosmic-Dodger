@@ -1,5 +1,7 @@
-#include "Projectile.hpp"
-#include "MovementComponent.hpp"
+#include "entities/Projectile.hpp"
+#include "components/MovementComponent.hpp"
+#include "components/CollisionComponent.hpp"
+#include "components/Collider2D.hpp"
 #include "GameManager.hpp"
 #include "Window.hpp"
 

@@ -1,14 +1,14 @@
 #include <SDL.h>
 #include <iostream>
 
-#include "Player.hpp"
+#include "entities/Player.hpp"
+#include "components/MovementComponent.hpp"
+#include "components/PlayerInputComponent.hpp"
+#include "components/CollisionComponent.hpp"
+#include "entities/Projectile.hpp"
+#include "entities/WindowBounds.hpp"
+#include "utilities/ResourceManager.hpp"
 #include "GameManager.hpp"
-#include "MovementComponent.hpp"
-#include "PlayerInputComponent.hpp"
-#include "Projectile.hpp"
-#include "Window.hpp"
-#include "WindowBounds.hpp"
-#include "Window.hpp"
 
 
 Player::Player(const Transform& transform, TextureResource* texture, const char* name)
@@ -23,7 +23,7 @@ Player::Player(const Transform& transform, TextureResource* texture, const char*
 	m_movementComponent->SetMaxSpeed(700.f);
 
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));
-	m_collisionComponent->SetCanRender(false);
+	m_collisionComponent->SetCanRender(true);
 	m_collider = m_collisionComponent->AddCollider(texture->GetDimensions(), Vector2(0.5, 0.5), true, "Ship Collision");
 	
 	std::function<void(HitInfo&)> OnCollisionDelegate = std::bind(&Player::OnCollision, this, std::placeholders::_1);
@@ -91,14 +91,14 @@ void Player::ShootProjectile()
 		return;
 	}
 
-	assert(Window::projectileTexture);
+	assert(ResourceManager::projectileTexture);
 
 	const Vector2 absoluteCenter = m_transform.GetPosition() + m_centerPoint;
-	Vector2 spawnPosition(absoluteCenter - Window::projectileTexture->GetDimensions()/2.f + m_lookAtDirection * m_projetileSpawnDistance);
+	Vector2 spawnPosition(absoluteCenter - ResourceManager::projectileTexture->GetDimensions()/2.f + m_lookAtDirection * m_projetileSpawnDistance);
 	const float angle = Math::GetAngleFromDirection(m_lookAtDirection);
 	Transform spawnTransform = Transform(spawnPosition, angle);
 
-	Projectile* projectile = new Projectile(spawnTransform, Window::projectileTexture, "Projectile");
+	Projectile* projectile = new Projectile(spawnTransform, ResourceManager::projectileTexture, "Projectile");
 	projectile->GetMovementComponent()->SetVelocity(m_lookAtDirection);
 	projectile->GetBodyCollider()->ListenForCollisions(m_windowBounds->GetCollisionComponent()->GetAllColliders());
 

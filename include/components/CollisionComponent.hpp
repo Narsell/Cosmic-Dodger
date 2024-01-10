@@ -3,11 +3,9 @@
 #include <vector>
 #include <functional>
 
-#include "Math.hpp"
-#include "Component.hpp"
-#include "Collider2D.hpp"
-#include "GameObject.hpp"
-
+#include "utilities/Math.hpp"
+#include "components/Component.hpp"
+#include "entities/GameObject.hpp"
 
 class Collider2D;
 

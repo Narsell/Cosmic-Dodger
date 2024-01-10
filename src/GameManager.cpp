@@ -1,16 +1,17 @@
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 
 #include "GameManager.hpp"
 #include "Window.hpp"
-#include "WindowBounds.hpp"
-#include "CollisionComponent.hpp"
-#include "MovementComponent.hpp"
-#include "PlayerInputComponent.hpp"
-#include "Player.hpp"
-#include "Projectile.hpp"
-#include "Transform.hpp"
-#include "Utils.hpp"
+#include "entities/WindowBounds.hpp"
+#include "components/CollisionComponent.hpp"
+#include "components/MovementComponent.hpp"
+#include "components/PlayerInputComponent.hpp"
+#include "entities/Player.hpp"
+#include "entities/Projectile.hpp"
+#include "utilities/Performance.hpp"
+#include "utilities/ResourceManager.hpp"
 
 std::list<GameObject*> GameManager::m_gameObjects;
 std::vector<GameObject*> GameManager::m_destroyQueue;
@@ -18,11 +19,12 @@ std::vector<SDL_Event> GameManager::m_inputEventQueue;
 const Uint8* GameManager::m_keyboardState;
 
 GameManager::GameManager(const Uint32 subSystems)
-    :m_window(nullptr),
-    m_isGameRunning(true)
 {
     if (SDL_Init(subSystems) < 0) {
         std::cout << "SDL_Init HAS FAILED. SDL_ERROR: " << SDL_GetError() << std::endl;
+    }
+    if (TTF_Init() < 0) {
+        std::cout << "TTF_Init HAS FAILED. SDL_ERROR: " << SDL_GetError() << std::endl;
     }
 
 }
@@ -36,17 +38,18 @@ GameManager* GameManager::GetInstance()
 void GameManager::GameStart(const char* gameTitle)
 {
     m_window = new Window(gameTitle);
+    m_resourceManager = ResourceManager::InitResourceManager(m_window->GetRenderer());
 
     Construction();
     BeginPlay();
-    float frameEndTime = static_cast<float>(SDL_GetPerformanceCounter());
-    float frameStartTime = 0;
+    Uint64 frameEndTime = SDL_GetPerformanceCounter();
+    Uint64 frameStartTime = 0;
 
     while (m_isGameRunning) {
         frameStartTime = frameEndTime;
-        frameEndTime = static_cast<float>(SDL_GetPerformanceCounter());
+        frameEndTime = SDL_GetPerformanceCounter();
         HandleInput();
-        Update((frameEndTime - frameStartTime) / SDL_GetPerformanceFrequency());
+        Update(static_cast<float>(frameEndTime - frameStartTime) / static_cast<float>(SDL_GetPerformanceFrequency()));
         ClearEventQueue();
         Render();
     }
@@ -62,11 +65,11 @@ void GameManager::Construction()
                            Window::s_height - playerDimensions.y - 5);
     Transform playerTransform = Transform(playerPosition);
 
-    Window::playerTexture = m_window->LoadTexture("Player", playerDimensions, "assets/player_ship.png");
-    Window::projectileTexture = m_window->LoadTexture("Projectile", Vector2(9, 37), "assets/laser.png");
+    ResourceManager::playerTexture = m_resourceManager->LoadTexture("Player", playerDimensions, "assets/player_ship.png");
+    ResourceManager::projectileTexture = m_resourceManager->LoadTexture("Projectile", Vector2(9, 37), "assets/laser.png");
 
     player = SpawnGameObject(
-        new Player(playerTransform, Window::playerTexture, "Player")
+        new Player(playerTransform, ResourceManager::playerTexture, "Player")
     );
 }
 
@@ -139,6 +142,7 @@ GameManager::~GameManager()
     }
 
     delete m_window;
+    delete m_resourceManager;
     std::cout << AllocationMetrics::GetInstance()->CurrentUsage() << std::endl;
 
 }

@@ -1,4 +1,4 @@
-#include "Sound.hpp"
+#include "components/Sound.hpp"
 #include <iostream>
 
 Sound::Sound(std::string filepath)

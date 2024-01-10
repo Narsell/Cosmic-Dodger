@@ -1,7 +1,7 @@
 #include <algorithm>
 
-#include "MovementComponent.hpp"
-#include "GameObject.hpp"
+#include "components/MovementComponent.hpp"
+#include "entities/GameObject.hpp"
 
 MovementComponent::MovementComponent(GameObject* parent, const char* name)
 	:Component(parent, name),

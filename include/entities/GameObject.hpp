@@ -3,9 +3,9 @@
 #include <vector>
 #include <assert.h>
 
-#include "Math.hpp"
-#include "BaseEntity.hpp"
-#include "Transform.hpp"
+#include "utilities/Math.hpp"
+#include "entities/BaseEntity.hpp"
+#include "components/Transform.hpp"
 
 struct TextureResource;
 class Component;

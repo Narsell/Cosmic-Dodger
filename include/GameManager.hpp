@@ -4,13 +4,14 @@
 #include <vector>
 #include <sstream>
 
-#include "GameObject.hpp"
+#include "entities/GameObject.hpp"
 
 class PlayerInputComponent;
 class Window;
 class GameObject;
 class Player;
 class WindowBounds;
+class ResourceManager;
 
 class GameManager {
 
@@ -53,12 +54,13 @@ private:
 private:
 	bool m_isGameRunning = true;
 	Window* m_window = nullptr;
-	static std::vector<GameObject*> m_destroyQueue;
+	ResourceManager* m_resourceManager = nullptr;
 	static std::vector<SDL_Event> m_inputEventQueue;
 	static const Uint8* m_keyboardState;
 
 	// Game entities
 	static std::list<GameObject*> m_gameObjects;
+	static std::vector<GameObject*> m_destroyQueue;
 	Player* player = nullptr;
 	WindowBounds* windowBounds = nullptr;
 

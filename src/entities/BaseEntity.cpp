@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <iostream>
 
-#include "BaseEntity.hpp"
+#include "entities/BaseEntity.hpp"
 
 BaseEntity::BaseEntity()
 	:

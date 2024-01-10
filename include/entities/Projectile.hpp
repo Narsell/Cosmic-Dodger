@@ -1,9 +1,10 @@
 #pragma once
 
-#include "GameObject.hpp"
-#include "CollisionComponent.hpp"
+#include "entities/GameObject.hpp"
+#include "components/Collider2D.hpp"
 
 class MovementComponent;
+class CollisionComponent;
 
 class Projectile : public GameObject {
 

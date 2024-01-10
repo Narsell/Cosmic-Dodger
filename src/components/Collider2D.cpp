@@ -2,9 +2,9 @@
 #include <assert.h>
 #include <cmath>
 
-#include "Collider2D.hpp"
-#include "GameObject.hpp"
-#include "CollisionComponent.hpp"
+#include "components/Collider2D.hpp"
+#include "entities/GameObject.hpp"
+#include "components/CollisionComponent.hpp"
 
 
 Collider2D::Collider2D(const Vector2& dimensions, CollisionComponent* parentComp, const Vector2& relativePos, const bool visible, const char* name)
