@@ -114,6 +114,8 @@ void GameManager::Update(const float deltaTime)
         }
     }
 
+    m_hud->Update(deltaTime);
+
     //std::cout << "fps: " << 1 / (deltaTime) << "\n";
     //std::cout << AllocationMetrics::GetInstance()->CurrentUsage() << std::endl;
 }

@@ -4,12 +4,11 @@
 #include "entities/GameObject.hpp"
 #include "components/Collider2D.hpp"
 #include "Window.hpp"
-#include "components/Sound.hpp"
 
 class MovementComponent;
 class PlayerInputComponent;
 class CollisionComponent;
-class Projectile;
+class ShootingComponent;
 class WindowBounds;
 struct TextureResource;
 
@@ -22,27 +21,25 @@ public:
 	const Player& operator=(const Player& other) = delete;
 	~Player() override;
 
+	const bool GetIsMouseOnPlayer() const { return m_isMouseOnPlayer; };
+	WindowBounds* GetWindowBounds() const { return m_windowBounds; };
+
 	CollisionComponent* GetCollisionComponent() const { return m_collisionComponent; };
 	MovementComponent* GetMovementComponent() const { return m_movementComponent; };
+	ShootingComponent* GetShootingComponent() const { return m_shootingComponent; };
+
+	void SetWindowBounds(WindowBounds* windowBounds);
+	void SetCanMove(const bool canMove) { m_canMove = canMove; };
 
 	void Update(const float deltaTime) override;
-	void SetWindowBounds(WindowBounds* windowBounds);
-	void ShootProjectile();
-	void SetCanMove(const bool canMove) { m_canMove = canMove; };
 
 private:
 	void OnCollision(HitInfo& hitInformation);
 
 private:
 
-	Sound m_shootingSound;
-	const float m_shootingReloadTime = 0.15f;
-	float m_timeSinceLastShot = 0.f;
-	const float m_projetileSpawnDistance = 50.f;
-	bool m_isMouseFar = true;
-
+	bool m_isMouseOnPlayer = true;
 	Vector2 m_lookAtDirection = Vector2::ZERO;
-	Vector2 m_centerPoint = Vector2::ZERO;
 	bool m_canMove = false;
 
 	WindowBounds* m_windowBounds = nullptr;
@@ -51,5 +48,6 @@ private:
 	CollisionComponent* m_collisionComponent = nullptr;
 	MovementComponent* m_movementComponent = nullptr;
 	PlayerInputComponent* m_inputComponent = nullptr;
+	ShootingComponent* m_shootingComponent = nullptr;
 
 };

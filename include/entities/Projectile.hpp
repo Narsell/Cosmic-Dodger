@@ -5,6 +5,8 @@
 
 class MovementComponent;
 class CollisionComponent;
+class WindowBounds;
+
 
 class Projectile : public GameObject {
 
@@ -20,6 +22,8 @@ public:
 	CollisionComponent* GetCollisionComponent() const { return m_collisionComponent; };
 	MovementComponent* GetMovementComponent() const { return m_movementComponent; };
 
+	void SetWindowCollisions(WindowBounds* windowBounds);
+
 	void Update(const float deltaTime) override;
 
 private:
@@ -31,7 +35,7 @@ private:
 	Collider2D* m_collider = nullptr;
 
 	std::uint8_t m_bouncesCounter = 0;
-	std::uint8_t m_maxBounces = 1;
+	std::uint8_t m_maxBounces = 2;
 
 	float m_distanceTraveled = 0.f;
 	Vector2 m_startPosition;

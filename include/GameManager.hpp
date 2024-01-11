@@ -19,7 +19,7 @@ class GameManager {
 public:
 	//Gets the GameManager instance
 	static GameManager* GetInstance();
-	//Calls the appropiate functions to setup the game loop.
+	//Initializes the window and starts the game loop.
 	void GameStart(const char* gameTitle);
 
 	template<typename T>

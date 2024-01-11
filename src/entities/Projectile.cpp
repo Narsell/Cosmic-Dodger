@@ -2,6 +2,7 @@
 #include "components/MovementComponent.hpp"
 #include "components/CollisionComponent.hpp"
 #include "components/Collider2D.hpp"
+#include "entities/WindowBounds.hpp"
 #include "GameManager.hpp"
 #include "Window.hpp"
 
@@ -54,4 +55,9 @@ void Projectile::OnCollision(HitInfo& hitInformation)
 		m_movementComponent->SetVelocity(newVelocity);
 	}
 
+}
+
+void Projectile::SetWindowCollisions(WindowBounds* windowBounds)
+{
+	m_collider->ListenForCollisions(windowBounds->GetCollisionComponent()->GetAllColliders());
 }

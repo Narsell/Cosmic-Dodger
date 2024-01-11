@@ -5,17 +5,15 @@
 #include "components/MovementComponent.hpp"
 #include "components/PlayerInputComponent.hpp"
 #include "components/CollisionComponent.hpp"
-#include "entities/Projectile.hpp"
-#include "entities/WindowBounds.hpp"
+#include "components/ShootingComponent.hpp"
 #include "utilities/ResourceManager.hpp"
+#include "entities/WindowBounds.hpp"
 #include "GameManager.hpp"
 
 
 Player::Player(const Transform& transform, TextureResource* texture, const char* name)
 	:
-	GameObject(transform, texture, name),
-	m_centerPoint((texture->GetDimensions().x / 2), (texture->GetDimensions().y / 2)),
-	m_shootingSound("assets/shoot2.wav")
+	GameObject(transform, texture, name)
 {
 	m_transform.SetRotation(90.0);
 
@@ -31,6 +29,8 @@ Player::Player(const Transform& transform, TextureResource* texture, const char*
 
 	m_inputComponent = AddComponent<PlayerInputComponent>(new PlayerInputComponent(this, "Input Component"));
 
+	m_shootingComponent = AddComponent< ShootingComponent>(new ShootingComponent(this, "Shoot Component"));
+
 }
 
 Player::~Player()
@@ -43,17 +43,15 @@ void Player::Update(const float deltaTime)
 {
 	GameObject::Update(deltaTime);
 
-	m_timeSinceLastShot += deltaTime;
-
 	int mouseX = 0;
 	int mouseY = 0;
 	SDL_GetMouseState(&mouseX, &mouseY);
 
 	const Vector2 mousePosition = Vector2(static_cast<float>(mouseX), static_cast<float>(mouseY));
-	const Vector2 absoluteCenter = m_transform.GetPosition() + m_centerPoint;
+	const Vector2 absoluteCenter = m_transform.GetPosition() + GetCenterPoint();
 	const Vector2 playerToMouse = mousePosition - absoluteCenter;
-	m_isMouseFar = playerToMouse.Lenght() >= 40.f;
-	if (m_isMouseFar) {
+	m_isMouseOnPlayer = playerToMouse.Lenght() < 40.f;
+	if (!m_isMouseOnPlayer) {
 
 		const Vector2 currentDirection = Math::GetDirectionFromAngle(m_transform.GetRotation());
 		const Vector2 desiredDirection = playerToMouse.Normalized();
@@ -85,26 +83,3 @@ void Player::OnCollision(HitInfo& hitInformation)
 
 }
 
-void Player::ShootProjectile()
-{
-	if (m_timeSinceLastShot < m_shootingReloadTime || !m_isMouseFar) {
-		return;
-	}
-
-	assert(ResourceManager::projectileTexture);
-
-	const Vector2 absoluteCenter = m_transform.GetPosition() + m_centerPoint;
-	Vector2 spawnPosition(absoluteCenter - ResourceManager::projectileTexture->GetDimensions()/2.f + m_lookAtDirection * m_projetileSpawnDistance);
-	const float angle = Math::GetAngleFromDirection(m_lookAtDirection);
-	Transform spawnTransform = Transform(spawnPosition, angle);
-
-	Projectile* projectile = new Projectile(spawnTransform, ResourceManager::projectileTexture, "Projectile");
-	projectile->GetMovementComponent()->SetVelocity(m_lookAtDirection);
-	projectile->GetBodyCollider()->ListenForCollisions(m_windowBounds->GetCollisionComponent()->GetAllColliders());
-
-	GameManager::SpawnGameObject(projectile);
-
-	m_shootingSound.PlaySound();
-	
-	m_timeSinceLastShot = 0.f;
-}

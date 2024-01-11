@@ -1,6 +1,7 @@
 #pragma once
 #include "SDL.h"
 #include <SDL_ttf.h>
+#include <assert.h>
 
 #include "utilities/Math.hpp"
 
@@ -16,10 +17,9 @@ public:
     {}
 
     ~TextureResource() {
-        if (m_texture != nullptr) {
-            std::cout << "Destroyed TEXTURE " << m_name << "\n";
-            SDL_DestroyTexture(m_texture);
-        }
+        assert(m_texture);
+        SDL_DestroyTexture(m_texture);
+        
     }
 
     const char* GetName() const { return m_name; };

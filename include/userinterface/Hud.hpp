@@ -13,6 +13,9 @@ public:
 	HUD(Window* window);
 	~HUD();
 
+	void UpdateLivesText(const char* newText);
+	void UpdateScoreText(const char* newText);
+
 	virtual void Render(struct SDL_Renderer* renderer) override;
 	virtual void Update(const float deltaTime) override;
 

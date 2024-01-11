@@ -19,7 +19,8 @@ GameObject::GameObject(const Transform& transform, TextureResource* texture, con
 	:BaseEntity("", name, true, true),
     m_transform(transform),
 	m_currentFrame(SDL_FRect(0.f, 0.f, texture->GetDimensions().x, texture->GetDimensions().y)),
-	m_texture(texture)
+	m_texture(texture),
+    m_centerPoint(texture->GetDimensions() / 2.f)
 {
 }
 

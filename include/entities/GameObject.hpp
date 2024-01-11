@@ -18,6 +18,8 @@ public:
 	~GameObject() override;
 
 	Transform m_transform;
+
+	const Vector2 GetCenterPoint() const { return m_centerPoint; };
 	
 	//Renders the game object texture and its components
 	virtual void Render(SDL_Renderer* renderer) override;
@@ -45,6 +47,7 @@ private:
 
 	SDL_FRect m_currentFrame;
 	TextureResource* m_texture = nullptr;
+	Vector2 m_centerPoint;
 	//Has ownership of all components. This class will take care of freeing memory on all components
 	std::vector<Component*> m_components;
 

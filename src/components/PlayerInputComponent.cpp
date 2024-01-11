@@ -4,6 +4,7 @@
 
 #include "components/PlayerInputComponent.hpp"
 #include "components/MovementComponent.hpp"
+#include "components/ShootingComponent.hpp"
 #include "GameManager.hpp"
 #include "entities/Player.hpp"
 #include "utilities/Performance.hpp"
@@ -40,7 +41,7 @@ void PlayerInputComponent::Update(const float deltaTime)
 
 
 	if (m_isShooting)
-		m_player->ShootProjectile();
+		m_player->GetShootingComponent()->Shoot();
 
 	m_player->SetCanMove(m_keyboardState[SDL_SCANCODE_W]);
 }
