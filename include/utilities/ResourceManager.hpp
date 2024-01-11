@@ -49,6 +49,7 @@ public:
 
     static TextureResource* playerTexture;
     static TextureResource* projectileTexture;
+    static TextureResource* backgroundTexture;
     static TTF_Font* textFont;
 
 private:

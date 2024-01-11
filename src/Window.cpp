@@ -6,13 +6,14 @@
 #include "Window.hpp"
 #include "entities/GameObject.hpp"
 #include "utilities/Math.hpp"
+#include "utilities/ResourceManager.hpp"
 
 /* WINDOW DIMENSIONS */
 int Window::s_width = 1280;
 int Window::s_height = 720;
 
 Window::Window(const char* title)
-    :m_window(nullptr), m_renderer(nullptr)
+    :m_window(nullptr), m_renderer(nullptr), m_bgTexture(ResourceManager::backgroundTexture)
 {
     m_window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, s_width, s_height, SDL_WINDOW_SHOWN);
     if (!m_window){
@@ -28,8 +29,15 @@ Window::~Window()
 }
 
 void Window::Clear(){
+
     SDL_SetRenderDrawColor(m_renderer, 48, 14, 65, SDL_ALPHA_OPAQUE);
+
     SDL_RenderClear(m_renderer);
+
+    SDL_FRect bgRect(0.f, 0.f, ResourceManager::backgroundTexture->GetDimensions().x, ResourceManager::backgroundTexture->GetDimensions().y);
+    if (ResourceManager::backgroundTexture)
+        SDL_RenderCopyF(m_renderer, ResourceManager::backgroundTexture->GetTexture(), nullptr, &bgRect);
+
 }
 
 void Window::Display(){

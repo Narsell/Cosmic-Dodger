@@ -39,6 +39,7 @@ GameManager* GameManager::GetInstance()
 void GameManager::GameStart(const char* gameTitle)
 {
     m_window = new Window(gameTitle);
+    
     m_resourceManager = ResourceManager::InitResourceManager(m_window->GetRenderer());
 
     Construction();
@@ -70,6 +71,7 @@ void GameManager::Construction()
 
     ResourceManager::playerTexture = m_resourceManager->LoadTexture("Player", playerDimensions, "assets/player_ship.png");
     ResourceManager::projectileTexture = m_resourceManager->LoadTexture("Projectile", Vector2(9, 37), "assets/laser.png");
+    ResourceManager::backgroundTexture = m_resourceManager->LoadTexture("Background", Vector2(1280, 720), "assets/background.png");
 
     player = SpawnGameObject(
         new Player(playerTransform, ResourceManager::playerTexture, m_hud, "Player")

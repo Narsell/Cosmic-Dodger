@@ -12,6 +12,7 @@ ResourceManager* ResourceManager::m_resourceManager = nullptr;
 /* TEXTURE RESOURCES INSTANCES */
 TextureResource* ResourceManager::playerTexture = nullptr;
 TextureResource* ResourceManager::projectileTexture = nullptr;
+TextureResource* ResourceManager::backgroundTexture = nullptr;
 
 /* FONTS */
 TTF_Font* ResourceManager::textFont = nullptr;

@@ -5,6 +5,7 @@
 
 struct SDL_Window;
 struct SDL_Renderer;
+struct TextureResource;
 
 class Window {
 
@@ -25,6 +26,7 @@ public:
 
 private:
 
+    TextureResource* m_bgTexture;
     struct SDL_Window* m_window;
     SDL_Renderer* m_renderer;
 };
