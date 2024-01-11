@@ -11,9 +11,10 @@
 #include "GameManager.hpp"
 
 
-Player::Player(const Transform& transform, TextureResource* texture, const char* name)
+Player::Player(const Transform& transform, TextureResource* texture, HUD* hud, const char* name)
 	:
-	GameObject(transform, texture, name)
+	GameObject(transform, texture, name),
+	m_hud(hud)
 {
 	m_transform.SetRotation(90.0);
 
@@ -37,6 +38,18 @@ Player::~Player()
 {
 	//std::cout << GetDisplayName() << " destroyed on Player destructor!\n";
 
+}
+
+HUD* Player::GetHud() const
+{
+	assert(m_hud);
+	return m_hud;
+}
+
+WindowBounds* Player::GetWindowBounds() const
+{
+	assert(m_windowBounds);
+	return m_windowBounds;
 }
 
 void Player::Update(const float deltaTime)

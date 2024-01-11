@@ -13,8 +13,9 @@ public:
 	HUD(Window* window);
 	~HUD();
 
-	void UpdateLivesText(const char* newText);
-	void UpdateScoreText(const char* newText);
+	void UpdateLives(const int lives);
+	void UpdateScore(const int score);
+	void UpdateAmmo(const int ammo);
 
 	virtual void Render(struct SDL_Renderer* renderer) override;
 	virtual void Update(const float deltaTime) override;
@@ -23,6 +24,7 @@ private:
 
 	StaticText* m_lives = nullptr;
 	StaticText* m_score = nullptr;
+	StaticText* m_ammo = nullptr;
 
 	std::vector<StaticText*> m_textElements;
 	Window* m_window = nullptr;

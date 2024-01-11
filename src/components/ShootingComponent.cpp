@@ -8,14 +8,18 @@
 #include "entities/Projectile.hpp"
 #include "entities/Player.hpp"
 #include "entities/WindowBounds.hpp"
+#include "userinterface/Hud.hpp"
 #include "GameManager.hpp"
 
 ShootingComponent::ShootingComponent(GameObject* parent, const char* name)
 	:Component(parent, name),
-	m_shootingSound("assets/shoot2.wav")
+	m_shootingSound("assets/shoot2.wav"),
+	m_player(dynamic_cast<Player*>(m_parent))
 {
-	m_player = dynamic_cast<Player*>(m_parent);
 	assert(m_player);
+	m_hud = m_player->GetHud();
+	assert(m_hud);
+	m_hud->UpdateAmmo(m_currentAmmo);
 }
 
 ShootingComponent::~ShootingComponent()
@@ -27,10 +31,8 @@ void ShootingComponent::Update(const float deltaTime)
 	m_timeSinceLastShot += deltaTime;
 	m_timeSinceLastReplenish += deltaTime;
 
-	std::cout << "Current ammo: " << m_currentAmmo << "\n";
-
 	if (m_timeSinceLastReplenish >= m_increaseAmmoTime) {
-		m_currentAmmo = std::clamp(++m_currentAmmo, 0, m_maxAmmo);
+		UpdateAmmo(m_currentAmmo + 1);
 		m_timeSinceLastReplenish = 0.f;
 	}
 
@@ -60,5 +62,11 @@ void ShootingComponent::Shoot()
 	m_shootingSound.PlaySound();
 
 	m_timeSinceLastShot = 0.f;
-	m_currentAmmo = std::clamp(--m_currentAmmo, 0, m_maxAmmo);
+	UpdateAmmo(m_currentAmmo - 1);
+}
+
+void ShootingComponent::UpdateAmmo(const int newAmmo)
+{
+	m_currentAmmo = std::clamp(newAmmo, 0, m_maxAmmo);
+	m_player->GetHud()->UpdateAmmo(m_currentAmmo);
 }

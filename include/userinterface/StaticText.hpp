@@ -1,4 +1,6 @@
 #pragma once
+#include <sstream>
+
 #include "components/Transform.hpp"
 #include "entities/BaseEntity.hpp"
 #include "utilities/Color.hpp"
@@ -12,10 +14,10 @@ class StaticText : public BaseEntity {
 
 public:
 
-	StaticText(Window* window, const char* text, const Color& color, Transform transform = Transform(), Vector2 dimensions = Vector2(10.f, 10.f), const char* name = "NA_StaticText");
+	StaticText(Window* window, const std::string& text, const Color& color, const Transform& transform = Transform(), const Vector2& dimensions = Vector2(10.f, 10.f), const char* name = "NA_StaticText");
 	~StaticText();
 
-	void SetText(const char* newText);
+	void SetText(const std::string& newText);
 
 	virtual void Render(SDL_Renderer* renderer) override;
 	virtual void Update(const float deltaTime) override {};
@@ -23,7 +25,7 @@ public:
 	Transform m_transform;
 private:
 
-	const char* m_text;
+	std::string m_text;
 	Color m_color;
 	Vector2 m_dimensions;
 

@@ -72,7 +72,7 @@ void GameManager::Construction()
     ResourceManager::projectileTexture = m_resourceManager->LoadTexture("Projectile", Vector2(9, 37), "assets/laser.png");
 
     player = SpawnGameObject(
-        new Player(playerTransform, ResourceManager::playerTexture, "Player")
+        new Player(playerTransform, ResourceManager::playerTexture, m_hud, "Player")
     );
 }
 

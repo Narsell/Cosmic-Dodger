@@ -4,6 +4,7 @@
 #include "components/Sound.hpp"
 
 class Player;
+class HUD;
 
 class ShootingComponent : public Component {
 
@@ -20,6 +21,9 @@ public:
 	void Shoot();
 
 private:
+	void UpdateAmmo(const int newAmmo);
+
+private:
 	Sound m_shootingSound;
 	float m_timeSinceLastShot = 0.f;
 	const float m_shootingReloadTime = 0.15f;
@@ -29,6 +33,7 @@ private:
 	float m_timeSinceLastReplenish = 0.f;
 	const float m_increaseAmmoTime = 2.f;
 
-	Player* m_player = nullptr;
+	Player* m_player;
+	HUD* m_hud = nullptr;
 
 };

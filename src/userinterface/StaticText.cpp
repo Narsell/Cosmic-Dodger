@@ -4,7 +4,7 @@
 
 bool StaticText::s_fontInitialized = false;
 
-StaticText::StaticText(Window* window, const char* text, const Color& color, Transform transform, Vector2 dimensions, const char* name)
+StaticText::StaticText(Window* window, const std::string& text, const Color& color, const Transform& transform, const Vector2& dimensions, const char* name)
 	:BaseEntity("", name, true, false),
 	m_text(text),
 	m_color(color),
@@ -14,7 +14,7 @@ StaticText::StaticText(Window* window, const char* text, const Color& color, Tra
 {
 	ResourceManager::textFont = ResourceManager::LoadFont("assets/kenvector_future_thin.ttf", 50);
 
-	m_fontSurface = TTF_RenderText_Solid(ResourceManager::textFont, m_text, m_color.ToSDLColor());
+	m_fontSurface = TTF_RenderText_Solid(ResourceManager::textFont, m_text.c_str(), m_color.ToSDLColor());
 	m_fontTexture = SDL_CreateTextureFromSurface(m_window->GetRenderer(), m_fontSurface);
 
 	SDL_FreeSurface(m_fontSurface);
@@ -25,10 +25,10 @@ StaticText::~StaticText()
 	SDL_DestroyTexture(m_fontTexture);
 }
 
-void StaticText::SetText(const char* newText)
+void StaticText::SetText(const std::string& newText)
 {
 	m_text = newText;
-	m_fontSurface = TTF_RenderText_Solid(ResourceManager::textFont, m_text, m_color.ToSDLColor());
+	m_fontSurface = TTF_RenderText_Solid(ResourceManager::textFont, m_text.c_str(), m_color.ToSDLColor());
 	m_fontTexture = SDL_CreateTextureFromSurface(m_window->GetRenderer(), m_fontSurface);
 
 	SDL_FreeSurface(m_fontSurface);

@@ -10,19 +10,21 @@ class PlayerInputComponent;
 class CollisionComponent;
 class ShootingComponent;
 class WindowBounds;
+class HUD;
 struct TextureResource;
 
 class Player : public GameObject {
 
 public:
 
-	Player(const Transform& transform, TextureResource* texture, const char* name = "NA_Player");
+	Player(const Transform& transform, TextureResource* texture, HUD* hud, const char* name = "NA_Player");
 	Player(const Player& copy) = delete;
 	const Player& operator=(const Player& other) = delete;
 	~Player() override;
 
 	const bool GetIsMouseOnPlayer() const { return m_isMouseOnPlayer; };
-	WindowBounds* GetWindowBounds() const { return m_windowBounds; };
+	HUD* GetHud() const;
+	WindowBounds* GetWindowBounds() const;
 
 	CollisionComponent* GetCollisionComponent() const { return m_collisionComponent; };
 	MovementComponent* GetMovementComponent() const { return m_movementComponent; };
@@ -49,5 +51,7 @@ private:
 	MovementComponent* m_movementComponent = nullptr;
 	PlayerInputComponent* m_inputComponent = nullptr;
 	ShootingComponent* m_shootingComponent = nullptr;
+
+	HUD* m_hud;
 
 };
