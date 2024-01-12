@@ -1,23 +1,20 @@
 #include "userinterface/StaticText.hpp"
 #include "utilities/ResourceManager.hpp"
+#include "userinterface/Hud.hpp"
 #include "Window.hpp"
 
-bool StaticText::s_fontInitialized = false;
 
-StaticText::StaticText(Window* window, const std::string& text, const Color& color, const Transform& transform, const Vector2& dimensions, const char* name)
+StaticText::StaticText(HUD* parentHud, const std::string& text, const Color& color, const Transform& transform, const Vector2& dimensions, const char* name)
 	:BaseEntity("", name, true, false),
 	m_text(text),
 	m_color(color),
-	m_window(window),
-	m_transform(transform),
-	m_dimensions(dimensions)
+	m_dimensions(dimensions),
+	m_parentHud(parentHud),
+	m_transform(transform)
 {
 	ResourceManager::textFont = ResourceManager::LoadFont("assets/kenvector_future_thin.ttf", 50);
 
-	m_fontSurface = TTF_RenderText_Solid(ResourceManager::textFont, m_text.c_str(), m_color.ToSDLColor());
-	m_fontTexture = SDL_CreateTextureFromSurface(m_window->GetRenderer(), m_fontSurface);
-
-	SDL_FreeSurface(m_fontSurface);
+	UpdateTexture();
 }
 
 StaticText::~StaticText()
@@ -28,10 +25,7 @@ StaticText::~StaticText()
 void StaticText::SetText(const std::string& newText)
 {
 	m_text = newText;
-	m_fontSurface = TTF_RenderText_Solid(ResourceManager::textFont, m_text.c_str(), m_color.ToSDLColor());
-	m_fontTexture = SDL_CreateTextureFromSurface(m_window->GetRenderer(), m_fontSurface);
-
-	SDL_FreeSurface(m_fontSurface);
+	UpdateTexture();
 }
 
 void StaticText::Render(SDL_Renderer* renderer)
@@ -40,4 +34,14 @@ void StaticText::Render(SDL_Renderer* renderer)
 	SDL_FRect rect(position.x, position.y, m_dimensions.x, m_dimensions.y);
 
 	SDL_RenderCopyF(renderer, m_fontTexture, nullptr, &rect);		
+}
+
+void StaticText::UpdateTexture()
+{
+	SDL_Renderer* renderer = m_parentHud->GetTargetWindow()->GetRenderer();
+	assert(renderer);
+	m_fontSurface = TTF_RenderText_Solid(ResourceManager::textFont, m_text.c_str(), m_color.ToSDLColor());
+	m_fontTexture = SDL_CreateTextureFromSurface(renderer, m_fontSurface);
+
+	SDL_FreeSurface(m_fontSurface);
 }

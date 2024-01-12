@@ -13,6 +13,7 @@ class Player;
 class WindowBounds;
 class ResourceManager;
 class HUD;
+class GameState;
 
 class GameManager {
 
@@ -67,6 +68,9 @@ private:
 
 	//UI
 	HUD* m_hud = nullptr;
+
+	//GameState
+	GameState* m_gameState = nullptr;
 
 };
 

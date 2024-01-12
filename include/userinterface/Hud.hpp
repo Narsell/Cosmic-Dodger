@@ -5,6 +5,7 @@
 
 struct SDL_Renderer;
 class StaticText;
+class GameState;
 class Window;
 
 class HUD : public BaseEntity {
@@ -20,13 +21,16 @@ public:
 	virtual void Render(struct SDL_Renderer* renderer) override;
 	virtual void Update(const float deltaTime) override;
 
-private:
+	Window* GetTargetWindow() const { return m_window; };
 
-	StaticText* m_lives = nullptr;
-	StaticText* m_score = nullptr;
-	StaticText* m_ammo = nullptr;
+private:
+	Window* m_window;
+
+	StaticText* m_lives;
+	StaticText* m_score;
+	StaticText* m_ammo;
 
 	std::vector<StaticText*> m_textElements;
-	Window* m_window = nullptr;
+
 
 };

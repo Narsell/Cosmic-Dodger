@@ -6,15 +6,16 @@
 #include "components/Transform.hpp"
 #include "userinterface/StaticText.hpp"
 #include "utilities/Color.hpp"
+#include "utilities/GameState.hpp"
 
 
 HUD::HUD(Window* window)
 	:BaseEntity("", "NA_HUD", true, true),
-	m_window(window)
+	m_window(window),
+	m_lives(new StaticText(this, "LIVES: #", Color::aqua, Transform(Vector2(Window::s_width - 220.f, 20.f)), Vector2(200.f, 50.f))),
+	m_score(new StaticText(this, "SCORE: #", Color::aqua, Transform(Vector2(20.f, 20.f)), Vector2(200.f, 50.f))),
+	m_ammo(new StaticText(this, "AMMO: #", Color::aqua, Transform(Vector2(20.f, Window::s_height - 70.f)), Vector2(200.f, 50.f)))
 {	
-	m_lives = new StaticText(m_window, "LIVES: 3", Color::aqua, Transform(Vector2(Window::s_width - 220.f, 20.f)), Vector2(200.f, 50.f));
-	m_score = new StaticText(m_window, "SCORE: 0", Color::aqua, Transform(Vector2(20.f, 20.f)), Vector2(200.f, 50.f));
-	m_ammo = new StaticText(m_window, "AMMO: 0", Color::aqua, Transform(Vector2(20.f, Window::s_height - 70.f)), Vector2(200.f, 50.f));
 
 	m_textElements.push_back(m_lives);
 	m_textElements.push_back(m_score);

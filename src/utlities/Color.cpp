@@ -2,7 +2,7 @@
 
 Color Color::red = Color(255, 0, 0);
 Color Color::green = Color(0, 255, 0);
-Color Color::blue = Color(0, 0, 1);
+Color Color::blue = Color(0, 0, 255);
 Color Color::aqua = Color(0, 255, 255);
 
 Color::Color(const int r, const int g, const int b, const int a)

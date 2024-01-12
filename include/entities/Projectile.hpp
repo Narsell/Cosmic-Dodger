@@ -35,7 +35,7 @@ private:
 	Collider2D* m_collider = nullptr;
 
 	std::uint8_t m_bouncesCounter = 0;
-	std::uint8_t m_maxBounces = 2;
+	std::uint8_t m_maxBounces = 1;
 
 	float m_distanceTraveled = 0.f;
 	Vector2 m_startPosition;

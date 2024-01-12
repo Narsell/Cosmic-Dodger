@@ -13,6 +13,7 @@
 #include "utilities/Performance.hpp"
 #include "utilities/ResourceManager.hpp"
 #include "userinterface/HUD.hpp"
+#include "utilities/GameState.hpp"
 
 std::list<GameObject*> GameManager::m_gameObjects;
 std::vector<GameObject*> GameManager::m_destroyQueue;
@@ -60,7 +61,9 @@ void GameManager::GameStart(const char* gameTitle)
 
 void GameManager::Construction()
 {
+    m_gameState = GameState::GetGameState();
     m_hud = new HUD(m_window);
+    m_gameState->SetTargetHUD(m_hud);
 
     windowBounds = SpawnGameObject(new WindowBounds("Window Bounds"));
 
