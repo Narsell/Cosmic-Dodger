@@ -10,6 +10,7 @@
 #include "components/PlayerInputComponent.hpp"
 #include "entities/Player.hpp"
 #include "entities/Projectile.hpp"
+#include "entities/Meteor.hpp"
 #include "utilities/Performance.hpp"
 #include "utilities/ResourceManager.hpp"
 #include "userinterface/HUD.hpp"
@@ -63,27 +64,16 @@ void GameManager::Construction()
 {
     m_gameState = GameState::GetGameState();
     m_hud = new HUD(m_window);
-    m_gameState->SetTargetHUD(m_hud);
 
     windowBounds = SpawnGameObject(new WindowBounds("Window Bounds"));
-
-    Vector2 playerDimensions = Vector2(112, 75);
-    Vector2 playerPosition(Window::s_width / 2 - playerDimensions.x / 2,
-                           Window::s_height - playerDimensions.y - 5);
-    Transform playerTransform = Transform(playerPosition);
-
-    ResourceManager::playerTexture = m_resourceManager->LoadTexture("Player", playerDimensions, "assets/player_ship.png");
-    ResourceManager::projectileTexture = m_resourceManager->LoadTexture("Projectile", Vector2(9, 37), "assets/laser.png");
-    ResourceManager::backgroundTexture = m_resourceManager->LoadTexture("Background", Vector2(1280, 720), "assets/background.png");
-
-    player = SpawnGameObject(
-        new Player(playerTransform, ResourceManager::playerTexture, m_hud, "Player")
-    );
+    SpawnGameObject(new Meteor(Transform(Vector2(595.5f, 319.f)), "Meteor"));
+    player = SpawnGameObject(new Player(m_hud, "Player"));
 }
 
 void GameManager::BeginPlay()
 {
     player->SetWindowBounds(windowBounds);
+    m_gameState->SetTargetHUD(m_hud);
 }
 
 void GameManager::HandleInput()

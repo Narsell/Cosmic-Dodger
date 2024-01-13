@@ -11,19 +11,23 @@
 #include "GameManager.hpp"
 
 
-Player::Player(const Transform& transform, TextureResource* texture, HUD* hud, const char* name)
+Player::Player(HUD* hud, const char* name)
 	:
-	GameObject(transform, texture, name),
+	GameObject(Transform(), ResourceManager::playerTexture, name),
 	m_hud(hud)
 {
-	m_transform.SetRotation(90.0);
+	Vector2 playerPosition(
+		Window::s_width / 2 - ResourceManager::playerTexture->GetDimensions().x / 2.f, 
+		Window::s_height - ResourceManager::playerTexture->GetDimensions().y - 5.f
+	);
+	m_transform = Transform(playerPosition, 90.f);
 
 	m_movementComponent = AddComponent<MovementComponent>(new MovementComponent(this, "Movement Component"));
 	m_movementComponent->SetMaxSpeed(700.f);
 
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));
 	m_collisionComponent->SetCanRender(false);
-	m_collider = m_collisionComponent->AddCollider(texture->GetDimensions(), Vector2(0.5, 0.5), true, "Ship Collision");
+	m_collider = m_collisionComponent->AddCollider(ResourceManager::playerTexture->GetDimensions(), Vector2(0.5, 0.5), true, "Ship Collision");
 	
 	std::function<void(HitInfo&)> OnCollisionDelegate = std::bind(&Player::OnCollision, this, std::placeholders::_1);
 	m_collider->SetCollisionDelegate(OnCollisionDelegate);

@@ -17,7 +17,7 @@ class Player : public GameObject {
 
 public:
 
-	Player(const Transform& transform, TextureResource* texture, HUD* hud, const char* name = "NA_Player");
+	Player(HUD* hud, const char* name = "NA_Player");
 	Player(const Player& copy) = delete;
 	const Player& operator=(const Player& other) = delete;
 	~Player() override;

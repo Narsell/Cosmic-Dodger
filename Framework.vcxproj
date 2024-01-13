@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\components\ShootingComponent.cpp" />
+    <ClCompile Include="src\entities\Meteor.cpp" />
     <ClCompile Include="src\utlities\Color.cpp" />
     <ClCompile Include="src\utlities\GameState.cpp" />
     <ClCompile Include="src\components\PlayerInputComponent.cpp" />
@@ -52,6 +53,7 @@
     <ClInclude Include="include\components\Transform.hpp" />
     <ClInclude Include="include\entities\BaseEntity.hpp" />
     <ClInclude Include="include\entities\GameObject.hpp" />
+    <ClInclude Include="include\entities\Meteor.hpp" />
     <ClInclude Include="include\entities\Player.hpp" />
     <ClInclude Include="include\entities\Projectile.hpp" />
     <ClInclude Include="include\entities\WindowBounds.hpp" />

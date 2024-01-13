@@ -53,7 +53,7 @@ void ShootingComponent::Shoot()
 	Vector2 spawnPosition(absoluteCenter - ResourceManager::projectileTexture->GetDimensions() / 2.f + lookAtDirection * m_projetileSpawnDistance);
 	Transform spawnTransform = Transform(spawnPosition, rotation);
 
-	Projectile* projectile = new Projectile(spawnTransform, ResourceManager::projectileTexture, "Projectile");
+	Projectile* projectile = new Projectile(spawnTransform, "Projectile");
 	projectile->GetMovementComponent()->SetVelocity(lookAtDirection);
 	projectile->SetWindowCollisions(m_player->GetWindowBounds());
 

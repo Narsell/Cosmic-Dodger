@@ -3,12 +3,13 @@
 #include "components/CollisionComponent.hpp"
 #include "components/Collider2D.hpp"
 #include "entities/WindowBounds.hpp"
+#include "utilities/ResourceManager.hpp"
 #include "GameManager.hpp"
 #include "Window.hpp"
 
-Projectile::Projectile(const Transform& transform, TextureResource* texture, const char* name)
+Projectile::Projectile(const Transform& transform, const char* name)
 	:
-	GameObject(transform, texture, name)
+	GameObject(transform, ResourceManager::projectileTexture, name)
 {
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));
 	m_collisionComponent->SetCanRender(false);

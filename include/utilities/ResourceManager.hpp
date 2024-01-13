@@ -48,6 +48,7 @@ public:
     static TTF_Font* LoadFont(const char* path, int size);
 
     static TextureResource* playerTexture;
+    static TextureResource* meteorTexture;
     static TextureResource* projectileTexture;
     static TextureResource* backgroundTexture;
     static TTF_Font* textFont;
@@ -56,7 +57,7 @@ private:
 
     ResourceManager(SDL_Renderer* renderer);
 
-    static ResourceManager* m_resourceManager;
+    static ResourceManager* s_resourceManager;
     SDL_Renderer* m_renderer;
 
     //TODO: Add vector member variables to store resources and delete them in a for loop.

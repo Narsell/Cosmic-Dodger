@@ -30,16 +30,17 @@ void GameState::SetTargetHUD(HUD* hud)
 void GameState::AddScore(const int increment)
 {
 	m_currentScore += increment;
-	m_hud->UpdateScore(m_currentScore);
+	if(m_hud)
+		m_hud->UpdateScore(m_currentScore);
 }
 
 
 void GameState::PlayerDeath()
 {
 	m_currentLives = std::clamp(m_currentLives - 1, 0, 1);
-	assert(m_hud);
 
-	m_hud->UpdateLives(m_currentLives);
+	if(m_hud)
+		m_hud->UpdateLives(m_currentLives);
 
 	if (m_currentLives == 0) {
 		GameOver();

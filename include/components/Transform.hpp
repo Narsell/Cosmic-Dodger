@@ -17,7 +17,7 @@ public:
 	const float GetScale() const { return m_scale; };
 
 	void SetPosition(const Vector2& newPosition) { m_position = newPosition; };
-	void SetRotation(const float newRotation) { m_rotation = newRotation; };
+	void SetRotation(const float newRotation);
 	void SetScale(const float newScale) { m_scale = newScale; };
 
 private:
