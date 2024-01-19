@@ -17,8 +17,8 @@ Player::Player(HUD* hud, const char* name)
 	m_hud(hud)
 {
 	Vector2 playerPosition(
-		Window::s_width / 2 - ResourceManager::playerTexture->GetDimensions().x / 2.f, 
-		Window::s_height - ResourceManager::playerTexture->GetDimensions().y - 5.f
+		Window::s_width / 2.f - ResourceManager::playerTexture->GetDimensions().x / 2.f, 
+		Window::s_height / 2.f - ResourceManager::playerTexture->GetDimensions().y / 2.f
 	);
 	m_transform = Transform(playerPosition, 90.f);
 

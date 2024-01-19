@@ -15,7 +15,9 @@
 #include "utilities/ResourceManager.hpp"
 #include "userinterface/HUD.hpp"
 #include "utilities/GameState.hpp"
+#include "utilities/MeteorSpawner.hpp"
 
+Player* GameManager::m_player = nullptr;
 std::list<GameObject*> GameManager::m_gameObjects;
 std::vector<GameObject*> GameManager::m_destroyQueue;
 std::vector<SDL_Event> GameManager::m_inputEventQueue;
@@ -65,14 +67,14 @@ void GameManager::Construction()
     m_gameState = GameState::GetGameState();
     m_hud = new HUD(m_window);
 
-    windowBounds = SpawnGameObject(new WindowBounds("Window Bounds"));
-    SpawnGameObject(new Meteor(Transform(Vector2(595.5f, 319.f)), "Meteor"));
-    player = SpawnGameObject(new Player(m_hud, "Player"));
+    m_windowBounds = SpawnGameObject(new WindowBounds("Window Bounds"));
+    m_player = SpawnGameObject(new Player(m_hud, "Player"));
+    m_meteorSpawner = new MeteorSpawner();
 }
 
 void GameManager::BeginPlay()
 {
-    player->SetWindowBounds(windowBounds);
+    m_player->SetWindowBounds(m_windowBounds);
     m_gameState->SetTargetHUD(m_hud);
 }
 
@@ -108,7 +110,7 @@ void GameManager::Update(const float deltaTime)
             gameObject->Update(deltaTime);
         }
     }
-
+    m_meteorSpawner->Update(deltaTime);
     m_hud->Update(deltaTime);
 
     //std::cout << "fps: " << 1 / (deltaTime) << "\n";
@@ -146,6 +148,7 @@ GameManager::~GameManager()
     delete m_window;
     delete m_resourceManager;
     delete m_hud;
+    delete m_meteorSpawner;
 
     std::cout << AllocationMetrics::GetInstance()->CurrentUsage() << std::endl;
 

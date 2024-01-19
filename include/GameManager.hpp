@@ -14,6 +14,7 @@ class WindowBounds;
 class ResourceManager;
 class HUD;
 class GameState;
+class MeteorSpawner;
 
 class GameManager {
 
@@ -33,6 +34,8 @@ public:
 	GameManager(const GameManager& other) = delete;
 	const GameManager& operator=(const GameManager& other) = delete;
 	~GameManager();
+
+	static const Player* GetPlayer() { return m_player; };
 
 	static std::vector<SDL_Event>& GetInputEventQueue() { return m_inputEventQueue; };
 	static const Uint8*& GetInputKeyboardState() { return m_keyboardState; };
@@ -63,8 +66,10 @@ private:
 	// Game entities
 	static std::list<GameObject*> m_gameObjects;
 	static std::vector<GameObject*> m_destroyQueue;
-	Player* player = nullptr;
-	WindowBounds* windowBounds = nullptr;
+	static Player* m_player;
+	WindowBounds* m_windowBounds = nullptr;
+
+	MeteorSpawner* m_meteorSpawner = nullptr;
 
 	//UI
 	HUD* m_hud = nullptr;

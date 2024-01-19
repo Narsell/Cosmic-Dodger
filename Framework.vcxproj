@@ -40,6 +40,7 @@
     <ClCompile Include="src\userinterface\StaticText.cpp" />
     <ClCompile Include="src\utlities\Math.cpp" />
     <ClCompile Include="src\components\Sound.cpp" />
+    <ClCompile Include="src\utlities\MeteorSpawner.cpp" />
     <ClCompile Include="src\utlities\ResourceManager.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
@@ -64,6 +65,7 @@
     <ClInclude Include="include\utilities\GameState.hpp" />
     <ClInclude Include="include\utilities\GameStatics.hpp" />
     <ClInclude Include="include\utilities\Math.hpp" />
+    <ClInclude Include="include\utilities\MeteorSpawner.hpp" />
     <ClInclude Include="include\utilities\ResourceManager.hpp" />
     <ClInclude Include="include\userinterface\StaticText.hpp" />
     <ClInclude Include="include\Window.hpp" />
