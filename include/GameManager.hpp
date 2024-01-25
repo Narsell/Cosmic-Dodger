@@ -25,10 +25,10 @@ public:
 	void GameStart(const char* gameTitle);
 
 	template<typename T>
-	static T* SpawnGameObject(T* gameObject);
+	inline static T* SpawnEntity(T* entity);
 
 	template<typename T>
-	static void DestroyGameObject(T* gameObject);
+	inline static void DestroyEntity(T* entity);
 
 	//Copy constructor, copy assigment and destructors.
 	GameManager(const GameManager& other) = delete;
@@ -64,11 +64,10 @@ private:
 	static const Uint8* m_keyboardState;
 
 	// Game entities
-	static std::list<GameObject*> m_gameObjects;
-	static std::vector<GameObject*> m_destroyQueue;
+	static std::list<BaseEntity*> m_entities;
+	static std::vector<BaseEntity*> m_destroyQueue;
 	static Player* m_player;
 	WindowBounds* m_windowBounds = nullptr;
-
 	MeteorSpawner* m_meteorSpawner = nullptr;
 
 	//UI
@@ -82,21 +81,21 @@ private:
 /* TEMPLATE DEFINITIONS */
 
 template<typename T>
-T* GameManager::SpawnGameObject(T* gameObject)
+inline T* GameManager::SpawnEntity(T* entity)
 {
-	assert(gameObject);
-	std::string idName = gameObject->GetDisplayName() + "_" + std::to_string(m_gameObjects.size());
-	gameObject->SetIdName(idName);
-	//std::cout << "Spawned " << gameObject->GetIdName() << "\n";
-	m_gameObjects.emplace_back(gameObject);
-	return gameObject;
+	assert(entity);
+	std::string idName = entity->GetDisplayName() + "_" + std::to_string(m_entities.size());
+	entity->SetIdName(idName);
+	//std::cout << "Spawned " << entity->GetIdName() << "\n";
+	m_entities.emplace_back(entity);
+	return entity;
 }
 
 template<typename T>
-void GameManager::DestroyGameObject(T* gameObject)
+inline void GameManager::DestroyEntity(T* entity)
 {
-	assert(gameObject);
-	//std::cout << "Destroyed " << gameObject->GetIdName() << "\n";
-	m_destroyQueue.push_back(gameObject);
-	gameObject->Disable();
+	assert(entity);
+	//std::cout << "Destroyed " << entity->GetIdName() << "\n";
+	m_destroyQueue.push_back(entity);
+	entity->Disable();
 }

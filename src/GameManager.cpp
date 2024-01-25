@@ -18,8 +18,8 @@
 #include "utilities/MeteorSpawner.hpp"
 
 Player* GameManager::m_player = nullptr;
-std::list<GameObject*> GameManager::m_gameObjects;
-std::vector<GameObject*> GameManager::m_destroyQueue;
+std::list<BaseEntity*> GameManager::m_entities;
+std::vector<BaseEntity*> GameManager::m_destroyQueue;
 std::vector<SDL_Event> GameManager::m_inputEventQueue;
 const Uint8* GameManager::m_keyboardState;
 
@@ -67,9 +67,9 @@ void GameManager::Construction()
     m_gameState = GameState::GetGameState();
     m_hud = new HUD(m_window);
 
-    m_windowBounds = SpawnGameObject(new WindowBounds("Window Bounds"));
-    m_player = SpawnGameObject(new Player(m_hud, "Player"));
-    m_meteorSpawner = new MeteorSpawner();
+    m_windowBounds = SpawnEntity(new WindowBounds("Window Bounds"));
+    m_player = SpawnEntity(new Player(m_hud, "Player"));
+    m_meteorSpawner = SpawnEntity(new MeteorSpawner());
 }
 
 void GameManager::BeginPlay()
@@ -97,17 +97,17 @@ void GameManager::HandleInput()
 
 void GameManager::Update(const float deltaTime)
 {
-    for (GameObject* destroyedGameObj : m_destroyQueue) {
+    for (BaseEntity* destroyedGameObj : m_destroyQueue) {
         assert(destroyedGameObj);
         delete destroyedGameObj;
-        m_gameObjects.remove(destroyedGameObj);
+        m_entities.remove(destroyedGameObj);
     }
     m_destroyQueue.clear();
 
-    for (GameObject* gameObject : m_gameObjects) {
-        assert(gameObject);
-        if (gameObject->GetCanUpdate()) {
-            gameObject->Update(deltaTime);
+    for (BaseEntity* entity : m_entities) {
+        assert(entity);
+        if (entity->GetCanUpdate()) {
+            entity->Update(deltaTime);
         }
     }
     m_meteorSpawner->Update(deltaTime);
@@ -126,9 +126,9 @@ void GameManager::Render()
 {
     m_window->Clear();
 
-    for (GameObject* gameObject : m_gameObjects) {
-        if (gameObject->GetCanRender()) {
-            gameObject->Render(m_window->GetRenderer());
+    for (BaseEntity* entity : m_entities) {
+        if (entity->GetCanRender()) {
+            entity->Render(m_window->GetRenderer());
         }
     }
 
@@ -141,17 +141,15 @@ void GameManager::Render()
 GameManager::~GameManager()
 {
     //Deleting all game objects
-    for (GameObject* gameObject : m_gameObjects) {
-        delete gameObject;
+    for (BaseEntity* entity : m_entities) {
+        delete entity;
     }
 
     delete m_window;
     delete m_resourceManager;
     delete m_hud;
-    delete m_meteorSpawner;
 
     std::cout << AllocationMetrics::GetInstance()->CurrentUsage() << std::endl;
-
 }
 
 

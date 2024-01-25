@@ -37,6 +37,7 @@ public:
 	void Update(const float deltaTime) override;
 
 	void ListenForCollisions(Collider2D* collisionCandidate);
+	void ListenForCollisions(GameObject* collisionCandidate);
 	void ListenForCollisions(std::vector<Collider2D*> newCollisionCandidates);
 	void SetCollisionDelegate(std::function<void(HitInfo&)> delegate);
 	bool IsColliding(Collider2D* other, HitInfo& OutHitInformation) const;

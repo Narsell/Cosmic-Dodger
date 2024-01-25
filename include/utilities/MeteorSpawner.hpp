@@ -16,7 +16,9 @@ public:
 	~MeteorSpawner();
 
 	virtual void Update(const float deltaTime) override;
-	void DeleteMeteor(Meteor* meteor);
+
+	static const std::list<Meteor*>& GetActiveMeteors();
+	static void DeleteMeteor(Meteor* meteor);
 	
 private:
 
@@ -25,10 +27,10 @@ private:
 
 private:
 
-	const float m_spawnRate = 1.f;
+	const float m_spawnRate = 1.5f;
 	float m_timeSinceLastSpawn = 0.f;
 
 	const Player* m_player = nullptr;
-	std::list<Meteor*> m_activeMeteors;
+	static std::list<Meteor*> m_activeMeteors;
 
 };

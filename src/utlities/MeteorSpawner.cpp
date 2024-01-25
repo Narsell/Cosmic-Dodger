@@ -5,6 +5,8 @@
 #include "Window.hpp"
 
 
+std::list<Meteor*> MeteorSpawner::m_activeMeteors;
+
 MeteorSpawner::MeteorSpawner()
 	:m_player(GameManager::GetPlayer())
 {
@@ -27,10 +29,15 @@ void MeteorSpawner::Update(const float deltaTime) {
 
 }
 
+const std::list<Meteor*>& MeteorSpawner::GetActiveMeteors()
+{
+	return m_activeMeteors;
+}
+
 void MeteorSpawner::DeleteMeteor(Meteor* meteor)
 {
 	m_activeMeteors.remove(meteor);
-	GameManager::DestroyGameObject(meteor);
+	GameManager::DestroyEntity(meteor);
 }
 
 void MeteorSpawner::SpawnMeteor()
@@ -39,7 +46,7 @@ void MeteorSpawner::SpawnMeteor()
 	Vector2 playerPosition = m_player->m_transform.GetPosition();
 	Vector2 velocity = (playerPosition - spawnPosition).Normalized();
 	m_activeMeteors.emplace_back(
-		GameManager::SpawnGameObject(new Meteor(spawnPosition, velocity, this))
+		GameManager::SpawnEntity(new Meteor(spawnPosition, velocity, this))
 	);
 }
 

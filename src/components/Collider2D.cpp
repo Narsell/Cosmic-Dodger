@@ -26,8 +26,8 @@ Collider2D::~Collider2D()
 void Collider2D::Render(SDL_Renderer* renderer)
 {
 	BaseEntity::Render(renderer);
+	SDL_SetRenderDrawColor(renderer, 255, 255, 0, SDL_ALPHA_OPAQUE);
 
-	SDL_SetRenderDrawColor(renderer, 255, 0, 255, SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawRectF(renderer, &m_colliderRectangle);
 }
 
@@ -35,11 +35,24 @@ void Collider2D::Update(const float deltaTime)
 {
 	BaseEntity::Update(deltaTime);
 
-	m_absTransform = m_parentComponent->m_transform;
+	Transform parentTransform = m_parentComponent->m_transform;
 
-	m_colliderRectangle.x = m_absTransform.GetPosition().x + m_relTransform.GetPosition().x;
-	m_colliderRectangle.y = m_absTransform.GetPosition().y + m_relTransform.GetPosition().y;
+	m_absTransform.SetRotation(parentTransform.GetRotation());
+	m_absTransform.SetScale(parentTransform.GetScale());
 
+	const Vector2 absoluteCenter = parentTransform.GetPosition() + m_parentComponent->GetParent()->GetCenterPoint();
+	const float rotation = Math::DegreesToRadians(parentTransform.GetRotation());
+	const Vector2 relativePosition = m_relTransform.GetPosition().RotatedBy(rotation);
+	const Vector2 absolutePosition = Vector2(
+		absoluteCenter.x + relativePosition.x - m_colliderRectangle.w / 2.f,
+		absoluteCenter.y + relativePosition.y - m_colliderRectangle.h / 2.f
+	);
+
+	m_absTransform.SetPosition(absolutePosition);
+
+	m_colliderRectangle.x = m_absTransform.GetPosition().x;
+	m_colliderRectangle.y = m_absTransform.GetPosition().y;
+	
 	for (Collider2D* collisionCandidate : m_collisionCandidates) {
 		const bool isColliding = IsColliding(collisionCandidate, m_lastHitInformation);
 		if (isColliding && GetCanUpdate() && OnCollisionDelegate) {
@@ -55,6 +68,14 @@ void Collider2D::ListenForCollisions(Collider2D* collisionCandidate)
 {
 	assert(collisionCandidate);
 	m_collisionCandidates.emplace_back(collisionCandidate);
+}
+
+void Collider2D::ListenForCollisions(GameObject* collisionCandidate)
+{
+	CollisionComponent* collisionComp = collisionCandidate->GetComponentOfType<CollisionComponent>();
+	if (collisionComp) {
+		ListenForCollisions(collisionComp->GetAllColliders());
+	}
 }
 
 void Collider2D::ListenForCollisions(std::vector<Collider2D*> newCollisionCandidates)

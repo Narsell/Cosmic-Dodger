@@ -3,10 +3,13 @@
 
 #include "components/ShootingComponent.hpp"
 #include "components/MovementComponent.hpp"
-#include "utilities/ResourceManager.hpp"
+#include "components/CollisionComponent.hpp"
 #include "components/Transform.hpp"
+#include "utilities/ResourceManager.hpp"
+#include "utilities/MeteorSpawner.hpp"
 #include "entities/Projectile.hpp"
 #include "entities/Player.hpp"
+#include "entities/Meteor.hpp"
 #include "entities/WindowBounds.hpp"
 #include "userinterface/Hud.hpp"
 #include "GameManager.hpp"
@@ -57,7 +60,11 @@ void ShootingComponent::Shoot()
 	projectile->GetMovementComponent()->SetVelocity(lookAtDirection);
 	projectile->SetWindowCollisions(m_player->GetWindowBounds());
 
-	GameManager::SpawnGameObject(projectile);
+	for (Meteor* meteor : MeteorSpawner::GetActiveMeteors()) {
+		projectile->GetCollisionComponent()->GetColliderByIndex(0)->ListenForCollisions(meteor);
+	}
+
+	GameManager::SpawnEntity(projectile);
 
 	m_shootingSound.PlaySound();
 

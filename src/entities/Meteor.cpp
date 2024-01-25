@@ -15,7 +15,7 @@ Meteor::Meteor(const Transform& transform, const Vector2& initialVelocity, Meteo
 
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));
 	m_collisionComponent->SetCanRender(false);
-	m_collider = m_collisionComponent->AddCollider(ResourceManager::meteorTexture->GetDimensions() * 0.7f, Vector2(10, 10), true, "Meteor Collision");
+	m_collider = m_collisionComponent->AddCollider(ResourceManager::meteorTexture->GetDimensions() * 0.7f, Vector2::ZERO, true, "Meteor Collision");
 
 }
 

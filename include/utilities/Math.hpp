@@ -27,7 +27,7 @@ public:
 
 	const Vector2 Normalized() const;
 
-	void RotateBy(const float angle, const Vector2& point);
+	const Vector2 RotatedBy(const float angle) const;
 
 	const Vector2 operator+(const Vector2& other) const;
 	const Vector2 operator-(const Vector2& other) const;

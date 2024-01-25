@@ -47,22 +47,16 @@ const Vector2 Vector2::Normalized() const
 	return Vector2(*this / lenght);
 }
 
-void Vector2::RotateBy(const float angle, const Vector2& pivot)
+const Vector2 Vector2::RotatedBy(const float angle) const
 {
-	float s = sin(angle);
-	float c = cos(angle);
 
-	// translate point back to origin:
-	Vector2 tempPoint = *this;
-	tempPoint -= pivot;
-
-	// rotate point
-	Vector2 direction = Math::GetDirectionFromAngle(angle);
-	Vector2 newV(tempPoint.x * direction.x - tempPoint.y * direction.y, tempPoint.x * direction.y + direction.x * tempPoint.y);
-
-	// translate point back:
-	Vector2 rotatedVector = newV + pivot;
-	*this = rotatedVector;
+	if (Math::IsNearlyEqual(angle, 0.f))
+		return *this;
+	Vector2 rotatedAtOrigin (
+		this->x * sin(angle) - this->y * cos(angle),
+		this->x * cos(angle) + this->y * sin(angle)
+	);
+	return rotatedAtOrigin;
 }
 
 const Vector2 Vector2::operator+(const Vector2& other) const
