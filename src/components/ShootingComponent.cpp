@@ -60,6 +60,9 @@ void ShootingComponent::Shoot()
 	projectile->GetMovementComponent()->SetVelocity(lookAtDirection);
 	projectile->SetWindowCollisions(m_player->GetWindowBounds());
 
+	// TODO: When a robust collision channel system is implemented, remove this.
+	// This introduces a bug where a new meteor spawned just after the projectile will not register collisions with each other (Because they don't know about each other)
+	// Since the projectile is fast enough this shouldn't be much of a problem for now, very difficult to reproduce.
 	for (Meteor* meteor : MeteorSpawner::GetActiveMeteors()) {
 		projectile->GetCollisionComponent()->GetColliderByIndex(0)->ListenForCollisions(meteor);
 	}

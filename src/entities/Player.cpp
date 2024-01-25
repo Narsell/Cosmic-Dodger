@@ -72,7 +72,7 @@ void Player::Update(const float deltaTime)
 
 		const Vector2 currentDirection = Math::GetDirectionFromAngle(m_transform.GetRotation());
 		const Vector2 desiredDirection = playerToMouse.Normalized();
-		m_lookAtDirection = Math::Lerp(currentDirection, desiredDirection, 0.1f);
+		m_lookAtDirection = Math::Lerp(currentDirection, desiredDirection, 0.3f);
 
 		m_transform.SetRotation(Math::GetAngleFromDirection(m_lookAtDirection));		
 	}

@@ -1,9 +1,10 @@
-#include "entities/Projectile.hpp"
 #include "components/MovementComponent.hpp"
 #include "components/CollisionComponent.hpp"
-#include "components/Collider2D.hpp"
 #include "entities/WindowBounds.hpp"
+#include "entities/Meteor.hpp"
+#include "entities/Projectile.hpp"
 #include "utilities/ResourceManager.hpp"
+#include "utilities/MeteorSpawner.hpp"
 #include "GameManager.hpp"
 #include "Window.hpp"
 
@@ -36,13 +37,26 @@ void Projectile::Update(const float deltaTime)
 
 void Projectile::OnCollision(HitInfo& hitInformation)
 {
-	++m_bouncesCounter;
-	if (m_bouncesCounter >= m_maxBounces) {
-		GameManager::DestroyEntity(this);
-		return;
-	}
 
-	if (hitInformation.hitGameObject->GetDisplayName() == "Window Bounds") {
+	if (hitInformation.hitGameObject->GetDisplayName() == "NA_Meteor")
+	{
+		GameManager::DestroyEntity(this);
+		// TODO: Add a more robust collision channel system to avoid this.
+		// Each object should get their own collision callback to handle their specific functionality.
+		// Instead, we're calling the meteor's spawner and deleting it from here, not ideal but that's a problem
+		// for future me.
+		Meteor* meteor = dynamic_cast<Meteor*>(hitInformation.hitGameObject);
+		if (meteor) {
+			meteor->GetParentSpawner()->DeleteMeteor(meteor);
+		}
+	}
+	else if (hitInformation.hitGameObject->GetDisplayName() == "Window Bounds")
+	{
+		++m_bouncesCounter;
+		if (m_bouncesCounter >= m_maxBounces) {
+			GameManager::DestroyEntity(this);
+			return;
+		}
 
 		const Vector2 currentVelocity = m_movementComponent->GetVelocity();
 

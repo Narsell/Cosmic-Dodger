@@ -1,5 +1,6 @@
 #pragma once
 #include "entities/GameObject.hpp"
+#include "components/Collider2D.hpp"
 
 class MovementComponent;
 class CollisionComponent;
@@ -16,6 +17,12 @@ public:
 	~Meteor() override;
 
 	void Update(const float deltaTime) override;
+
+	MeteorSpawner* GetParentSpawner() const { return m_spawner; };
+
+private:
+
+	void OnCollision(HitInfo& hitInformation);
 
 private:
 

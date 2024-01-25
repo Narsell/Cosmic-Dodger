@@ -26,7 +26,6 @@ void MeteorSpawner::Update(const float deltaTime) {
 		SpawnMeteor();
 		m_timeSinceLastSpawn = 0.f;
 	}
-
 }
 
 const std::list<Meteor*>& MeteorSpawner::GetActiveMeteors()

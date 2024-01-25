@@ -16,7 +16,8 @@ Meteor::Meteor(const Transform& transform, const Vector2& initialVelocity, Meteo
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));
 	m_collisionComponent->SetCanRender(false);
 	m_collider = m_collisionComponent->AddCollider(ResourceManager::meteorTexture->GetDimensions() * 0.7f, Vector2::ZERO, true, "Meteor Collision");
-
+	std::function<void(HitInfo&)> OnCollisionDelegate = std::bind(&Meteor::OnCollision, this, std::placeholders::_1);
+	m_collider->SetCollisionDelegate(OnCollisionDelegate);
 }
 
 Meteor::~Meteor()
@@ -36,4 +37,9 @@ void Meteor::Update(const float deltaTime)
 	}
 
 	m_transform.SetRotation(m_transform.GetRotation() + 1.f);
+}
+
+void Meteor::OnCollision(HitInfo& hitInformation)
+{
+	m_spawner->DeleteMeteor(this);
 }
