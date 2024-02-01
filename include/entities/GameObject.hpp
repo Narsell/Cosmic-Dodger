@@ -36,7 +36,7 @@ public:
 	inline ComponentType* AddComponent(ComponentType* component);
 
 	template<typename ComponentType>
-	inline ComponentType* GetComponentOfType();
+	inline ComponentType* GetComponentOfType() const;
 
 protected:
 
@@ -63,7 +63,7 @@ ComponentType* GameObject::AddComponent(ComponentType* component)
 }
 
 template<typename ComponentType>
-ComponentType* GameObject::GetComponentOfType() {
+ComponentType* GameObject::GetComponentOfType() const {
 	ComponentType* result = nullptr;
 	for (Component* component : m_components)
 	{

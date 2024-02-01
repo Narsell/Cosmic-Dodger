@@ -8,6 +8,7 @@
 #include "entities/GameObject.hpp"
 
 class CollisionComponent;
+class Collider2D;
 
 struct HitInfo {
 
@@ -22,7 +23,7 @@ struct HitInfo {
 
 	bool hasHit;
 	Vector2 hitLocation;
-	class Collider2D* hitCollider;
+	Collider2D* hitCollider;
 	GameObject* hitGameObject;
 };
 
@@ -37,10 +38,10 @@ public:
 	void Update(const float deltaTime) override;
 
 	void ListenForCollisions(Collider2D* collisionCandidate);
-	void ListenForCollisions(GameObject* collisionCandidate);
+	void ListenForCollisions(const GameObject* collisionCandidate);
 	void ListenForCollisions(std::vector<Collider2D*> newCollisionCandidates);
 	void SetCollisionDelegate(std::function<void(HitInfo&)> delegate);
-	bool IsColliding(Collider2D* other, HitInfo& OutHitInformation) const;
+	const bool IsColliding(Collider2D* other, HitInfo& OutHitInformation) const;
 
 	const SDL_FRect& GetRect() const { return m_colliderRectangle; };
 
@@ -49,8 +50,8 @@ private:
 	Transform m_relTransform;
 	SDL_FRect m_colliderRectangle;
 	CollisionComponent* m_parentComponent = nullptr;
+	std::list<Collider2D*> m_collisionCandidates;
 	std::function<void(HitInfo&)> OnCollisionDelegate;
-	std::vector<Collider2D*> m_collisionCandidates;
 	HitInfo m_lastHitInformation;
 
 };

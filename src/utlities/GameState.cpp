@@ -37,7 +37,7 @@ void GameState::AddScore(const int increment)
 
 void GameState::PlayerDeath()
 {
-	m_currentLives = std::clamp(m_currentLives - 1, 0, 1);
+	m_currentLives = std::clamp(m_currentLives - 1, 0, m_maxLives);
 
 	if(m_hud)
 		m_hud->UpdateLives(m_currentLives);

@@ -20,7 +20,7 @@ Collider2D::Collider2D(const Vector2& dimensions, CollisionComponent* parentComp
 Collider2D::~Collider2D()
 {
 	//std::cout << GetDisplayName() << " destroyed on Collider destructor!\n";
-
+	m_collisionCandidates.clear();
 }
 
 void Collider2D::Render(SDL_Renderer* renderer)
@@ -55,10 +55,12 @@ void Collider2D::Update(const float deltaTime)
 	
 	for (Collider2D* collisionCandidate : m_collisionCandidates) {
 		const bool isColliding = IsColliding(collisionCandidate, m_lastHitInformation);
-		if (isColliding && GetCanUpdate() && OnCollisionDelegate) {
+		if (isColliding && GetCanUpdate() && OnCollisionDelegate)
+		{
 			OnCollisionDelegate(m_lastHitInformation);
 		}
-		else if(isColliding && (!GetCanUpdate() || !OnCollisionDelegate)) {
+		else if(isColliding && (!GetCanUpdate() || !OnCollisionDelegate))
+		{
 			std::cout << "[WARNING] Unable to call collision delegate\n";
 		}
 	}
@@ -70,7 +72,7 @@ void Collider2D::ListenForCollisions(Collider2D* collisionCandidate)
 	m_collisionCandidates.emplace_back(collisionCandidate);
 }
 
-void Collider2D::ListenForCollisions(GameObject* collisionCandidate)
+void Collider2D::ListenForCollisions(const GameObject* collisionCandidate)
 {
 	CollisionComponent* collisionComp = collisionCandidate->GetComponentOfType<CollisionComponent>();
 	if (collisionComp) {
@@ -78,10 +80,9 @@ void Collider2D::ListenForCollisions(GameObject* collisionCandidate)
 	}
 }
 
-void Collider2D::ListenForCollisions(std::vector<Collider2D*> newCollisionCandidates)
+void Collider2D::ListenForCollisions(const std::vector<Collider2D*> newCollisionCandidates)
 {
-	m_collisionCandidates.reserve(m_collisionCandidates.size() + newCollisionCandidates.size());
-	m_collisionCandidates.insert(m_collisionCandidates.end(), newCollisionCandidates.begin(), newCollisionCandidates.end());
+	std::copy(newCollisionCandidates.begin(), newCollisionCandidates.end(), std::back_inserter(m_collisionCandidates));
 }
 
 void Collider2D::SetCollisionDelegate(std::function<void(HitInfo&)> delegate)
@@ -89,10 +90,8 @@ void Collider2D::SetCollisionDelegate(std::function<void(HitInfo&)> delegate)
 	OnCollisionDelegate = delegate;
 }
 
-bool Collider2D::IsColliding(Collider2D* other, HitInfo& OutHitInformation) const
+const bool Collider2D::IsColliding(Collider2D* other, HitInfo& OutHitInformation) const
 {
-	assert(other);
-
 	if (SDL_HasIntersectionF(&m_colliderRectangle, &other->m_colliderRectangle)) {
 
 		CollisionComponent* parentCollisionComp = other->m_parentComponent;

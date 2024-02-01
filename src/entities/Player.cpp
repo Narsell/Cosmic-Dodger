@@ -86,7 +86,6 @@ void Player::Update(const float deltaTime)
 		const float currentSpeed = m_movementComponent->GetSpeed();
 		m_movementComponent->SetSpeed(currentSpeed - 25);
 	}
-
 }
 
 void Player::SetWindowBounds(WindowBounds* windowBounds)
@@ -97,6 +96,5 @@ void Player::SetWindowBounds(WindowBounds* windowBounds)
 
 void Player::OnCollision(HitInfo& hitInformation)
 {
-
 }
 
