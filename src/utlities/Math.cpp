@@ -2,6 +2,7 @@
 
 #include <math.h>
 #include <cmath>
+#include <random>
 
 #include "utilities/Math.hpp"
 
@@ -133,6 +134,16 @@ const Vector2 Math::Lerp(const Vector2& a, const Vector2& target, const float fa
 {
 	const Vector2 difference = target - a;
 	return difference * factor + a;
+}
+
+const int Math::RandomRange(const int from, const int to)
+{
+	std::random_device rd;
+	std::mt19937 gen(rd());
+
+	std::uniform_int_distribution<> randDist(from, to);
+
+	return randDist(gen);
 }
 
 const bool Math::IsNearlyEqual(const float x, const float y)

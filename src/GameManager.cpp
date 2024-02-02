@@ -18,6 +18,7 @@
 #include "utilities/MeteorSpawner.hpp"
 
 Player* GameManager::m_player = nullptr;
+MeteorSpawner* GameManager::m_meteorSpawner = nullptr;
 std::list<BaseEntity*> GameManager::m_entities;
 std::vector<BaseEntity*> GameManager::m_destroyQueue;
 std::vector<SDL_Event> GameManager::m_inputEventQueue;

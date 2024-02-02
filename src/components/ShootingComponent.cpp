@@ -29,6 +29,13 @@ ShootingComponent::~ShootingComponent()
 {
 }
 
+void ShootingComponent::Reset()
+{
+	m_currentAmmo = m_maxAmmo;
+	m_timeSinceLastReplenish = 0.f;
+	m_timeSinceLastShot = 0.f;
+}
+
 void ShootingComponent::Update(const float deltaTime)
 {
 	m_timeSinceLastShot += deltaTime;

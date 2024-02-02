@@ -16,6 +16,7 @@ public:
 
 	void UpdateLives(const int lives);
 	void UpdateScore(const int score);
+	void UpdateHighScore(const int highScore);
 	void UpdateAmmo(const int ammo);
 
 	virtual void Render(struct SDL_Renderer* renderer) override;
@@ -28,6 +29,7 @@ private:
 
 	StaticText* m_lives;
 	StaticText* m_score;
+	StaticText* m_highScore;
 	StaticText* m_ammo;
 
 	std::vector<StaticText*> m_textElements;

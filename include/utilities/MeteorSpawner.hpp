@@ -15,6 +15,9 @@ public:
 	MeteorSpawner();
 	~MeteorSpawner();
 
+	//Resets spawner timer and deletes all active meteors
+	void Reset();
+
 	virtual void Update(const float deltaTime) override;
 
 	static const std::list<Meteor*>& GetActiveMeteors();

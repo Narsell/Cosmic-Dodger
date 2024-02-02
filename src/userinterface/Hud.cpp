@@ -14,11 +14,13 @@ HUD::HUD(Window* window)
 	m_window(window),
 	m_lives(new StaticText(this, "LIVES: #", Color::aqua, Transform(Vector2(Window::s_width - 220.f, 20.f)), Vector2(200.f, 50.f))),
 	m_score(new StaticText(this, "SCORE: #", Color::aqua, Transform(Vector2(20.f, 20.f)), Vector2(200.f, 50.f))),
+	m_highScore(new StaticText(this, "HI SCORE: #", Color::aqua, Transform(Vector2(20.f, 80)), Vector2(120.f, 30.f))),
 	m_ammo(new StaticText(this, "AMMO: #", Color::aqua, Transform(Vector2(20.f, Window::s_height - 70.f)), Vector2(200.f, 50.f)))
 {	
 
 	m_textElements.push_back(m_lives);
 	m_textElements.push_back(m_score);
+	m_textElements.push_back(m_highScore);
 	m_textElements.push_back(m_ammo);
 }
 
@@ -37,6 +39,11 @@ void HUD::UpdateLives(const int lives)
 void HUD::UpdateScore(const int score)
 {
 	m_score->SetText("SCORE: " + std::to_string(score));
+}
+
+void HUD::UpdateHighScore(const int highScore)
+{
+	m_highScore->SetText("HI SCORE: " + std::to_string(highScore));
 }
 
 void HUD::UpdateAmmo(const int ammo)

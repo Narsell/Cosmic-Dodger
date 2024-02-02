@@ -15,6 +15,15 @@ MeteorSpawner::MeteorSpawner()
 
 MeteorSpawner::~MeteorSpawner()
 {
+}
+
+void MeteorSpawner::Reset()
+{
+	m_timeSinceLastSpawn = 0.f;
+	for (Meteor* meteor : m_activeMeteors) 
+	{
+		GameManager::DestroyEntity(meteor);
+	}
 	m_activeMeteors.clear();
 }
 
@@ -57,6 +66,8 @@ const Vector2 MeteorSpawner::GetRandomSpawnPoint() const
 		2: Random position from the bottom side of the window.
 		3: Random position from the left side of the window.
 	*/
+
+	// TODO: Replace all this with Math::RandomRange()
 	std::random_device rd;
 	std::mt19937 gen(rd());
 

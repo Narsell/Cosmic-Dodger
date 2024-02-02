@@ -35,7 +35,8 @@ public:
 	const GameManager& operator=(const GameManager& other) = delete;
 	~GameManager();
 
-	static const Player* GetPlayer() { return m_player; };
+	static Player* GetPlayer() { return m_player; };
+	static MeteorSpawner* GetMeteorSpawner() { return m_meteorSpawner; };
 
 	static std::vector<SDL_Event>& GetInputEventQueue() { return m_inputEventQueue; };
 	static const Uint8*& GetInputKeyboardState() { return m_keyboardState; };
@@ -67,8 +68,8 @@ private:
 	static std::list<BaseEntity*> m_entities;
 	static std::vector<BaseEntity*> m_destroyQueue;
 	static Player* m_player;
+	static MeteorSpawner* m_meteorSpawner;
 	WindowBounds* m_windowBounds = nullptr;
-	MeteorSpawner* m_meteorSpawner = nullptr;
 
 	//UI
 	HUD* m_hud = nullptr;
@@ -96,6 +97,11 @@ inline void GameManager::DestroyEntity(T* entity)
 {
 	assert(entity);
 	//std::cout << "Destroyed " << entity->GetIdName() << "\n";
+	if (std::find(m_destroyQueue.begin(), m_destroyQueue.end(), entity) != m_destroyQueue.end()) 
+	{
+		std::cout << entity->GetDisplayName() << " already queued for deletion! SKIPPING\n";
+		return;
+	}
 	m_destroyQueue.push_back(entity);
 	entity->Disable();
 }

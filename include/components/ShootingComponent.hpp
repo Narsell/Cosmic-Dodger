@@ -13,6 +13,9 @@ public:
 	ShootingComponent(GameObject* parent, const char* name = "NA_CollisionComponent");
 	~ShootingComponent();
 
+	//Resets current ammo and shooting timers
+	void Reset();
+
 	const int GetMaxAmmo() const { return m_maxAmmo; };
 	const int GetCurrentAmmo() const { return m_currentAmmo; };
 

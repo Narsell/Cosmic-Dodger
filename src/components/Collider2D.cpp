@@ -109,10 +109,12 @@ const bool Collider2D::IsColliding(Collider2D* other, HitInfo& OutHitInformation
 
 void HitInfo::Print() const
 {
+	std::cout << std::boolalpha;
 	std::cout << "HitInfo:\n"
 		"\tCollision: " << hasHit << "\n"
 		"\tLocation: (" << hitLocation.x << "," << hitLocation.y << ")\n"
 		"\tCollider: " << hitCollider->GetDisplayName() << "\n"
 		"\tObject: " << hitGameObject->GetDisplayName() << "\n"
 		<< "===========================================\n";
+	std::cout << std::boolalpha;
 }

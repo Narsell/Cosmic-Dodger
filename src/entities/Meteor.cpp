@@ -11,10 +11,14 @@ Meteor::Meteor(const Transform& transform, const Vector2& initialVelocity, Meteo
 	:GameObject(transform, ResourceManager::meteorTexture, name),
 	m_spawner(spawner)
 {
+	while (m_rotationRate == 0) {
+		m_rotationRate = Math::RandomRange(-1, 1);
+	}
+
 	m_movementComponent = AddComponent<MovementComponent>(new MovementComponent(this, "Movement Component"));
 	m_movementComponent->SetVelocity(initialVelocity);
-	m_movementComponent->SetSpeed(350.f);
-	m_movementComponent->SetMaxSpeed(350.f);
+	m_movementComponent->SetSpeed(250.f);
+	m_movementComponent->SetMaxSpeed(250.f);
 
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));
 	m_collisionComponent->SetCanRender(false);
@@ -23,7 +27,6 @@ Meteor::Meteor(const Transform& transform, const Vector2& initialVelocity, Meteo
 	m_collider->SetCollisionDelegate(OnCollisionDelegate);
 
 	const Player* player = GameManager::GetPlayer();
-
 	m_collider->ListenForCollisions(player);
 }
 
@@ -43,12 +46,12 @@ void Meteor::Update(const float deltaTime)
 		m_spawner->DeleteMeteor(this);
 	}
 
-	m_transform.SetRotation(m_transform.GetRotation() + 1.f);
+	m_transform.SetRotation(m_transform.GetRotation() + m_rotationRate);
 }
 
 void Meteor::OnCollision(HitInfo& hitInformation)
 {
 	hitInformation.Print();
-	GameState::GetGameState()->PlayerDeath();
+	GameState::GetGameState()->PlayerHit();
 	m_spawner->DeleteMeteor(this);
 }

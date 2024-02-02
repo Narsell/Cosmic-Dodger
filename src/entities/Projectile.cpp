@@ -5,6 +5,7 @@
 #include "entities/Projectile.hpp"
 #include "utilities/ResourceManager.hpp"
 #include "utilities/MeteorSpawner.hpp"
+#include "utilities/GameState.hpp"
 #include "GameManager.hpp"
 #include "Window.hpp"
 
@@ -41,6 +42,7 @@ void Projectile::OnCollision(HitInfo& hitInformation)
 	if (hitInformation.hitGameObject->GetDisplayName() == "NA_Meteor")
 	{
 		GameManager::DestroyEntity(this);
+		GameState::GetGameState()->AddScore(1);
 		// TODO: Add a more robust collision channel system to avoid this.
 		// Each object should get their own collision callback to handle their specific functionality.
 		// Instead, we're calling the meteor's spawner and deleting it from here, not ideal but that's a problem

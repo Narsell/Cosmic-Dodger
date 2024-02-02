@@ -46,6 +46,8 @@ public:
 class Math {
 
 public:
+	//Returns a random integer withtin the range
+	static const int RandomRange(const int from, const int to);
 	//Determines if two floats are nearly equal (by some epsilon)
 	static const bool IsNearlyEqual(const float x, const float b);
 	//Radians to Degrees conversion.

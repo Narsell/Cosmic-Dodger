@@ -7,6 +7,7 @@
 #include "components/CollisionComponent.hpp"
 #include "components/ShootingComponent.hpp"
 #include "utilities/ResourceManager.hpp"
+#include "utilities/GameState.hpp"
 #include "entities/WindowBounds.hpp"
 #include "GameManager.hpp"
 
@@ -16,9 +17,9 @@ Player::Player(HUD* hud, const char* name)
 	GameObject(Transform(), ResourceManager::playerTexture, name),
 	m_hud(hud)
 {
+	
 	Vector2 playerPosition(
-		Window::s_width / 2.f - ResourceManager::playerTexture->GetDimensions().x / 2.f, 
-		Window::s_height / 2.f - ResourceManager::playerTexture->GetDimensions().y / 2.f
+		GameState::GetGameState()->GetPlayerStartPosition()
 	);
 	m_transform = Transform(playerPosition, 90.f);
 
