@@ -16,7 +16,7 @@
 
 ShootingComponent::ShootingComponent(GameObject* parent, const char* name)
 	:Component(parent, name),
-	m_shootingSound("assets/shoot2.wav"),
+	m_shootingSound("assets/shoot2.wav", AUDIO_CHANNEL::SFX, 0.5f),
 	m_player(dynamic_cast<Player*>(m_parent))
 {
 	assert(m_player);
@@ -76,7 +76,7 @@ void ShootingComponent::Shoot()
 
 	GameManager::SpawnEntity(projectile);
 
-	m_shootingSound.PlaySound();
+	m_shootingSound.Play();
 
 	m_timeSinceLastShot = 0.f;
 	UpdateAmmo(m_currentAmmo - 1);

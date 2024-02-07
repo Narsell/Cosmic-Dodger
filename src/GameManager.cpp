@@ -1,6 +1,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <SDL_Mixer.h>
 
 #include "GameManager.hpp"
 #include "Window.hpp"
@@ -31,6 +32,9 @@ GameManager::GameManager(const Uint32 subSystems)
     }
     if (TTF_Init() < 0) {
         std::cout << "TTF_Init HAS FAILED. SDL_ERROR: " << SDL_GetError() << std::endl;
+    }
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
+        std::cout << "SDL_Mixer HAS FAILED. SDL_MIXER ERROR: " << Mix_GetError() << std::endl;
     }
 
 }

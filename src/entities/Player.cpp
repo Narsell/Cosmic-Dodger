@@ -24,7 +24,7 @@ Player::Player(HUD* hud, const char* name)
 	m_transform = Transform(playerPosition, 90.f);
 
 	m_movementComponent = AddComponent<MovementComponent>(new MovementComponent(this, "Movement Component"));
-	m_movementComponent->SetMaxSpeed(700.f);
+	m_movementComponent->SetMaxSpeed(600.f);
 
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));
 	m_collisionComponent->SetCanRender(false);
@@ -73,7 +73,7 @@ void Player::Update(const float deltaTime)
 
 		const Vector2 currentDirection = Math::GetDirectionFromAngle(m_transform.GetRotation());
 		const Vector2 desiredDirection = playerToMouse.Normalized();
-		m_lookAtDirection = Math::Lerp(currentDirection, desiredDirection, 0.3f);
+		m_lookAtDirection = Math::Lerp(currentDirection, desiredDirection, 0.2f);
 
 		m_transform.SetRotation(Math::GetAngleFromDirection(m_lookAtDirection));		
 	}
@@ -85,7 +85,7 @@ void Player::Update(const float deltaTime)
 	}
 	else {
 		const float currentSpeed = m_movementComponent->GetSpeed();
-		m_movementComponent->SetSpeed(currentSpeed - 25);
+		m_movementComponent->SetSpeed(currentSpeed - 15);
 	}
 }
 

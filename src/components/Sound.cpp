@@ -1,40 +1,28 @@
 #include "components/Sound.hpp"
 #include <iostream>
 
-Sound::Sound(std::string filepath)
+Sound::Sound(const std::string& filepath, AUDIO_CHANNEL channel, float volume, const bool looping)
+	:m_audio(nullptr),
+	m_channel(channel),
+	m_looping(looping),
+	m_volume(static_cast<int>(volume * MIX_MAX_VOLUME))
 {
-	if (SDL_LoadWAV(filepath.c_str(), &m_audioSpec, &m_waveStart, &m_waveLenght) == nullptr) {
-		std::cerr << "Error loading sound: " << SDL_GetError() << "\n";
-	}
-	SetupDevice();
+	//Load this from resource manager
+	m_audio = Mix_LoadWAV(filepath.c_str());
 }
 
 Sound::~Sound()
 {
-	SDL_FreeWAV(m_waveStart);
-	SDL_CloseAudioDevice(m_device);
+	Mix_FreeChunk(m_audio);
+
 }
 
-void Sound::PlaySound()
+void Sound::Play()
 {
-	int status = SDL_QueueAudio(m_device, m_waveStart, m_waveLenght);
-	if (status < 0) {
-		std::cerr << "Failed to queue sound: " << SDL_GetError() << "\n";
-	}
-	SDL_PauseAudioDevice(m_device, 0);
+	Mix_VolumeChunk(m_audio, m_volume);
+	Mix_PlayChannel(m_channel, m_audio, m_looping ? -1 : 0);
 }
 
-void Sound::StopSound()
-{
-	SDL_PauseAudioDevice(m_device, 1);
-}
 
-void Sound::SetupDevice()
-{
-	m_device = SDL_OpenAudioDevice(nullptr, 0, &m_audioSpec, nullptr, 0);
-	if (!m_device) {
-		std::cerr << "Sound device error: " << SDL_GetError() << "\n";
-	}
-}
 
 

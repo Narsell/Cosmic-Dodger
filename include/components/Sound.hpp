@@ -1,37 +1,28 @@
 #pragma once
 #include "SDL.h"
 #include <sstream>
+#include <SDL_Mixer.h>
 
-class ISound {
-
-public:
-	virtual ~ISound() {};
-
-	virtual void PlaySound() = 0;
-	virtual void StopSound() = 0;
+enum AUDIO_CHANNEL {
+	MASTER = 1,
+	MUSIC,
+	SFX,
 };
 
-class Sound : public ISound {
+class Sound {
 
 public:
 
-	Sound(std::string filepath);
+	Sound(const std::string& filepath, AUDIO_CHANNEL channel = AUDIO_CHANNEL::MASTER, float volume = 1, const bool looping = false);
 	~Sound();
 
-	virtual void PlaySound() override;
-	virtual void StopSound() override;
-
+	virtual void Play();
 
 private:
 	
-	void SetupDevice();
-
-	//Device the sound will play on
-	SDL_AudioDeviceID m_device;
-
-	//Properties of the wave file that is loaded
-	SDL_AudioSpec m_audioSpec;
-	Uint8* m_waveStart;
-	Uint32 m_waveLenght;
+	Mix_Chunk* m_audio;
+	AUDIO_CHANNEL m_channel;
+	const bool m_looping;
+	int m_volume;
 
 };
