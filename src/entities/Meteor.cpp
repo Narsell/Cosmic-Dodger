@@ -25,9 +25,7 @@ Meteor::Meteor(const Transform& transform, const Vector2& initialVelocity, Meteo
 	m_collider = m_collisionComponent->AddCollider(ResourceManager::meteorTexture->GetDimensions() * 0.7f, Vector2::ZERO, true, "Meteor Collision");
 	std::function<void(HitInfo&)> OnCollisionDelegate = std::bind(&Meteor::OnCollision, this, std::placeholders::_1);
 	m_collider->SetCollisionDelegate(OnCollisionDelegate);
-
-	const Player* player = GameManager::GetPlayer();
-	m_collider->ListenForCollisions(player);
+	m_collider->ListenForCollisions(GameManager::GetPlayer());
 }
 
 Meteor::~Meteor()

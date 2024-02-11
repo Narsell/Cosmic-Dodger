@@ -49,7 +49,7 @@ void Projectile::OnCollision(HitInfo& hitInformation)
 		// for future me.
 		Meteor* meteor = dynamic_cast<Meteor*>(hitInformation.hitGameObject);
 		if (meteor) {
-			meteor->GetParentSpawner()->DeleteMeteor(meteor);
+			MeteorSpawner::DeleteMeteor(meteor);
 		}
 	}
 	else if (hitInformation.hitGameObject->GetDisplayName() == "Window Bounds")

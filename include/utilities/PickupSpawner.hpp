@@ -20,6 +20,7 @@ public:
 	virtual void Update(const float deltaTime) override;
 
 	void SpawnPickup();
+	static void DeletePickup(EnergyPickup* pickup);
 
 private:
 
@@ -34,7 +35,7 @@ private:
 	// Minimum distance to distance each pickup from the last spawned. Be careful not to set to high or it could get stuck on a inf. while loop.
 	const float m_minDistanceToNextPickup = 600.f;
 
-	std::list<EnergyPickup*> m_activePickups;
+	static std::list<EnergyPickup*> m_activePickups;
 
 
 };

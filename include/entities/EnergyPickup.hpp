@@ -30,5 +30,4 @@ private:
 
 	Sound m_pickUpSound;
 
-
 };

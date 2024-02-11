@@ -16,8 +16,6 @@ public:
 
 	void Update(const float deltaTime) override;
 
-	MeteorSpawner* GetParentSpawner() const { return m_spawner; };
-
 private:
 
 	void OnCollision(HitInfo& hitInformation);

@@ -16,7 +16,7 @@
 
 ShootingComponent::ShootingComponent(GameObject* parent, const char* name)
 	:Component(parent, name),
-	m_shootingSound(ResourceManager::shootingSound, AUDIO_CHANNEL::SFX, 0.5f),
+	m_shootingSound(ResourceManager::shootingSound, 0.5f),
 	m_player(dynamic_cast<Player*>(m_parent))
 {
 	assert(m_player);

@@ -13,17 +13,21 @@ class Sound {
 
 public:
 
-	Sound(Mix_Chunk* audio, AUDIO_CHANNEL channel = AUDIO_CHANNEL::MASTER, float volume = 1.0, const bool looping = false);
+	Sound(Mix_Chunk* audio, float volume = 1.0, const bool looping = false);
 	~Sound();
 
 	virtual void Play();
 
-	static void SetChannelVolume(AUDIO_CHANNEL channel, float volume);
+	const bool IsPlaying() const;
+	void SetVolume(float volume);
+	void SetOnFinishedCallback(void(*callback)());
 
 private:
+	static void AudioFinished(int m_channel);
+	static void(*m_callback)();
 	
 	Mix_Chunk* m_audio;
-	AUDIO_CHANNEL m_channel;
+	int m_channel;
 	const bool m_looping;
 	int m_volume;
 

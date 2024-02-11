@@ -3,6 +3,8 @@
 #include "GameManager.hpp"
 #include "Window.hpp"
 
+std::list<EnergyPickup*> PickupSpawner::m_activePickups;
+
 
 PickupSpawner::PickupSpawner()
 {
@@ -51,7 +53,6 @@ Vector2 PickupSpawner::GetRandomSpawnPoint()
 				static_cast<float>(Math::RandomRange(areaPadding, maxHeight))
 			);
 			distanceToLastSpawn = (m_activePickups.back()->m_transform.GetPosition() - newSpawnpoint).Lenght();
-			std::cout << distanceToLastSpawn << "\n";
 
 		}
 
@@ -59,5 +60,11 @@ Vector2 PickupSpawner::GetRandomSpawnPoint()
 
 	return newSpawnpoint;
 
+}
+
+void PickupSpawner::DeletePickup(EnergyPickup* pickup)
+{
+	m_activePickups.remove(pickup);
+	GameManager::DestroyEntity(pickup);
 }
 

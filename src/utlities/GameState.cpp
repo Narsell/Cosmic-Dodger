@@ -17,7 +17,8 @@ GameState::GameState()
 		Window::s_width / 2.f - ResourceManager::playerTexture->GetDimensions().x / 2.f,
 		Window::s_height / 2.f - ResourceManager::playerTexture->GetDimensions().y / 2.f
 	),
-	m_currentLives(m_maxLives)
+	m_currentLives(m_maxLives),
+	m_playerHit(ResourceManager::explosionSound, 0.5f)
 {
 }
 
@@ -48,7 +49,7 @@ void GameState::AddScore(const int increment)
 void GameState::PlayerHit()
 {
 	m_currentLives = std::clamp(m_currentLives - 1, 0, m_maxLives);
-
+	m_playerHit.Play();
 	m_hud->UpdateLives(m_currentLives);
 
 	if (m_currentLives == 0) {

@@ -67,30 +67,26 @@ const Vector2 MeteorSpawner::GetRandomSpawnPoint() const
 		3: Random position from the left side of the window.
 	*/
 
-	// TODO: Replace all this with Math::RandomRange()
-	std::random_device rd;
-	std::mt19937 gen(rd());
 
-	std::uniform_int_distribution<> sideDist(0, 3);
-	std::uniform_int_distribution<> xDist(0, Window::s_width);
-	std::uniform_int_distribution<> yDist(0, Window::s_height);
-
-	const int side = sideDist(gen);
+	const int side = Math::RandomRange(0, 3);
 	const float windowOffset = 100.f;
-	const Vector2 randomPoints(static_cast<float>(xDist(gen)), static_cast<float>(yDist(gen)));
+	const Vector2 randomPoint(
+		static_cast<float>(Math::RandomRange(0, Window::s_width)),
+		static_cast<float>(Math::RandomRange(0, Window::s_height))
+	);
 	switch (side)
 	{
 	case 0:
-		return Vector2(randomPoints.x, -windowOffset);
+		return Vector2(randomPoint.x, -windowOffset);
 		break;
 	case 1:
-		return Vector2(Window::s_width + windowOffset, randomPoints.y);
+		return Vector2(Window::s_width + windowOffset, randomPoint.y);
 		break;
 	case 2:
-		return Vector2(randomPoints.x, Window::s_height + windowOffset);
+		return Vector2(randomPoint.x, Window::s_height + windowOffset);
 		break;
 	case 3:
-		return Vector2(-windowOffset, randomPoints.y);
+		return Vector2(-windowOffset, randomPoint.y);
 		break;
 	default:
 		return Vector2::ZERO;

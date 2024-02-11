@@ -1,5 +1,6 @@
 #pragma once
 #include "utilities/Math.hpp"
+#include "components/Sound.hpp"
 
 class HUD;
 class Player;
@@ -34,6 +35,8 @@ private:
 	int m_highScore = 0;
 
 	HUD* m_hud = nullptr;
+
+	Sound m_playerHit;
 
 	static GameState* s_gameState;
 };

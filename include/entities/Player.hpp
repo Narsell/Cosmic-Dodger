@@ -42,6 +42,7 @@ private:
 	Vector2 m_lookAtDirection = Vector2::ZERO;
 	bool m_canMove = false;
 
+
 	WindowBounds* m_windowBounds = nullptr;
 	Collider2D* m_collider = nullptr;
 

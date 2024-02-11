@@ -18,6 +18,8 @@ TextureResource* ResourceManager::pickupTexture = nullptr;
 
 /* SOUNDS */
 Mix_Chunk* ResourceManager::shootingSound = nullptr;
+Mix_Chunk* ResourceManager::explosionSound = nullptr;
+
 Mix_Chunk* ResourceManager::pickUpSound = nullptr;
 
 /* FONTS */
@@ -39,7 +41,8 @@ ResourceManager::ResourceManager(SDL_Renderer* renderer)
 	ResourceManager::backgroundTexture = LoadTexture("Background", bgDimensions, "assets/background.png");
 	ResourceManager::pickupTexture = LoadTexture("Pickup", pickupDimensions, "assets/pickup.png");
 
-	ResourceManager::shootingSound = LoadMixChunk("assets/shoot2.wav");
+	ResourceManager::shootingSound = LoadMixChunk("assets/shoot1.wav");
+	ResourceManager::explosionSound = LoadMixChunk("assets/explosion.wav");
 	ResourceManager::pickUpSound = LoadMixChunk("assets/pickup.wav");
 
 	ResourceManager::mainFont = LoadFont("assets/kenvector_future_thin.ttf", 50);
@@ -48,11 +51,18 @@ ResourceManager::ResourceManager(SDL_Renderer* renderer)
 
 ResourceManager::~ResourceManager()
 {
-	delete playerTexture;
-	delete projectileTexture;
-	delete meteorTexture;
-	delete backgroundTexture;
-	TTF_CloseFont(mainFont);
+	for (TextureResource* textureRes : m_textures) {
+		delete textureRes;
+	}
+
+	for (TTF_Font* font : m_fonts) {
+		TTF_CloseFont(font);
+	}
+
+	for (Mix_Chunk* sound_mix : m_sounds) {
+		Mix_FreeChunk(sound_mix);
+	}
+
 }
 
 ResourceManager* ResourceManager::InitResourceManager(SDL_Renderer* renderer)
