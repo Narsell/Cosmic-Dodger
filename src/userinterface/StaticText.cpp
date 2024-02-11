@@ -12,8 +12,6 @@ StaticText::StaticText(HUD* parentHud, const std::string& text, const Color& col
 	m_parentHud(parentHud),
 	m_transform(transform)
 {
-	ResourceManager::textFont = ResourceManager::LoadFont("assets/kenvector_future_thin.ttf", 50);
-
 	UpdateTexture();
 }
 
@@ -40,7 +38,7 @@ void StaticText::UpdateTexture()
 {
 	SDL_Renderer* renderer = m_parentHud->GetTargetWindow()->GetRenderer();
 	assert(renderer);
-	m_fontSurface = TTF_RenderText_Solid(ResourceManager::textFont, m_text.c_str(), m_color.ToSDLColor());
+	m_fontSurface = TTF_RenderText_Solid(ResourceManager::mainFont, m_text.c_str(), m_color.ToSDLColor());
 	m_fontTexture = SDL_CreateTextureFromSurface(renderer, m_fontSurface);
 
 	SDL_FreeSurface(m_fontSurface);

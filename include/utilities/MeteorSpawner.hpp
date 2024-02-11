@@ -13,7 +13,7 @@ class MeteorSpawner: public BaseEntity {
 public:
 
 	MeteorSpawner();
-	~MeteorSpawner();
+	~MeteorSpawner() override;
 
 	//Resets spawner timer and deletes all active meteors
 	void Reset();

@@ -18,8 +18,6 @@ class Player : public GameObject {
 public:
 
 	Player(HUD* hud, const char* name = "NA_Player");
-	Player(const Player& copy) = delete;
-	const Player& operator=(const Player& other) = delete;
 	~Player() override;
 
 	const bool GetIsMouseOnPlayer() const { return m_isMouseOnPlayer; };

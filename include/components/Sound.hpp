@@ -13,10 +13,12 @@ class Sound {
 
 public:
 
-	Sound(const std::string& filepath, AUDIO_CHANNEL channel = AUDIO_CHANNEL::MASTER, float volume = 1, const bool looping = false);
+	Sound(Mix_Chunk* audio, AUDIO_CHANNEL channel = AUDIO_CHANNEL::MASTER, float volume = 1.0, const bool looping = false);
 	~Sound();
 
 	virtual void Play();
+
+	static void SetChannelVolume(AUDIO_CHANNEL channel, float volume);
 
 private:
 	

@@ -1,9 +1,12 @@
 #pragma once
+#include <assert.h>
+#include <vector>
 #include "SDL.h"
 #include <SDL_ttf.h>
-#include <assert.h>
+#include <SDL_mixer.h>
 
 #include "utilities/Math.hpp"
+
 
 struct TextureResource {
 
@@ -36,22 +39,23 @@ class ResourceManager {
 
 public:
 
-    ~ResourceManager();
-
-    /* 
-    Initializes the Resource Manager and returns a pointer to it.
-    If initialized more than once, it will return the first instance initialized everytime.
-    */
-    static ResourceManager* InitResourceManager(SDL_Renderer* renderer);
-
-	TextureResource* LoadTexture(const char* name, const Vector2& dimensions, const char* path);
-    static TTF_Font* LoadFont(const char* path, int size);
-
     static TextureResource* playerTexture;
     static TextureResource* meteorTexture;
     static TextureResource* projectileTexture;
     static TextureResource* backgroundTexture;
-    static TTF_Font* textFont;
+    static TextureResource* pickupTexture;
+
+    static Mix_Chunk* shootingSound;
+    static Mix_Chunk* pickUpSound;
+
+    static TTF_Font* mainFont;
+
+    ~ResourceManager();
+    static ResourceManager* InitResourceManager(SDL_Renderer* renderer);
+	TextureResource* LoadTexture(const char* name, const Vector2& dimensions, const char* path);
+    TTF_Font* LoadFont(const char* path, int size);
+    Mix_Chunk* LoadMixChunk(const char* path);
+
 
 private:
 
@@ -61,5 +65,8 @@ private:
     SDL_Renderer* m_renderer;
 
     //TODO: Add vector member variables to store resources and delete them in a for loop.
+    std::vector<TextureResource*> m_textures;
+    std::vector<TTF_Font*> m_fonts;
+    std::vector<Mix_Chunk*> m_sounds;
 
 };

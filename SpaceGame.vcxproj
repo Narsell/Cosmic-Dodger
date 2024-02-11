@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\components\ShootingComponent.cpp" />
+    <ClCompile Include="src\entities\EnergyPickup.cpp" />
     <ClCompile Include="src\entities\Meteor.cpp" />
     <ClCompile Include="src\utlities\Color.cpp" />
     <ClCompile Include="src\utlities\GameState.cpp" />
@@ -41,6 +42,7 @@
     <ClCompile Include="src\utlities\Math.cpp" />
     <ClCompile Include="src\components\Sound.cpp" />
     <ClCompile Include="src\utlities\MeteorSpawner.cpp" />
+    <ClCompile Include="src\utlities\PickupSpawner.cpp" />
     <ClCompile Include="src\utlities\ResourceManager.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
@@ -66,10 +68,12 @@
     <ClInclude Include="include\utilities\GameStatics.hpp" />
     <ClInclude Include="include\utilities\Math.hpp" />
     <ClInclude Include="include\utilities\MeteorSpawner.hpp" />
+    <ClInclude Include="include\utilities\PickupSpawner.hpp" />
     <ClInclude Include="include\utilities\ResourceManager.hpp" />
     <ClInclude Include="include\userinterface\StaticText.hpp" />
     <ClInclude Include="include\Window.hpp" />
     <ClInclude Include="include\utilities\Performance.hpp" />
+    <ClInclude Include="include\entities\EnergyPickup.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

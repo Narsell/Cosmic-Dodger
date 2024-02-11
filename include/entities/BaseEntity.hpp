@@ -6,6 +6,8 @@ class BaseEntity {
 
 public:
 
+	BaseEntity(const BaseEntity& copy) = delete;
+	const BaseEntity& operator=(const BaseEntity& other) = delete;
 	virtual ~BaseEntity();
 
 	bool operator!() {

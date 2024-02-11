@@ -13,8 +13,6 @@ class Projectile : public GameObject {
 public:
 
 	Projectile(const Transform& transform, const char* name = "NA_Projectile");
-	Projectile(const Projectile& copy) = delete;
-	const Projectile& operator=(const Projectile& other) = delete;
 	~Projectile() override;
 
 	Collider2D* GetBodyCollider() const { return m_collider; };

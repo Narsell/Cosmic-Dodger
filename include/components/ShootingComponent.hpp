@@ -11,7 +11,7 @@ class ShootingComponent : public Component {
 public:
 
 	ShootingComponent(GameObject* parent, const char* name = "NA_CollisionComponent");
-	~ShootingComponent();
+	~ShootingComponent() override;
 
 	//Resets current ammo and shooting timers
 	void Reset();

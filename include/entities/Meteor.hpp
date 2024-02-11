@@ -12,8 +12,6 @@ class Meteor : public GameObject {
 
 public:
 	Meteor(const Transform& transform, const Vector2& initialVelocity, MeteorSpawner* spawner, const char* name = "NA_Meteor");
-	Meteor(const Meteor& copy) = delete;
-	const Meteor& operator=(const Meteor& other) = delete;
 	~Meteor() override;
 
 	void Update(const float deltaTime) override;

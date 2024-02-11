@@ -12,14 +12,16 @@
 #include "entities/Player.hpp"
 #include "entities/Projectile.hpp"
 #include "entities/Meteor.hpp"
+#include "userinterface/HUD.hpp"
 #include "utilities/Performance.hpp"
 #include "utilities/ResourceManager.hpp"
-#include "userinterface/HUD.hpp"
 #include "utilities/GameState.hpp"
 #include "utilities/MeteorSpawner.hpp"
+#include "utilities/PickupSpawner.hpp"
 
 Player* GameManager::m_player = nullptr;
 MeteorSpawner* GameManager::m_meteorSpawner = nullptr;
+PickupSpawner* GameManager::m_pickupSpawner = nullptr;
 std::list<BaseEntity*> GameManager::m_entities;
 std::vector<BaseEntity*> GameManager::m_destroyQueue;
 std::vector<SDL_Event> GameManager::m_inputEventQueue;
@@ -75,6 +77,7 @@ void GameManager::Construction()
     m_windowBounds = SpawnEntity(new WindowBounds("Window Bounds"));
     m_player = SpawnEntity(new Player(m_hud, "Player"));
     m_meteorSpawner = SpawnEntity(new MeteorSpawner());
+    m_pickupSpawner = SpawnEntity(new PickupSpawner());
 }
 
 void GameManager::BeginPlay()

@@ -15,6 +15,7 @@ class ResourceManager;
 class HUD;
 class GameState;
 class MeteorSpawner;
+class PickupSpawner;
 
 class GameManager {
 
@@ -69,6 +70,7 @@ private:
 	static std::vector<BaseEntity*> m_destroyQueue;
 	static Player* m_player;
 	static MeteorSpawner* m_meteorSpawner;
+	static PickupSpawner* m_pickupSpawner;
 	WindowBounds* m_windowBounds = nullptr;
 
 	//UI

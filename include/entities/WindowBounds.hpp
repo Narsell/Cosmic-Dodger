@@ -8,9 +8,7 @@ class WindowBounds : public GameObject {
 
 public:
 	WindowBounds(const char* name = "NA_WindowBounds");
-	WindowBounds(const WindowBounds& copy) = delete;
-	const WindowBounds& operator=(const WindowBounds& other) = delete;
-	~WindowBounds() {};
+	~WindowBounds() override {};
 
 	const CollisionComponent* GetCollisionComponent() const { return m_collisionComponent; };
 

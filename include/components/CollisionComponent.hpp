@@ -13,7 +13,7 @@ class CollisionComponent : public Component {
 public:
 
 	CollisionComponent(GameObject* parent, const char* name = "NA_CollisionComponent");
-	~CollisionComponent();
+	~CollisionComponent() override;
 
 	Transform m_transform;
 	

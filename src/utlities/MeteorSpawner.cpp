@@ -1,7 +1,7 @@
 #include "utilities/MeteorSpawner.hpp"
 #include "entities/Meteor.hpp"
-#include "GameManager.hpp"
 #include "entities/Player.hpp"
+#include "GameManager.hpp"
 #include "Window.hpp"
 
 

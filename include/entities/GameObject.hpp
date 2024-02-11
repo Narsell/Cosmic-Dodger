@@ -13,8 +13,7 @@ class Component;
 class GameObject : public BaseEntity
 {
 public:
-	GameObject(const GameObject& copy) = delete;
-	const GameObject& operator=(const GameObject& other) = delete;
+
 	~GameObject() override;
 
 	Transform m_transform;
