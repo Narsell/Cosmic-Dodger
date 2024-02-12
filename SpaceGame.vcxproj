@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\components\ShootingComponent.cpp" />
-    <ClCompile Include="src\entities\EnergyPickup.cpp" />
+    <ClCompile Include="src\entities\Pickup.cpp" />
     <ClCompile Include="src\entities\Meteor.cpp" />
     <ClCompile Include="src\utlities\Color.cpp" />
     <ClCompile Include="src\utlities\GameState.cpp" />
@@ -73,7 +73,7 @@
     <ClInclude Include="include\userinterface\StaticText.hpp" />
     <ClInclude Include="include\Window.hpp" />
     <ClInclude Include="include\utilities\Performance.hpp" />
-    <ClInclude Include="include\entities\EnergyPickup.hpp" />
+    <ClInclude Include="include\entities\Pickup.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

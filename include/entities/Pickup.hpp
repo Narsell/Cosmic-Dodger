@@ -5,12 +5,12 @@
 
 class CollisionComponent;
 
-class EnergyPickup : public GameObject {
+class Pickup : public GameObject {
 
 public:
 
-	EnergyPickup(const Transform& transform, const char* name = "NA_FuelGrab");
-	~EnergyPickup() override;
+	Pickup(const Transform& transform, const char* name = "NA_FuelGrab");
+	~Pickup() override;
 
 	void Update(const float deltaTime) override;
 

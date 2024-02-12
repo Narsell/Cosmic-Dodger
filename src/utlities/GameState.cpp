@@ -3,6 +3,7 @@
 
 #include "entities/Player.hpp"
 #include "utilities/MeteorSpawner.hpp"
+#include "utilities/PickupSpawner.hpp"
 #include "utilities/GameState.hpp"
 #include "utilities/ResourceManager.hpp"
 #include "userinterface/Hud.hpp"
@@ -87,6 +88,7 @@ void GameState::GameOver()
 void GameState::ResetGameState(Player& player) 
 {
 	GameManager::GetMeteorSpawner()->Reset();
+	GameManager::GetPickupSpawner()->Reset();
 	player.GetShootingComponent()->Reset();
 	m_currentLives = m_maxLives;
 	if (m_currentScore > m_highScore) {

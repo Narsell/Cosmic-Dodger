@@ -11,7 +11,8 @@
 
 Projectile::Projectile(const Transform& transform, const char* name)
 	:
-	GameObject(transform, ResourceManager::projectileTexture, name)
+	GameObject(transform, ResourceManager::projectileTexture, name),
+	m_hitSound(ResourceManager::projectileHitSound, 0.5f)
 {
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));
 	m_collisionComponent->SetCanRender(false);
@@ -43,6 +44,7 @@ void Projectile::OnCollision(HitInfo& hitInformation)
 	{
 		GameManager::DestroyEntity(this);
 		GameState::GetGameState()->AddScore(1);
+		m_hitSound.Play();
 		// TODO: Add a more robust collision channel system to avoid this.
 		// Each object should get their own collision callback to handle their specific functionality.
 		// Instead, we're calling the meteor's spawner and deleting it from here, not ideal but that's a problem

@@ -8,7 +8,7 @@
 #include "utilities/Math.hpp"
 #include "entities/BaseEntity.hpp"
 
-class EnergyPickup;
+class Pickup;
 
 class PickupSpawner : public BaseEntity {
 
@@ -20,7 +20,8 @@ public:
 	virtual void Update(const float deltaTime) override;
 
 	void SpawnPickup();
-	static void DeletePickup(EnergyPickup* pickup);
+	static void DeletePickup(Pickup* pickup);
+	void Reset();
 
 private:
 
@@ -31,11 +32,15 @@ private:
 	const float m_spawnRate = 1.5f;
 	float m_timeSinceLastSpawn = 0.f;
 
-	const int m_maxActivePicups = 10;
-	// Minimum distance to distance each pickup from the last spawned. Be careful not to set to high or it could get stuck on a inf. while loop.
-	const float m_minDistanceToNextPickup = 600.f;
+	const int m_maxActivePicups = 5;
+	// Minimum distance to distance each pickup from the last spawned. Avoid values higher than 600.
+	const float m_minDistanceToNextPickup = 400.f;
+	// Minimum distance to player, to avoid spawning to close to the player. Avoid values higher than 300.
+	const float m_minDistanceToPlayer = 200.f;
+	//Max number of attempts to try and find a suitable spawn point given m_minDistanceToNextPickup and m_minDistanceToPlayer. (Infinite loop protection)
+	const int m_maxAttempts = 20;
 
-	static std::list<EnergyPickup*> m_activePickups;
+	static std::list<Pickup*> m_activePickups;
 
 
 };

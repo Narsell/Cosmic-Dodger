@@ -49,7 +49,6 @@ void Meteor::Update(const float deltaTime)
 
 void Meteor::OnCollision(HitInfo& hitInformation)
 {
-	hitInformation.Print();
 	GameState::GetGameState()->PlayerHit();
 	m_spawner->DeleteMeteor(this);
 }

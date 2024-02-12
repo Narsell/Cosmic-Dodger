@@ -2,6 +2,7 @@
 
 #include "entities/GameObject.hpp"
 #include "components/Collider2D.hpp"
+#include "components/Sound.hpp"
 
 class MovementComponent;
 class CollisionComponent;
@@ -37,6 +38,8 @@ private:
 
 	float m_distanceTraveled = 0.f;
 	Vector2 m_startPosition;
+
+	Sound m_hitSound;
 
 	CollisionComponent* m_collisionComponent;
 	MovementComponent* m_movementComponent;

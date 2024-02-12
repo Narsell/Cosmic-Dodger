@@ -1,9 +1,10 @@
 #include "utilities/PickupSpawner.hpp"
-#include "entities/EnergyPickup.hpp"
+#include "entities/Pickup.hpp"
+#include "entities/Player.hpp"
 #include "GameManager.hpp"
 #include "Window.hpp"
 
-std::list<EnergyPickup*> PickupSpawner::m_activePickups;
+std::list<Pickup*> PickupSpawner::m_activePickups;
 
 
 PickupSpawner::PickupSpawner()
@@ -28,7 +29,7 @@ void PickupSpawner::SpawnPickup()
 {
 	Vector2 spawnPosition = GetRandomSpawnPoint();
 	m_activePickups.emplace_back(
-		GameManager::SpawnEntity(new EnergyPickup(spawnPosition))
+		GameManager::SpawnEntity(new Pickup(spawnPosition))
 	);
 }
 
@@ -38,33 +39,49 @@ Vector2 PickupSpawner::GetRandomSpawnPoint()
 	const int maxWidth = Window::s_width - areaPadding;
 	const int maxHeight = Window::s_height - areaPadding;
 
-	Vector2 newSpawnpoint = Vector2(
-		static_cast<float>(Math::RandomRange(areaPadding, maxWidth)),
-		static_cast<float>(Math::RandomRange(areaPadding, maxHeight))
-	);
+	Vector2 newSpawnpoint = Vector2::ZERO;
+	float distanceToLastSpawn = 0;
+	float distanceToPlayer = 0;
+	int iterations = 0;
 
-	if (m_activePickups.size() > 1) {
-		
-		float distanceToLastSpawn = (m_activePickups.back()->m_transform.GetPosition() - newSpawnpoint).Lenght();
-		while (distanceToLastSpawn < m_minDistanceToNextPickup)
-		{
-			newSpawnpoint = Vector2(
-				static_cast<float>(Math::RandomRange(areaPadding, maxWidth)),
-				static_cast<float>(Math::RandomRange(areaPadding, maxHeight))
-			);
-			distanceToLastSpawn = (m_activePickups.back()->m_transform.GetPosition() - newSpawnpoint).Lenght();
+	do {
+		if (iterations > m_maxAttempts - 1)
+			break;
 
-		}
+		newSpawnpoint = Vector2(
+			static_cast<float>(Math::RandomRange(areaPadding, maxWidth)),
+			static_cast<float>(Math::RandomRange(areaPadding, maxHeight))
+		);
 
-	}
+		distanceToLastSpawn = m_activePickups.size() > 0
+			? (m_activePickups.back()->m_transform.GetPosition() - newSpawnpoint).Lenght()
+			: m_minDistanceToNextPickup;
+		distanceToPlayer = (GameManager::GetPlayer()->m_transform.GetPosition() - newSpawnpoint).Lenght();
+		++iterations;
+
+	} while (
+		distanceToLastSpawn < m_minDistanceToNextPickup || 
+		distanceToPlayer < m_minDistanceToPlayer || 
+		newSpawnpoint == Vector2::ZERO
+		);
 
 	return newSpawnpoint;
 
 }
 
-void PickupSpawner::DeletePickup(EnergyPickup* pickup)
+void PickupSpawner::DeletePickup(Pickup* pickup)
 {
 	m_activePickups.remove(pickup);
 	GameManager::DestroyEntity(pickup);
+}
+
+void PickupSpawner::Reset()
+{
+	m_timeSinceLastSpawn = 0.f;
+	for (Pickup* pickup : m_activePickups)
+	{
+		GameManager::DestroyEntity(pickup);
+	}
+	m_activePickups.clear();
 }
 

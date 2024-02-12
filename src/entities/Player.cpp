@@ -28,7 +28,7 @@ Player::Player(HUD* hud, const char* name)
 
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));
 	m_collisionComponent->SetCanRender(false);
-	m_collider = m_collisionComponent->AddCollider(ResourceManager::playerTexture->GetDimensions(), Vector2::ZERO, true, "Ship Collision");
+	m_collider = m_collisionComponent->AddCollider(ResourceManager::playerTexture->GetDimensions() * 0.85f, Vector2::ZERO, true, "Ship Collision");
 	
 	std::function<void(HitInfo&)> OnCollisionDelegate = std::bind(&Player::OnCollision, this, std::placeholders::_1);
 	m_collider->SetCollisionDelegate(OnCollisionDelegate);

@@ -46,6 +46,7 @@ public:
     static TextureResource* pickupTexture;
 
     static Mix_Chunk* shootingSound;
+    static Mix_Chunk* projectileHitSound;
     static Mix_Chunk* explosionSound;
     static Mix_Chunk* pickUpSound;
 

@@ -38,6 +38,7 @@ public:
 
 	static Player* GetPlayer() { return m_player; };
 	static MeteorSpawner* GetMeteorSpawner() { return m_meteorSpawner; };
+	static PickupSpawner* GetPickupSpawner() { return m_pickupSpawner; };
 
 	static std::vector<SDL_Event>& GetInputEventQueue() { return m_inputEventQueue; };
 	static const Uint8*& GetInputKeyboardState() { return m_keyboardState; };

@@ -18,8 +18,8 @@ TextureResource* ResourceManager::pickupTexture = nullptr;
 
 /* SOUNDS */
 Mix_Chunk* ResourceManager::shootingSound = nullptr;
+Mix_Chunk* ResourceManager::projectileHitSound;
 Mix_Chunk* ResourceManager::explosionSound = nullptr;
-
 Mix_Chunk* ResourceManager::pickUpSound = nullptr;
 
 /* FONTS */
@@ -33,15 +33,16 @@ ResourceManager::ResourceManager(SDL_Renderer* renderer)
 	Vector2 meteorTexture = Vector2(89.f, 82.f);
 	Vector2 projectileDimensions = Vector2(9.f, 54.f);
 	Vector2 bgDimensions = Vector2(1280.f, 720.f);
-	Vector2 pickupDimensions = Vector2(19.f, 30.f);
+	Vector2 pickupDimensions = Vector2(30.f, 31.f);
 
 	ResourceManager::playerTexture = LoadTexture("Player", playerDimensions, "assets/player_ship.png");
 	ResourceManager::meteorTexture = LoadTexture("Meteor", meteorTexture, "assets/meteors/meteor3.png");
 	ResourceManager::projectileTexture = LoadTexture("Projectile", projectileDimensions, "assets/laser_g.png");
 	ResourceManager::backgroundTexture = LoadTexture("Background", bgDimensions, "assets/background.png");
-	ResourceManager::pickupTexture = LoadTexture("Pickup", pickupDimensions, "assets/pickup.png");
+	ResourceManager::pickupTexture = LoadTexture("Pickup", pickupDimensions, "assets/star_gold.png");
 
 	ResourceManager::shootingSound = LoadMixChunk("assets/shoot1.wav");
+	ResourceManager::projectileHitSound = LoadMixChunk("assets/hit.wav");
 	ResourceManager::explosionSound = LoadMixChunk("assets/explosion.wav");
 	ResourceManager::pickUpSound = LoadMixChunk("assets/pickup.wav");
 

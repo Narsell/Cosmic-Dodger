@@ -75,6 +75,11 @@ const Vector2 Vector2::operator*(float scalar) const
 	return Vector2(x * scalar, y * scalar);
 }
 
+const bool Vector2::operator==(const Vector2& other) const
+{
+	return this->x == other.x && this->y == other.y;
+}
+
 const Vector2 Vector2::operator/(float scalar) const
 {
 	return Vector2(x / scalar, y / scalar);
