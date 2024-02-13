@@ -15,6 +15,7 @@ public:
 
 	const int GetScore() const { return m_currentScore; };
 	const int GetCurrentLives() const { return m_currentLives; };
+	const int GetMaxLives() const { return m_maxLives; };
 	const Vector2& GetPlayerStartPosition() const { return m_startPosition; };
 
 	void AddScore(const int increment);

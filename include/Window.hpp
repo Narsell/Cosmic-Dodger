@@ -19,7 +19,7 @@ public:
     static int s_width;
     static int s_height;
 
-    SDL_Renderer* GetRenderer() { return m_renderer; };
+    SDL_Renderer* GetRenderer() const { return m_renderer; };
 
     void Clear();
 	void Display();

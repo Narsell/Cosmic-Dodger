@@ -4,29 +4,27 @@
 #include "Window.hpp"
 
 
-StaticText::StaticText(HUD* parentHud, const std::string& text, const Color& color, const Transform& transform, const Vector2& dimensions, const char* name)
-	:BaseEntity("", name, true, false),
+UIStaticText::UIStaticText(const HUD* parentHud, const std::string& text, const Color& color, const Transform& transform, const Vector2& dimensions, const char* name)
+	:UIElement(parentHud, transform, name),
 	m_text(text),
 	m_color(color),
-	m_dimensions(dimensions),
-	m_parentHud(parentHud),
-	m_transform(transform)
+	m_dimensions(dimensions)
 {
 	UpdateTexture();
 }
 
-StaticText::~StaticText()
+UIStaticText::~UIStaticText()
 {
 	SDL_DestroyTexture(m_fontTexture);
 }
 
-void StaticText::SetText(const std::string& newText)
+void UIStaticText::SetText(const std::string& newText)
 {
 	m_text = newText;
 	UpdateTexture();
 }
 
-void StaticText::Render(SDL_Renderer* renderer)
+void UIStaticText::Render(SDL_Renderer* renderer)
 {
 	Vector2 position = m_transform.GetPosition();
 	SDL_FRect rect(position.x, position.y, m_dimensions.x, m_dimensions.y);
@@ -34,9 +32,9 @@ void StaticText::Render(SDL_Renderer* renderer)
 	SDL_RenderCopyF(renderer, m_fontTexture, nullptr, &rect);		
 }
 
-void StaticText::UpdateTexture()
+void UIStaticText::UpdateTexture()
 {
-	SDL_Renderer* renderer = m_parentHud->GetTargetWindow()->GetRenderer();
+	SDL_Renderer* renderer = GetParentHud()->GetTargetWindow()->GetRenderer();
 	assert(renderer);
 	m_fontSurface = TTF_RenderText_Solid(ResourceManager::mainFont, m_text.c_str(), m_color.ToSDLColor());
 	m_fontTexture = SDL_CreateTextureFromSurface(renderer, m_fontSurface);

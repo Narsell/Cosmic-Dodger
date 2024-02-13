@@ -4,8 +4,9 @@
 #include "entities/BaseEntity.hpp"
 
 struct SDL_Renderer;
-class StaticText;
-class GameState;
+class UIStaticText;
+class UIElement;
+class UIPlayerLives;
 class Window;
 
 class HUD : public BaseEntity {
@@ -27,12 +28,13 @@ public:
 private:
 	Window* m_window;
 
-	StaticText* m_lives;
-	StaticText* m_score;
-	StaticText* m_highScore;
-	StaticText* m_ammo;
+	UIPlayerLives* m_lives;
 
-	std::vector<StaticText*> m_textElements;
+	UIStaticText* m_score;
+	UIStaticText* m_highScore;
+	UIStaticText* m_ammo;	
+
+	std::vector<UIElement*> m_uiElements;
 
 
 };

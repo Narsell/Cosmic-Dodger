@@ -22,6 +22,9 @@
     <ClCompile Include="src\components\ShootingComponent.cpp" />
     <ClCompile Include="src\entities\Pickup.cpp" />
     <ClCompile Include="src\entities\Meteor.cpp" />
+    <ClCompile Include="src\userinterface\PlayerLives.cpp" />
+    <ClCompile Include="src\userinterface\TextureRect.cpp" />
+    <ClCompile Include="src\userinterface\UIElement.cpp" />
     <ClCompile Include="src\utlities\Color.cpp" />
     <ClCompile Include="src\utlities\GameState.cpp" />
     <ClCompile Include="src\components\PlayerInputComponent.cpp" />
@@ -63,6 +66,9 @@
     <ClInclude Include="include\GameManager.hpp" />
     <ClInclude Include="include\components\Sound.hpp" />
     <ClInclude Include="include\userinterface\Hud.hpp" />
+    <ClInclude Include="include\userinterface\PlayerLives.hpp" />
+    <ClInclude Include="include\userinterface\TextureRect.hpp" />
+    <ClInclude Include="include\userinterface\UIElement.hpp" />
     <ClInclude Include="include\utilities\Color.hpp" />
     <ClInclude Include="include\utilities\GameState.hpp" />
     <ClInclude Include="include\utilities\GameStatics.hpp" />

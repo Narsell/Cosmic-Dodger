@@ -1,28 +1,25 @@
 #pragma once
-#include <sstream>
 
 #include "components/Transform.hpp"
-#include "entities/BaseEntity.hpp"
+#include "userinterface/UIElement.hpp"
 #include "utilities/Color.hpp"
 
 struct SDL_Texture;
 struct SDL_Surface;
-struct SDL_Renderer;
 class HUD;
 
-class StaticText : public BaseEntity {
+class UIStaticText : public UIElement {
 
 public:
 
-	StaticText(HUD* parentHud, const std::string& text, const Color& color, const Transform& transform = Transform(), const Vector2& dimensions = Vector2(10.f, 10.f), const char* name = "NA_StaticText");
-	~StaticText();
+	UIStaticText(const HUD* parentHud, const std::string& text, const Color& color, const Transform& transform = Transform(), const Vector2& dimensions = Vector2(10.f, 10.f), const char* name = "NA_StaticText");
+	~UIStaticText() override;
 
 	void SetText(const std::string& newText);
 
 	virtual void Render(SDL_Renderer* renderer) override;
 	virtual void Update(const float deltaTime) override {};
 
-	Transform m_transform;
 private:
 
 	void UpdateTexture();
@@ -34,5 +31,4 @@ private:
 	SDL_Texture* m_fontTexture = nullptr;
 	SDL_Surface* m_fontSurface = nullptr;
 
-	HUD* m_parentHud;
 };

@@ -2,6 +2,8 @@
 #include <sstream>
 #include <iostream>
 
+struct SDL_Renderer;
+
 class BaseEntity {
 
 public:
@@ -14,7 +16,7 @@ public:
 		return this == nullptr;
 	}
 
-	virtual void Render(struct SDL_Renderer* renderer);
+	virtual void Render(SDL_Renderer* renderer);
 	virtual void Update(const float deltaTime) = 0;
 
 	bool GetCanRender() const { return m_canRender; };

@@ -40,6 +40,7 @@ class ResourceManager {
 public:
 
     static TextureResource* playerTexture;
+    static TextureResource* playerLifeTexture;
     static TextureResource* meteorTexture;
     static TextureResource* projectileTexture;
     static TextureResource* backgroundTexture;
@@ -66,7 +67,6 @@ private:
     static ResourceManager* s_resourceManager;
     SDL_Renderer* m_renderer;
 
-    //TODO: Add vector member variables to store resources and delete them in a for loop.
     std::vector<TextureResource*> m_textures;
     std::vector<TTF_Font*> m_fonts;
     std::vector<Mix_Chunk*> m_sounds;
