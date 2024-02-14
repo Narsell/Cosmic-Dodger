@@ -7,17 +7,18 @@
 #include "utilities/GameState.hpp"
 #include "GameManager.hpp"
 
-Meteor::Meteor(const Transform& transform, const Vector2& initialVelocity, MeteorSpawner* spawner, const char* name)
-	:GameObject(transform, ResourceManager::meteorTexture, name),
-	m_spawner(spawner)
+float Meteor::maxSpeed = 350.f;
+
+Meteor::Meteor(const Transform& transform, const Vector2& initialVelocity, const float speed, const char* name)
+	:GameObject(transform, ResourceManager::meteorTexture, name)
 {
 	while (m_rotationRate == 0) {
-		m_rotationRate = Math::RandomRange(-1, 1);
+		m_rotationRate = Math::RandomRange(-2, 2);
 	}
-
 	m_movementComponent = AddComponent<MovementComponent>(new MovementComponent(this, "Movement Component"));
 	m_movementComponent->SetVelocity(initialVelocity);
-	m_movementComponent->SetMaxSpeed(250.f);
+	m_movementComponent->SetMaxSpeed(maxSpeed);
+	m_movementComponent->SetSpeed(speed);
 
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));
 	m_collisionComponent->SetCanRender(false);
@@ -40,7 +41,7 @@ void Meteor::Update(const float deltaTime)
 	m_distanceTraveled = m_movementComponent->GetSpeed() * m_aliveTime;
 
 	if (m_distanceTraveled > m_maxDistanceTravel) {
-		m_spawner->DeleteMeteor(this);
+		MeteorSpawner::DeleteMeteor(this);
 	}
 
 	m_transform.SetRotation(m_transform.GetRotation() + m_rotationRate);
@@ -49,5 +50,5 @@ void Meteor::Update(const float deltaTime)
 void Meteor::OnCollision(HitInfo& hitInformation)
 {
 	GameState::GetGameState()->PlayerHit();
-	m_spawner->DeleteMeteor(this);
+	MeteorSpawner::DeleteMeteor(this);
 }

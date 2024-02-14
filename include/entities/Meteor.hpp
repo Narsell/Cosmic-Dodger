@@ -11,11 +11,11 @@ class MeteorSpawner;
 class Meteor : public GameObject {
 
 public:
-	Meteor(const Transform& transform, const Vector2& initialVelocity, MeteorSpawner* spawner, const char* name = "NA_Meteor");
+	Meteor(const Transform& transform, const Vector2& initialVelocity, const float speed, const char* name = "NA_Meteor");
 	~Meteor() override;
 
 	void Update(const float deltaTime) override;
-	MovementComponent* GetMovementComponent() const { return m_movementComponent; };
+	static const float GetMaxSpeed() { return maxSpeed; };
 
 private:
 
@@ -29,8 +29,8 @@ private:
 
 	int m_rotationRate = 0;
 
-	MeteorSpawner* m_spawner = nullptr;
-	WindowBounds* m_windowBounds = nullptr;
+	static float maxSpeed;
+
 	Collider2D* m_collider = nullptr;
 
 	CollisionComponent* m_collisionComponent = nullptr;

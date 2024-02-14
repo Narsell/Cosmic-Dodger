@@ -21,6 +21,7 @@ void MeteorSpawner::Reset()
 {
 	m_timeSinceLastSpawn = 0.f;
 	SetSpawnRate(m_maxSpawnRate);
+	SetMeteorSpeed(m_minMeteorSpeed);
 	for (Meteor* meteor : m_activeMeteors) 
 	{
 		GameManager::DestroyEntity(meteor);
@@ -28,8 +29,8 @@ void MeteorSpawner::Reset()
 	m_activeMeteors.clear();
 }
 
-void MeteorSpawner::Update(const float deltaTime) {
-
+void MeteorSpawner::Update(const float deltaTime) 
+{
 	m_timeSinceLastSpawn += deltaTime;
 	if (m_timeSinceLastSpawn > m_currentSpawnRate) {
 		SpawnMeteor();
@@ -39,12 +40,18 @@ void MeteorSpawner::Update(const float deltaTime) {
 
 void MeteorSpawner::IncreaseDifficulty()
 {
-	SetSpawnRate(m_currentSpawnRate - m_decrementRate);
+	SetSpawnRate(m_currentSpawnRate - m_spawnDecrementRate);
+	SetMeteorSpeed(m_currentMeteorSpeed + m_speedIncrementRate);
 }
 
 void MeteorSpawner::SetSpawnRate(const float spawnRate)
 {
 	m_currentSpawnRate = std::clamp(spawnRate, m_minSpawnRate, m_maxSpawnRate);
+}
+
+void MeteorSpawner::SetMeteorSpeed(const float speed)
+{
+	m_currentMeteorSpeed = std::clamp(speed, m_minMeteorSpeed, Meteor::GetMaxSpeed());
 }
 
 const std::list<Meteor*>& MeteorSpawner::GetActiveMeteors()
@@ -64,7 +71,7 @@ void MeteorSpawner::SpawnMeteor()
 	Vector2 playerPosition = m_player->m_transform.GetPosition();
 	Vector2 velocity = (playerPosition - spawnPosition).Normalized();
 	m_activeMeteors.emplace_back(
-		GameManager::SpawnEntity(new Meteor(spawnPosition, velocity, this))
+		GameManager::SpawnEntity(new Meteor(spawnPosition, velocity, m_currentMeteorSpeed))
 	);
 }
 
