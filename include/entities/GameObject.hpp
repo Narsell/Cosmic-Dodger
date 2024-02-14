@@ -29,8 +29,6 @@ public:
 	//Makes an object unable to update and render, as well as its child components.
 	void Disable();
 
-	const SDL_FRect& GetCurrentFrame() const { return m_currentFrame; };
-
 	template<typename ComponentType>
 	inline ComponentType* AddComponent(ComponentType* component);
 
@@ -44,7 +42,6 @@ protected:
 
 private:
 
-	SDL_FRect m_currentFrame;
 	TextureResource* m_texture = nullptr;
 	Vector2 m_centerPoint;
 	//Has ownership of all components. This class will take care of freeing memory on all components

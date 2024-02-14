@@ -29,7 +29,7 @@ private:
 
 private:
 
-	const float m_spawnRate = 1.5f;
+	const float m_currentSpawnRate = 1.5f;
 	float m_timeSinceLastSpawn = 0.f;
 
 	const int m_maxActivePicups = 5;

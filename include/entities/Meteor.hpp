@@ -15,6 +15,7 @@ public:
 	~Meteor() override;
 
 	void Update(const float deltaTime) override;
+	MovementComponent* GetMovementComponent() const { return m_movementComponent; };
 
 private:
 

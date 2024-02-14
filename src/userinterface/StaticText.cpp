@@ -36,7 +36,7 @@ void UIStaticText::UpdateTexture()
 {
 	SDL_Renderer* renderer = GetParentHud()->GetTargetWindow()->GetRenderer();
 	assert(renderer);
-	m_fontSurface = TTF_RenderText_Solid(ResourceManager::mainFont, m_text.c_str(), m_color.ToSDLColor());
+	m_fontSurface = TTF_RenderText_Blended(ResourceManager::mainFont, m_text.c_str(), m_color.ToSDLColor());
 	m_fontTexture = SDL_CreateTextureFromSurface(renderer, m_fontSurface);
 
 	SDL_FreeSurface(m_fontSurface);

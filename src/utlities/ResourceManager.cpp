@@ -16,6 +16,7 @@ TextureResource* ResourceManager::meteorTexture = nullptr;
 TextureResource* ResourceManager::projectileTexture = nullptr;
 TextureResource* ResourceManager::backgroundTexture = nullptr;
 TextureResource* ResourceManager::pickupTexture = nullptr;
+TextureResource* ResourceManager::ammoTexture = nullptr;
 
 /* SOUNDS */
 Mix_Chunk* ResourceManager::shootingSound = nullptr;
@@ -25,6 +26,10 @@ Mix_Chunk* ResourceManager::pickUpSound = nullptr;
 
 /* FONTS */
 TTF_Font* ResourceManager::mainFont = nullptr;
+
+/* CURSOR */
+SDL_Cursor* ResourceManager::cursor = nullptr;
+
 
 
 ResourceManager::ResourceManager(SDL_Renderer* renderer)
@@ -36,6 +41,7 @@ ResourceManager::ResourceManager(SDL_Renderer* renderer)
 	Vector2 projectileDimensions = Vector2(9.f, 54.f);
 	Vector2 bgDimensions = Vector2(1280.f, 720.f);
 	Vector2 pickupDimensions = Vector2(30.f, 31.f);
+	Vector2 ammoDimensions = Vector2(12.f, 20.f);
 
 	ResourceManager::playerTexture = LoadTexture("Player", playerDimensions, "assets/player_ship.png");
 	ResourceManager::playerLifeTexture = LoadTexture("Player Life", playerLifeDimensions, "assets/player_life.png");
@@ -43,13 +49,18 @@ ResourceManager::ResourceManager(SDL_Renderer* renderer)
 	ResourceManager::projectileTexture = LoadTexture("Projectile", projectileDimensions, "assets/laser_g.png");
 	ResourceManager::backgroundTexture = LoadTexture("Background", bgDimensions, "assets/background.png");
 	ResourceManager::pickupTexture = LoadTexture("Pickup", pickupDimensions, "assets/star_gold.png");
+	ResourceManager::ammoTexture = LoadTexture("Ammo", ammoDimensions, "assets/ammo_green.png");
 
+	SDL_Surface* cursorSurface = IMG_Load("assets/crossair_red.png");
+	ResourceManager::cursor = SDL_CreateColorCursor(cursorSurface, 0, 0);
+	SDL_FreeSurface(cursorSurface);
+	
 	ResourceManager::shootingSound = LoadMixChunk("assets/shoot1.wav");
 	ResourceManager::projectileHitSound = LoadMixChunk("assets/hit.wav");
 	ResourceManager::explosionSound = LoadMixChunk("assets/explosion.wav");
 	ResourceManager::pickUpSound = LoadMixChunk("assets/pickup.wav");
 
-	ResourceManager::mainFont = LoadFont("assets/kenvector_future_thin.ttf", 50);
+	ResourceManager::mainFont = LoadFont("assets/LilitaOne-Regular.ttf", 50);
 
 }
 
@@ -67,6 +78,7 @@ ResourceManager::~ResourceManager()
 		Mix_FreeChunk(sound_mix);
 	}
 
+	SDL_FreeCursor(cursor);
 }
 
 ResourceManager* ResourceManager::InitResourceManager(SDL_Renderer* renderer)

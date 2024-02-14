@@ -19,7 +19,7 @@ void PickupSpawner::Update(const float deltaTime)
 {
 	m_timeSinceLastSpawn += deltaTime;
 
-	if (m_timeSinceLastSpawn > m_spawnRate && m_activePickups.size() < m_maxActivePicups) {
+	if (m_timeSinceLastSpawn > m_currentSpawnRate && m_activePickups.size() < m_maxActivePicups) {
 		SpawnPickup();
 		m_timeSinceLastSpawn = 0.f;
 	}

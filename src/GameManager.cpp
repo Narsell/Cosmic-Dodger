@@ -74,6 +74,8 @@ void GameManager::Construction()
     m_gameState = GameState::GetGameState();
     m_hud = new HUD(m_window);
 
+    SDL_SetCursor(ResourceManager::cursor);
+
     m_windowBounds = SpawnEntity(new WindowBounds("Window Bounds"));
     m_player = SpawnEntity(new Player(m_hud, "Player"));
     m_meteorSpawner = SpawnEntity(new MeteorSpawner());

@@ -17,7 +17,6 @@ Meteor::Meteor(const Transform& transform, const Vector2& initialVelocity, Meteo
 
 	m_movementComponent = AddComponent<MovementComponent>(new MovementComponent(this, "Movement Component"));
 	m_movementComponent->SetVelocity(initialVelocity);
-	m_movementComponent->SetSpeed(250.f);
 	m_movementComponent->SetMaxSpeed(250.f);
 
 	m_collisionComponent = AddComponent<CollisionComponent>(new CollisionComponent(this, "Collision Component"));

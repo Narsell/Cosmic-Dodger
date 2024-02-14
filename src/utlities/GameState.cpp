@@ -38,12 +38,16 @@ void GameState::SetTargetHUD(HUD* hud)
 	m_hud->UpdateScore(m_currentScore);
 	m_hud->UpdateHighScore(m_highScore);
 	m_hud->UpdateLives(m_currentLives);
+	m_hud->UpdateDifficultyLevel(m_difficultyLevel);
 }
 
 void GameState::AddScore(const int increment)
 {
 	m_currentScore += increment;
 	m_hud->UpdateScore(m_currentScore);
+	if (m_currentScore % m_scoreAmountToIncreseDiff == 0) {
+		IncreaseDifficulty();
+	}
 }
 
 
@@ -60,6 +64,13 @@ void GameState::PlayerHit()
 }
 
 
+void GameState::IncreaseDifficulty()
+{
+	++m_difficultyLevel;
+	GameManager::GetMeteorSpawner()->IncreaseDifficulty();
+	m_hud->UpdateDifficultyLevel(m_difficultyLevel);
+}
+
 void GameState::GameOver()
 {
 	//It goes like this:
@@ -71,7 +82,7 @@ void GameState::GameOver()
 	//				Set player position to starting position
 	//				Update HUD with new values
 
-	// TODO: Add timer on hud to display GAME OVER message and add za callback to return and update HUD
+	// TODO: Add timer on hud to display GAME OVER message and add a callback to return and update HUD
 	
 	Player* player = GameManager::GetPlayer();
 	ShootingComponent* playerShootComponent = player->GetShootingComponent();
@@ -90,6 +101,7 @@ void GameState::ResetGameState(Player& player)
 	GameManager::GetMeteorSpawner()->Reset();
 	GameManager::GetPickupSpawner()->Reset();
 	player.GetShootingComponent()->Reset();
+	m_difficultyLevel = 1;
 	m_currentLives = m_maxLives;
 	if (m_currentScore > m_highScore) {
 		m_highScore = m_currentScore;

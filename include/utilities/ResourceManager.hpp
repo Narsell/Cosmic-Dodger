@@ -45,6 +45,7 @@ public:
     static TextureResource* projectileTexture;
     static TextureResource* backgroundTexture;
     static TextureResource* pickupTexture;
+    static TextureResource* ammoTexture;
 
     static Mix_Chunk* shootingSound;
     static Mix_Chunk* projectileHitSound;
@@ -52,6 +53,8 @@ public:
     static Mix_Chunk* pickUpSound;
 
     static TTF_Font* mainFont;
+
+    static SDL_Cursor* cursor;
 
     ~ResourceManager();
     static ResourceManager* InitResourceManager(SDL_Renderer* renderer);

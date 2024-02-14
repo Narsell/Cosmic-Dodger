@@ -20,6 +20,7 @@ MeteorSpawner::~MeteorSpawner()
 void MeteorSpawner::Reset()
 {
 	m_timeSinceLastSpawn = 0.f;
+	SetSpawnRate(m_maxSpawnRate);
 	for (Meteor* meteor : m_activeMeteors) 
 	{
 		GameManager::DestroyEntity(meteor);
@@ -30,11 +31,20 @@ void MeteorSpawner::Reset()
 void MeteorSpawner::Update(const float deltaTime) {
 
 	m_timeSinceLastSpawn += deltaTime;
-
-	if (m_timeSinceLastSpawn > m_spawnRate) {
+	if (m_timeSinceLastSpawn > m_currentSpawnRate) {
 		SpawnMeteor();
 		m_timeSinceLastSpawn = 0.f;
 	}
+}
+
+void MeteorSpawner::IncreaseDifficulty()
+{
+	SetSpawnRate(m_currentSpawnRate - m_decrementRate);
+}
+
+void MeteorSpawner::SetSpawnRate(const float spawnRate)
+{
+	m_currentSpawnRate = std::clamp(spawnRate, m_minSpawnRate, m_maxSpawnRate);
 }
 
 const std::list<Meteor*>& MeteorSpawner::GetActiveMeteors()

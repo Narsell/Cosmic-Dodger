@@ -16,6 +16,7 @@ public:
 	const int GetScore() const { return m_currentScore; };
 	const int GetCurrentLives() const { return m_currentLives; };
 	const int GetMaxLives() const { return m_maxLives; };
+	const int GetDifficultyLevel() const { return m_difficultyLevel; };
 	const Vector2& GetPlayerStartPosition() const { return m_startPosition; };
 
 	void AddScore(const int increment);
@@ -26,14 +27,18 @@ public:
 private:
 	GameState();
 
+	void IncreaseDifficulty();
 	void GameOver();
 	void ResetGameState(Player& player);
 
 	Vector2 m_startPosition;
 	const int m_maxLives = 3;
+	// Each amount score awarded, increases difficulty by 1
+	const int m_scoreAmountToIncreseDiff = 20;
 	int m_currentLives;
 	int m_currentScore = 0;
 	int m_highScore = 0;
+	int m_difficultyLevel = 1;
 
 	HUD* m_hud = nullptr;
 

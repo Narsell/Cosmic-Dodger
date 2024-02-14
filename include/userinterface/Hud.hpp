@@ -6,7 +6,7 @@
 struct SDL_Renderer;
 class UIStaticText;
 class UIElement;
-class UIPlayerLives;
+class UIProgressTextures;
 class Window;
 
 class HUD : public BaseEntity {
@@ -19,6 +19,7 @@ public:
 	void UpdateScore(const int score);
 	void UpdateHighScore(const int highScore);
 	void UpdateAmmo(const int ammo);
+	void UpdateDifficultyLevel(const int difficultyLevel);
 
 	virtual void Render(struct SDL_Renderer* renderer) override;
 	virtual void Update(const float deltaTime) override;
@@ -28,11 +29,12 @@ public:
 private:
 	Window* m_window;
 
-	UIPlayerLives* m_lives;
+	UIProgressTextures* m_livesProgress = nullptr;
+	UIProgressTextures* m_ammoProgress = nullptr;
 
-	UIStaticText* m_score;
-	UIStaticText* m_highScore;
-	UIStaticText* m_ammo;	
+	UIStaticText* m_score = nullptr;
+	UIStaticText* m_highScore = nullptr;
+	UIStaticText* m_difficultyLevel = nullptr;
 
 	std::vector<UIElement*> m_uiElements;
 
