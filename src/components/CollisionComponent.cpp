@@ -4,6 +4,7 @@
 
 #include "components/CollisionComponent.hpp"
 #include "components/Collider2D.hpp"
+#include "entities/GameObject.hpp"
 
 
 CollisionComponent::CollisionComponent(GameObject* parent, const char* name)

@@ -47,11 +47,14 @@ void Projectile::OnCollision(HitInfo& hitInformation)
 		m_hitSound.Play();
 		// TODO: Add a more robust collision channel system to avoid this.
 		// Each object should get their own collision callback to handle their specific functionality.
-		// Instead, we're calling the meteor's spawner and deleting it from here, not ideal but that's a problem
+		// Instead, we're calling the meteor's OnCollision function from here, not ideal but that's a problem
 		// for future me.
 		Meteor* meteor = dynamic_cast<Meteor*>(hitInformation.hitGameObject);
 		if (meteor) {
-			MeteorSpawner::DeleteMeteor(meteor);
+			HitInfo meteorHitInfo = hitInformation;
+			meteorHitInfo.hitCollider = m_collider;
+			meteorHitInfo.hitGameObject = this;
+			meteor->OnCollision(meteorHitInfo);
 		}
 	}
 	else if (hitInformation.hitGameObject->GetDisplayName() == "Window Bounds")

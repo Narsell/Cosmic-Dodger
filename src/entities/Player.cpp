@@ -35,7 +35,7 @@ Player::Player(HUD* hud, const char* name)
 
 	m_inputComponent = AddComponent<PlayerInputComponent>(new PlayerInputComponent(this, "Input Component"));
 
-	m_shootingComponent = AddComponent< ShootingComponent>(new ShootingComponent(this, "Shoot Component"));
+	m_shootingComponent = AddComponent<ShootingComponent>(new ShootingComponent(this, "Shoot Component"));
 
 }
 

@@ -20,5 +20,5 @@ public:
 
 private:
 
-	const TextureResource* m_texture;
+	const TextureResource* m_textureResource;
 };

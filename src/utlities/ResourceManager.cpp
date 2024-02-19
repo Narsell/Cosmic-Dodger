@@ -18,6 +18,10 @@ TextureResource* ResourceManager::backgroundTexture = nullptr;
 TextureResource* ResourceManager::pickupTexture = nullptr;
 TextureResource* ResourceManager::ammoTexture = nullptr;
 
+/* ANIMATIONS */
+
+AnimationFrames* ResourceManager::meteorDestroyFrames = nullptr;
+
 /* SOUNDS */
 Mix_Chunk* ResourceManager::shootingSound = nullptr;
 Mix_Chunk* ResourceManager::projectileHitSound;
@@ -37,7 +41,7 @@ ResourceManager::ResourceManager(SDL_Renderer* renderer)
 {
 	Vector2 playerDimensions = Vector2(112.f, 75.f);
 	Vector2 playerLifeDimensions = Vector2(37.f, 26.f);
-	Vector2 meteorTexture = Vector2(89.f, 82.f);
+	Vector2 meteorDimensions = Vector2(89.f, 82.f);
 	Vector2 projectileDimensions = Vector2(9.f, 54.f);
 	Vector2 bgDimensions = Vector2(1280.f, 720.f);
 	Vector2 pickupDimensions = Vector2(30.f, 31.f);
@@ -45,11 +49,29 @@ ResourceManager::ResourceManager(SDL_Renderer* renderer)
 
 	ResourceManager::playerTexture = LoadTexture("Player", playerDimensions, "assets/player_ship.png");
 	ResourceManager::playerLifeTexture = LoadTexture("Player Life", playerLifeDimensions, "assets/player_life.png");
-	ResourceManager::meteorTexture = LoadTexture("Meteor", meteorTexture, "assets/meteors/meteor3.png");
+	ResourceManager::meteorTexture = LoadTexture("Meteor", meteorDimensions, "assets/meteors/meteor3.png");
 	ResourceManager::projectileTexture = LoadTexture("Projectile", projectileDimensions, "assets/laser_g.png");
 	ResourceManager::backgroundTexture = LoadTexture("Background", bgDimensions, "assets/background.png");
 	ResourceManager::pickupTexture = LoadTexture("Pickup", pickupDimensions, "assets/star_gold.png");
 	ResourceManager::ammoTexture = LoadTexture("Ammo", ammoDimensions, "assets/ammo_green.png");
+
+	Vector2 meteorFramesDimensions = Vector2(100.f, 100.f);
+	ResourceManager::meteorDestroyFrames = CreateAnimationFrames("Meteor Destruction");
+	ResourceManager::meteorDestroyFrames->AddFrame(
+		LoadTexture("Meteor Frame 1", meteorFramesDimensions, "assets/meteors/animations/destroy_0.png")
+	)->AddFrame(
+		LoadTexture("Meteor Frame 2", meteorFramesDimensions, "assets/meteors/animations/destroy_1.png")
+	)->AddFrame(
+		LoadTexture("Meteor Frame 3", meteorFramesDimensions, "assets/meteors/animations/destroy_2.png")
+	)->AddFrame(
+		LoadTexture("Meteor Frame 4", meteorFramesDimensions, "assets/meteors/animations/destroy_3.png")
+	)->AddFrame(
+		LoadTexture("Meteor Frame 5", meteorFramesDimensions, "assets/meteors/animations/destroy_4.png")
+	)->AddFrame(
+		LoadTexture("Meteor Frame 6", meteorFramesDimensions, "assets/meteors/animations/destroy_5.png")
+	)->AddFrame(
+		LoadTexture("Meteor Frame 7", meteorFramesDimensions, "assets/meteors/animations/destroy_6.png")
+	);
 
 	SDL_Surface* cursorSurface = IMG_Load("assets/crossair_red.png");
 	ResourceManager::cursor = SDL_CreateColorCursor(cursorSurface, 0, 0);
@@ -66,15 +88,19 @@ ResourceManager::ResourceManager(SDL_Renderer* renderer)
 
 ResourceManager::~ResourceManager()
 {
-	for (TextureResource* textureRes : m_textures) {
+	for (TextureResource*& textureRes : m_textures) {
 		delete textureRes;
 	}
 
-	for (TTF_Font* font : m_fonts) {
+	for (AnimationFrames*& frames : m_animationFrames) {
+		delete frames;
+	}
+
+	for (TTF_Font*& font : m_fonts) {
 		TTF_CloseFont(font);
 	}
 
-	for (Mix_Chunk* sound_mix : m_sounds) {
+	for (Mix_Chunk*& sound_mix : m_sounds) {
 		Mix_FreeChunk(sound_mix);
 	}
 
@@ -90,17 +116,19 @@ ResourceManager* ResourceManager::InitResourceManager(SDL_Renderer* renderer)
 	return s_resourceManager;
 }
 
-TextureResource* ResourceManager::LoadTexture(const char* name, const Vector2& dimensions, const char* path)
+TextureResource* ResourceManager::LoadTexture(const std::string& name, const Vector2& dimensions, const char* path)
 {
 	SDL_Texture* texture = nullptr;
 	texture = IMG_LoadTexture(m_renderer, path);
 	assert(texture);
 	if (!texture)
 		std::cout << "Failed to load texture. Error: " << SDL_GetError() << std::endl;
-	m_textures.emplace_back(
-		new TextureResource(name, dimensions, texture)
-	);
-	return m_textures.back();
+	return m_textures.emplace_back(new TextureResource(name, dimensions, texture));
+}
+
+AnimationFrames* ResourceManager::CreateAnimationFrames(const std::string& name)
+{
+	return m_animationFrames.emplace_back(new AnimationFrames(name));
 }
 
 TTF_Font* ResourceManager::LoadFont(const char* path, int size)
@@ -124,3 +152,30 @@ Mix_Chunk* ResourceManager::LoadMixChunk(const char* path)
 	m_sounds.push_back(mixChunk);
 	return m_sounds.back();
 }
+
+
+
+AnimationFrames::AnimationFrames(const std::string& name)
+	:m_name(name)
+{
+}
+
+AnimationFrames* AnimationFrames::AddFrame(const TextureResource* newFrame)
+{
+	m_textureFrames.push_back(newFrame);
+	return this;
+}
+
+TextureResource::TextureResource(const std::string& name, const Vector2& dimensions, SDL_Texture* texture)
+	:m_name(name), m_dimensions(dimensions), m_texture(texture)
+{
+}
+
+
+
+TextureResource::~TextureResource()
+{
+	assert(m_texture);
+	SDL_DestroyTexture(m_texture);
+}
+

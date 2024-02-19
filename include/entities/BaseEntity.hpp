@@ -22,6 +22,7 @@ public:
 	bool GetCanRender() const { return m_canRender; };
 	bool GetCanUpdate() const { return m_canUpdate; };
 
+	virtual void Disable();
 	virtual void SetCanRender(const bool canRender) { m_canRender = canRender; };
 	virtual void SetCanUpdate(const bool canUpdate) { m_canUpdate = canUpdate; };
 

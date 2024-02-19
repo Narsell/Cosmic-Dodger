@@ -5,16 +5,16 @@ UIProgressTextures::UIProgressTextures(const HUD* parentHud, const Transform& tr
 	:UIElement(parentHud, transform, name),
 	m_maxValue(maxValue),
 	m_currentValue(m_maxValue),
-	m_texture(texture)
+	m_textureResource(texture)
 {
-	assert(m_texture);
+	assert(m_textureResource);
 	m_textures.reserve(m_maxValue);
 	for (int i = 0; i < m_maxValue; ++i) {
 		//TODO: Get grow direction logic here
-		const float xOffset = m_transform.GetPosition().x - i * (m_texture->GetDimensions().x + m_padding);
+		const float xOffset = m_transform.GetPosition().x - i * (m_textureResource->GetDimensions().x + m_padding);
 		const float yOffset = m_transform.GetPosition().y;
 		m_textures.emplace_back(
-			new UITextureRect(parentHud, m_texture, Transform(Vector2(xOffset, yOffset)))
+			new UITextureRect(parentHud, m_textureResource, Transform(Vector2(xOffset, yOffset)))
 		);
 	}
 }

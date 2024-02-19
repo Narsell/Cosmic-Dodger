@@ -4,6 +4,7 @@
 
 class MovementComponent;
 class CollisionComponent;
+class AnimationComponent;
 class WindowBounds;
 class Collider2D;
 class MeteorSpawner;
@@ -17,11 +18,11 @@ public:
 	void Update(const float deltaTime) override;
 	static const float GetMaxSpeed() { return maxSpeed; };
 
-private:
 
 	void OnCollision(HitInfo& hitInformation);
 
 private:
+	void OnDestroyAnimationFinish();
 
 	const float m_maxDistanceTravel = 2000.f;
 	float m_distanceTraveled = 0.f;
@@ -35,5 +36,6 @@ private:
 
 	CollisionComponent* m_collisionComponent = nullptr;
 	MovementComponent* m_movementComponent = nullptr;
+	AnimationComponent* m_animationComponent = nullptr;
 
 };

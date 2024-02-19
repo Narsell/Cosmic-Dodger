@@ -1,6 +1,7 @@
 #pragma once
 #include <assert.h>
 #include <vector>
+#include <map>
 #include "SDL.h"
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
@@ -12,32 +13,47 @@ struct TextureResource {
 
 public:
 
-    TextureResource(const char* name, const Vector2 dimensions, SDL_Texture* texture)
-        :
-        m_name(name),
-        m_dimensions(dimensions),
-        m_texture(texture)
-    {}
+    TextureResource(const std::string& name, const Vector2& dimensions, SDL_Texture* texture);
+    TextureResource(const TextureResource&) = delete;
+    const TextureResource& operator=(const TextureResource&) = delete;
+    ~TextureResource();
 
-    ~TextureResource() {
-        assert(m_texture);
-        SDL_DestroyTexture(m_texture);
-        
-    }
-
-    const char* GetName() const { return m_name; };
+    const std::string& GetName() const { return m_name; };
     const Vector2& GetDimensions() const { return m_dimensions; };
     SDL_Texture* GetTexture() const { return m_texture; };
 
 private:
-    const char* m_name;
+    const std::string m_name;
     const Vector2 m_dimensions;
     SDL_Texture* m_texture;
 };
 
+class AnimationFrames {
+
+public:
+    AnimationFrames(const std::string& name);
+    AnimationFrames(const AnimationFrames&) = delete;
+    const AnimationFrames& operator=(const AnimationFrames&) = delete;
+    ~AnimationFrames() {};
+
+    const std::vector<const TextureResource*>& GetFrames() const { return m_textureFrames; };
+
+    AnimationFrames* AddFrame(const TextureResource* newFrame);
+
+private:
+
+    std::vector<const TextureResource*> m_textureFrames;
+    const std::string m_name;
+};
+
+
 class ResourceManager {
 
 public:
+    static ResourceManager* InitResourceManager(SDL_Renderer* renderer);
+    ResourceManager(const ResourceManager&) = delete;
+    const ResourceManager& operator=(const ResourceManager&) = delete;
+    ~ResourceManager();
 
     static TextureResource* playerTexture;
     static TextureResource* playerLifeTexture;
@@ -46,6 +62,8 @@ public:
     static TextureResource* backgroundTexture;
     static TextureResource* pickupTexture;
     static TextureResource* ammoTexture;
+
+    static AnimationFrames* meteorDestroyFrames;
 
     static Mix_Chunk* shootingSound;
     static Mix_Chunk* projectileHitSound;
@@ -56,12 +74,12 @@ public:
 
     static SDL_Cursor* cursor;
 
-    ~ResourceManager();
-    static ResourceManager* InitResourceManager(SDL_Renderer* renderer);
-	TextureResource* LoadTexture(const char* name, const Vector2& dimensions, const char* path);
+private:
+
+	TextureResource* LoadTexture(const std::string& name, const Vector2& dimensions, const char* path);
+    AnimationFrames* CreateAnimationFrames(const std::string& name);
     TTF_Font* LoadFont(const char* path, int size);
     Mix_Chunk* LoadMixChunk(const char* path);
-
 
 private:
 
@@ -71,6 +89,7 @@ private:
     SDL_Renderer* m_renderer;
 
     std::vector<TextureResource*> m_textures;
+    std::vector<AnimationFrames*> m_animationFrames;
     std::vector<TTF_Font*> m_fonts;
     std::vector<Mix_Chunk*> m_sounds;
 

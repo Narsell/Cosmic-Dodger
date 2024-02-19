@@ -68,3 +68,9 @@ void MovementComponent::SetSpeed(const float speed)
 	m_speed = std::clamp<float>(speed, 0.f, m_max_speed);
 
 }
+
+void MovementComponent::SetMaxSpeed(const float maxSpeed)
+{
+	m_max_speed = std::clamp<float>(maxSpeed, 0.f, maxSpeed);
+	m_speed = std::clamp<float>(m_speed, 0.f, m_max_speed);
+}

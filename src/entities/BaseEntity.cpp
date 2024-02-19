@@ -35,3 +35,9 @@ void BaseEntity::Render(SDL_Renderer* renderer)
 void BaseEntity::Update(const float deltaTime)
 {
 }
+
+void BaseEntity::Disable()
+{
+	SetCanUpdate(false);
+	SetCanRender(false);
+}

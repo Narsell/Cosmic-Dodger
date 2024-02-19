@@ -24,10 +24,10 @@ HUD::HUD(Window* window)
 		new UIStaticText(this, "SCORE: #", Color(176, 228, 16), Transform(Vector2(20.f, 20.f)), Vector2(200.f, 50.f))
 	),
 	m_highScore(
-		new UIStaticText(this, "HI SCORE: #", Color(255, 0, 160), Transform(Vector2(20.f, 80)), Vector2(120.f, 30.f))
+		new UIStaticText(this, "HI SCORE: #", Color(255, 0, 160), Transform(Vector2(20.f, 80)), Vector2(100.f, 25.f))
 	),
 	m_difficultyLevel(
-		new UIStaticText(this, "LEVEL: #", Color(176, 228, 16), Transform(Vector2(20.f, Window::s_height - 70.f)), Vector2(200.f*0.8f, 50.f*0.8f))
+		new UIStaticText(this, "LEVEL: #", Color(176, 228, 16), Transform(Vector2(20.f, Window::s_height - 70.f)), Vector2(160.f, 40.f))
 	)
 	
 {	

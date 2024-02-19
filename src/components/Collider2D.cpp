@@ -55,11 +55,11 @@ void Collider2D::Update(const float deltaTime)
 	
 	for (Collider2D* collisionCandidate : m_collisionCandidates) {
 		const bool isColliding = IsColliding(collisionCandidate, m_lastHitInformation);
-		if (isColliding && GetCanUpdate() && OnCollisionDelegate)
+		if (isColliding && GetCanUpdate() && collisionCandidate->GetCanUpdate() && OnCollisionDelegate)
 		{
 			OnCollisionDelegate(m_lastHitInformation);
 		}
-		else if(isColliding && (!GetCanUpdate() || !OnCollisionDelegate))
+		else if(isColliding && (!GetCanUpdate() || collisionCandidate->GetCanUpdate() || !OnCollisionDelegate))
 		{
 			std::cout << "[WARNING] Unable to call collision delegate\n";
 		}

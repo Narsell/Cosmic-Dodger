@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\components\AnimationComponent.cpp" />
     <ClCompile Include="src\components\ShootingComponent.cpp" />
     <ClCompile Include="src\entities\Pickup.cpp" />
     <ClCompile Include="src\entities\Meteor.cpp" />
@@ -50,6 +51,7 @@
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\components\AnimationComponent.hpp" />
     <ClInclude Include="include\components\Collider2D.hpp" />
     <ClInclude Include="include\components\CollisionComponent.hpp" />
     <ClInclude Include="include\components\Component.hpp" />

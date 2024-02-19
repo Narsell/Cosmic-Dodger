@@ -17,7 +17,7 @@ public:
 	const Vector2& GetVelocity() const { return m_velocity; };
 
 	void SetSpeed(const float speed);
-	void SetMaxSpeed(const float maxSpeed) { m_max_speed = maxSpeed; };
+	void SetMaxSpeed(const float maxSpeed);
 	void SetVelocity(const Vector2& newVelocity) { m_velocity = newVelocity; };
 
 	void AddPositionDelta(const Vector2& deltaPosition);

@@ -28,7 +28,7 @@ private:
 	const float m_padding = 5;
 	GROW_DIRECTION m_growDirection = GROW_DIRECTION::LEFT;
 
-	TextureResource* m_texture = nullptr;
+	TextureResource* m_textureResource = nullptr;
 	std::vector<UITextureRect*> m_textures;
 
 };

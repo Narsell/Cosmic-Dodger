@@ -1,5 +1,4 @@
 #pragma once
-#include <SDL.h>
 #include <vector>
 #include <assert.h>
 
@@ -19,6 +18,9 @@ public:
 	Transform m_transform;
 
 	const Vector2 GetCenterPoint() const { return m_centerPoint; };
+	void SetTextureResource(const TextureResource* textureResource) { m_textureResource = textureResource; };
+
+	const TextureResource* GetTextureResource() const { return m_textureResource; };
 	
 	//Renders the game object texture and its components
 	virtual void Render(SDL_Renderer* renderer) override;
@@ -27,7 +29,7 @@ public:
 	virtual void Update(const float deltaTime) override;
 
 	//Makes an object unable to update and render, as well as its child components.
-	void Disable();
+	void Disable() override;
 
 	template<typename ComponentType>
 	inline ComponentType* AddComponent(ComponentType* component);
@@ -42,7 +44,7 @@ protected:
 
 private:
 
-	TextureResource* m_texture = nullptr;
+	const TextureResource* m_textureResource = nullptr;
 	Vector2 m_centerPoint;
 	//Has ownership of all components. This class will take care of freeing memory on all components
 	std::vector<Component*> m_components;

@@ -1,12 +1,12 @@
 #pragma once
-#include <SDL.h>
 #include <vector>
 
 #include "utilities/Math.hpp"
+#include "components/Transform.hpp"
 #include "components/Component.hpp"
-#include "entities/GameObject.hpp"
 
 class Collider2D;
+class GameObject;
 
 class CollisionComponent : public Component {
 
