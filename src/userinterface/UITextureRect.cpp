@@ -1,4 +1,4 @@
-#include "TextureRect.hpp"
+#include "userinterface/UITextureRect.hpp"
 #include "utilities/ResourceManager.hpp"
 
 UITextureRect::UITextureRect(const HUD* parentHud, const TextureResource* texture, const Transform& transform, const char* name)

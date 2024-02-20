@@ -8,7 +8,7 @@ class UIElement : public BaseEntity {
 
 public:
 
-	UIElement(const HUD* parentHud, const Transform& transform = Transform(), const char* name = "NA_TextureRect");
+	UIElement(const HUD* parentHud, const Transform& transform = Transform(), const char* name = "NA_UIElement");
 
 	Transform m_transform;
 

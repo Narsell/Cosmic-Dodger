@@ -2,7 +2,7 @@
 #include <SDL_image.h>
 #include <assert.h>
 
-#include "userinterface/StaticText.hpp"
+#include "userinterface/UIStaticText.hpp"
 #include "utilities/ResourceManager.hpp"
 #include "Window.hpp"
 
@@ -116,7 +116,7 @@ ResourceManager* ResourceManager::InitResourceManager(SDL_Renderer* renderer)
 	return s_resourceManager;
 }
 
-TextureResource* ResourceManager::LoadTexture(const std::string& name, const Vector2& dimensions, const char* path)
+TextureResource* ResourceManager::LoadTexture(const char* name, const Vector2& dimensions, const char* path)
 {
 	SDL_Texture* texture = nullptr;
 	texture = IMG_LoadTexture(m_renderer, path);
@@ -126,7 +126,7 @@ TextureResource* ResourceManager::LoadTexture(const std::string& name, const Vec
 	return m_textures.emplace_back(new TextureResource(name, dimensions, texture));
 }
 
-AnimationFrames* ResourceManager::CreateAnimationFrames(const std::string& name)
+AnimationFrames* ResourceManager::CreateAnimationFrames(const char* name)
 {
 	return m_animationFrames.emplace_back(new AnimationFrames(name));
 }
@@ -155,7 +155,7 @@ Mix_Chunk* ResourceManager::LoadMixChunk(const char* path)
 
 
 
-AnimationFrames::AnimationFrames(const std::string& name)
+AnimationFrames::AnimationFrames(const char* name)
 	:m_name(name)
 {
 }
@@ -166,7 +166,7 @@ AnimationFrames* AnimationFrames::AddFrame(const TextureResource* newFrame)
 	return this;
 }
 
-TextureResource::TextureResource(const std::string& name, const Vector2& dimensions, SDL_Texture* texture)
+TextureResource::TextureResource(const char* name, const Vector2& dimensions, SDL_Texture* texture)
 	:m_name(name), m_dimensions(dimensions), m_texture(texture)
 {
 }

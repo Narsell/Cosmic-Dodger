@@ -107,14 +107,14 @@ void GameManager::HandleInput()
 
 void GameManager::Update(const float deltaTime)
 {
-    for (BaseEntity* destroyedGameObj : m_destroyQueue) {
+    for (BaseEntity*& destroyedGameObj : m_destroyQueue) {
         assert(destroyedGameObj);
         delete destroyedGameObj;
         m_entities.remove(destroyedGameObj);
     }
     m_destroyQueue.clear();
 
-    for (BaseEntity* entity : m_entities) {
+    for (BaseEntity*& entity : m_entities) {
         assert(entity);
         if (entity->GetCanUpdate()) {
             entity->Update(deltaTime);
@@ -136,7 +136,7 @@ void GameManager::Render()
 {
     m_window->Clear();
 
-    for (BaseEntity* entity : m_entities) {
+    for (BaseEntity*& entity : m_entities) {
         if (entity->GetCanRender()) {
             entity->Render(m_window->GetRenderer());
         }
@@ -151,7 +151,7 @@ void GameManager::Render()
 GameManager::~GameManager()
 {
     //Deleting all game objects
-    for (BaseEntity* entity : m_entities) {
+    for (BaseEntity*& entity : m_entities) {
         delete entity;
     }
 

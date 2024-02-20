@@ -27,7 +27,7 @@ GameObject::~GameObject()
 {
     //std::cout << GetDisplayName() << " destroyed on GameObject destructor!\n";
 
-	for (Component* component : m_components) {
+	for (Component*& component : m_components) {
 		delete component;
 	}
 }
@@ -56,7 +56,7 @@ void GameObject::Render(SDL_Renderer* renderer)
     
     }
 
-    for (Component* component : m_components) {
+    for (Component*& component : m_components) {
         if (component->GetCanRender()) {
             component->Render(renderer);
         }
@@ -67,7 +67,7 @@ void GameObject::Update(const float deltaTime)
 {
     BaseEntity::Update(deltaTime);
 
-    for (Component* component : m_components) {
+    for (Component*& component : m_components) {
         if (component->GetCanUpdate()) {
             component->Update(deltaTime);
         }
@@ -77,7 +77,7 @@ void GameObject::Update(const float deltaTime)
 void GameObject::Disable()
 {
     BaseEntity::Disable();
-    for (Component* component : m_components) {
+    for (Component*& component : m_components) {
         component->SetCanUpdate(false);
         component->SetCanRender(false);
     }

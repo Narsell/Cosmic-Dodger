@@ -23,7 +23,7 @@
     <ClCompile Include="src\components\ShootingComponent.cpp" />
     <ClCompile Include="src\entities\Pickup.cpp" />
     <ClCompile Include="src\entities\Meteor.cpp" />
-    <ClCompile Include="src\userinterface\TextureRect.cpp" />
+    <ClCompile Include="src\userinterface\UITextureRect.cpp" />
     <ClCompile Include="src\userinterface\UIElement.cpp" />
     <ClCompile Include="src\userinterface\UIProgressTextures.cpp" />
     <ClCompile Include="src\utlities\Color.cpp" />
@@ -42,7 +42,7 @@
     <ClCompile Include="src\GameManager.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\userinterface\Hud.cpp" />
-    <ClCompile Include="src\userinterface\StaticText.cpp" />
+    <ClCompile Include="src\userinterface\UIStaticText.cpp" />
     <ClCompile Include="src\utlities\Math.cpp" />
     <ClCompile Include="src\components\Sound.cpp" />
     <ClCompile Include="src\utlities\MeteorSpawner.cpp" />
@@ -68,7 +68,8 @@
     <ClInclude Include="include\GameManager.hpp" />
     <ClInclude Include="include\components\Sound.hpp" />
     <ClInclude Include="include\userinterface\Hud.hpp" />
-    <ClInclude Include="include\userinterface\TextureRect.hpp" />
+    <ClInclude Include="include\userinterface\DeathMenu.hpp" />
+    <ClInclude Include="include\userinterface\UITextureRect.hpp" />
     <ClInclude Include="include\userinterface\UIElement.hpp" />
     <ClInclude Include="include\userinterface\UIProgressTextures.hpp" />
     <ClInclude Include="include\utilities\Color.hpp" />
@@ -78,7 +79,7 @@
     <ClInclude Include="include\utilities\MeteorSpawner.hpp" />
     <ClInclude Include="include\utilities\PickupSpawner.hpp" />
     <ClInclude Include="include\utilities\ResourceManager.hpp" />
-    <ClInclude Include="include\userinterface\StaticText.hpp" />
+    <ClInclude Include="include\userinterface\UIStaticText.hpp" />
     <ClInclude Include="include\Window.hpp" />
     <ClInclude Include="include\utilities\Performance.hpp" />
     <ClInclude Include="include\entities\Pickup.hpp" />

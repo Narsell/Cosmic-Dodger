@@ -53,7 +53,7 @@ void Collider2D::Update(const float deltaTime)
 	m_colliderRectangle.x = m_absTransform.GetPosition().x;
 	m_colliderRectangle.y = m_absTransform.GetPosition().y;
 	
-	for (Collider2D* collisionCandidate : m_collisionCandidates) {
+	for (Collider2D*& collisionCandidate : m_collisionCandidates) {
 		const bool isColliding = IsColliding(collisionCandidate, m_lastHitInformation);
 		if (isColliding && GetCanUpdate() && collisionCandidate->GetCanUpdate() && OnCollisionDelegate)
 		{

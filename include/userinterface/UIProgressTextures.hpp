@@ -2,7 +2,7 @@
 #include <vector>
 
 #include "userinterface/UIElement.hpp"
-#include "userinterface/TextureRect.hpp"
+#include "userinterface/UITextureRect.hpp"
 
 enum GROW_DIRECTION {
 	LEFT,

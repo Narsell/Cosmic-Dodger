@@ -22,7 +22,7 @@ void MeteorSpawner::Reset()
 	m_timeSinceLastSpawn = 0.f;
 	SetSpawnRate(m_maxSpawnRate);
 	SetMeteorSpeed(m_minMeteorSpeed);
-	for (Meteor* meteor : m_activeMeteors) 
+	for (Meteor*& meteor : m_activeMeteors) 
 	{
 		GameManager::DestroyEntity(meteor);
 	}

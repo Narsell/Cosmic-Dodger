@@ -13,17 +13,17 @@ struct TextureResource {
 
 public:
 
-    TextureResource(const std::string& name, const Vector2& dimensions, SDL_Texture* texture);
+    TextureResource(const char* name, const Vector2& dimensions, SDL_Texture* texture);
     TextureResource(const TextureResource&) = delete;
     const TextureResource& operator=(const TextureResource&) = delete;
     ~TextureResource();
 
-    const std::string& GetName() const { return m_name; };
+    const char* GetName() const { return m_name; };
     const Vector2& GetDimensions() const { return m_dimensions; };
     SDL_Texture* GetTexture() const { return m_texture; };
 
 private:
-    const std::string m_name;
+    const char* m_name;
     const Vector2 m_dimensions;
     SDL_Texture* m_texture;
 };
@@ -31,7 +31,7 @@ private:
 class AnimationFrames {
 
 public:
-    AnimationFrames(const std::string& name);
+    AnimationFrames(const char* name);
     AnimationFrames(const AnimationFrames&) = delete;
     const AnimationFrames& operator=(const AnimationFrames&) = delete;
     ~AnimationFrames() {};
@@ -43,7 +43,7 @@ public:
 private:
 
     std::vector<const TextureResource*> m_textureFrames;
-    const std::string m_name;
+    const char* m_name;
 };
 
 
@@ -76,8 +76,8 @@ public:
 
 private:
 
-	TextureResource* LoadTexture(const std::string& name, const Vector2& dimensions, const char* path);
-    AnimationFrames* CreateAnimationFrames(const std::string& name);
+	TextureResource* LoadTexture(const char*, const Vector2& dimensions, const char* path);
+    AnimationFrames* CreateAnimationFrames(const char* name);
     TTF_Font* LoadFont(const char* path, int size);
     Mix_Chunk* LoadMixChunk(const char* path);
 

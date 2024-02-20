@@ -1,4 +1,4 @@
-#include "userinterface/StaticText.hpp"
+#include "userinterface/UIStaticText.hpp"
 #include "utilities/ResourceManager.hpp"
 #include "userinterface/Hud.hpp"
 #include "Window.hpp"
@@ -6,7 +6,7 @@
 
 UIStaticText::UIStaticText(const HUD* parentHud, const std::string& text, const Color& color, const Transform& transform, const Vector2& dimensions, const char* name)
 	:UIElement(parentHud, transform, name),
-	m_text(text),
+	m_text(text.c_str()),
 	m_color(color),
 	m_dimensions(dimensions)
 {
@@ -20,7 +20,7 @@ UIStaticText::~UIStaticText()
 
 void UIStaticText::SetText(const std::string& newText)
 {
-	m_text = newText;
+	m_text = newText.c_str();
 	UpdateTexture();
 }
 
@@ -36,7 +36,7 @@ void UIStaticText::UpdateTexture()
 {
 	SDL_Renderer* renderer = GetParentHud()->GetTargetWindow()->GetRenderer();
 	assert(renderer);
-	m_fontSurface = TTF_RenderText_Blended(ResourceManager::mainFont, m_text.c_str(), m_color.ToSDLColor());
+	m_fontSurface = TTF_RenderText_Blended(ResourceManager::mainFont, m_text, m_color.ToSDLColor());
 	m_fontTexture = SDL_CreateTextureFromSurface(renderer, m_fontSurface);
 
 	SDL_FreeSurface(m_fontSurface);

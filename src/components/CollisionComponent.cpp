@@ -15,7 +15,7 @@ CollisionComponent::~CollisionComponent()
 {
 	//std::cout << GetDisplayName() << " destroyed on CollisionComponent destructor!\n";
 
-	for (Collider2D* collider : m_colliders) {
+	for (Collider2D*& collider : m_colliders) {
 		delete collider;
 	}
 }
@@ -32,7 +32,7 @@ void CollisionComponent::Render(SDL_Renderer* renderer)
 {
 	Component::Render(renderer);
 
-	for (Collider2D* collider : m_colliders) {
+	for (Collider2D*& collider : m_colliders) {
 		if (collider->GetCanRender()) {
 			collider->Render(renderer);
 		}
@@ -45,7 +45,7 @@ void CollisionComponent::Update(const float deltaTime)
 
 	m_transform = m_parent->m_transform;
 
-	for (Collider2D* collider : m_colliders) {
+	for (Collider2D*& collider : m_colliders) {
 		if (collider->GetCanUpdate()) {
 			collider->Update(deltaTime);
 		}
@@ -56,7 +56,7 @@ void CollisionComponent::SetCanUpdate(const bool canUpdate)
 {
 	BaseEntity::SetCanUpdate(canUpdate);
 
-	for (Collider2D* collider : m_colliders) {
+	for (Collider2D*& collider : m_colliders) {
 		collider->SetCanUpdate(canUpdate);
 	}
 }

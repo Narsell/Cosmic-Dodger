@@ -78,7 +78,7 @@ void PickupSpawner::DeletePickup(Pickup* pickup)
 void PickupSpawner::Reset()
 {
 	m_timeSinceLastSpawn = 0.f;
-	for (Pickup* pickup : m_activePickups)
+	for (Pickup*& pickup : m_activePickups)
 	{
 		GameManager::DestroyEntity(pickup);
 	}

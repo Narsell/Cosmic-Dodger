@@ -4,7 +4,7 @@
 #include "Window.hpp"
 #include "userinterface/Hud.hpp"
 #include "components/Transform.hpp"
-#include "userinterface/StaticText.hpp"
+#include "userinterface/UIStaticText.hpp"
 #include "userinterface/UIProgressTextures.hpp"
 #include "utilities/Color.hpp"
 #include "utilities/GameState.hpp"
@@ -40,7 +40,7 @@ HUD::HUD(Window* window)
 
 HUD::~HUD()
 {
-	for (UIElement* uiElement : m_uiElements) {
+	for (UIElement*& uiElement : m_uiElements) {
 		delete uiElement;
 	}
 }
@@ -67,13 +67,14 @@ void HUD::UpdateAmmo(const int ammo)
 
 void HUD::UpdateDifficultyLevel(const int difficultyLevel)
 {
+
 	m_difficultyLevel->SetText("LEVEL: " + std::to_string(difficultyLevel));
 }
 
 
 void HUD::Render(SDL_Renderer* renderer)
 {
-	for (UIElement* uiElement : m_uiElements) {
+	for (UIElement*& uiElement : m_uiElements) {
 		if (uiElement->GetCanRender()) {
 			uiElement->Render(renderer);
 		}

@@ -21,7 +21,7 @@ UIProgressTextures::UIProgressTextures(const HUD* parentHud, const Transform& tr
 
 UIProgressTextures::~UIProgressTextures()
 {
-	for (UITextureRect* texture : m_textures) {
+	for (UITextureRect*& texture : m_textures) {
 		delete texture;
 	}
 }

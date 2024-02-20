@@ -92,6 +92,8 @@ void GameState::GameOver()
 	m_hud->UpdateScore(m_currentScore);
 	m_hud->UpdateLives(m_currentLives);
 	m_hud->UpdateAmmo(playerShootComponent->GetCurrentAmmo());
+	m_hud->UpdateDifficultyLevel(m_difficultyLevel);
+
 
 	std::cout << "GAME OVER!\n";
 }
