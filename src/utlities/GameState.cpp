@@ -84,6 +84,10 @@ void GameState::GameOver()
 
 	// TODO: Add timer on hud to display GAME OVER message and add a callback to return and update HUD
 	
+	SetIsPaused(true);
+	m_hud->SetState(HUD_STATE::DEAD);
+	m_hud->UpdateDeathMenu(m_currentScore, m_difficultyLevel);
+
 	Player* player = GameManager::GetPlayer();
 	ShootingComponent* playerShootComponent = player->GetShootingComponent();
 	ResetGameState(*player);
@@ -94,8 +98,6 @@ void GameState::GameOver()
 	m_hud->UpdateAmmo(playerShootComponent->GetCurrentAmmo());
 	m_hud->UpdateDifficultyLevel(m_difficultyLevel);
 
-
-	std::cout << "GAME OVER!\n";
 }
 
 void GameState::ResetGameState(Player& player) 

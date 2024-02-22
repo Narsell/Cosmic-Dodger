@@ -10,11 +10,12 @@
 ResourceManager* ResourceManager::s_resourceManager = nullptr;
 
 /* TEXTURES */
+TextureResource* ResourceManager::gameBackgroundTexture = nullptr;
+TextureResource* ResourceManager::uiBackgroundTexture = nullptr;
 TextureResource* ResourceManager::playerTexture = nullptr;
 TextureResource* ResourceManager::playerLifeTexture = nullptr;
 TextureResource* ResourceManager::meteorTexture = nullptr;
 TextureResource* ResourceManager::projectileTexture = nullptr;
-TextureResource* ResourceManager::backgroundTexture = nullptr;
 TextureResource* ResourceManager::pickupTexture = nullptr;
 TextureResource* ResourceManager::ammoTexture = nullptr;
 
@@ -39,19 +40,21 @@ SDL_Cursor* ResourceManager::cursor = nullptr;
 ResourceManager::ResourceManager(SDL_Renderer* renderer)
 	:m_renderer(renderer)
 {
+	Vector2 bgDimensions = Vector2(1280.f, 720.f);
+	Vector2 uibgDimensions = Vector2(450.f, 450.f);
 	Vector2 playerDimensions = Vector2(112.f, 75.f);
 	Vector2 playerLifeDimensions = Vector2(37.f, 26.f);
 	Vector2 meteorDimensions = Vector2(89.f, 82.f);
 	Vector2 projectileDimensions = Vector2(9.f, 54.f);
-	Vector2 bgDimensions = Vector2(1280.f, 720.f);
 	Vector2 pickupDimensions = Vector2(30.f, 31.f);
 	Vector2 ammoDimensions = Vector2(12.f, 20.f);
 
+	ResourceManager::gameBackgroundTexture = LoadTexture("Background", bgDimensions, "assets/background.png");
+	ResourceManager::uiBackgroundTexture = LoadTexture("UI Background", uibgDimensions, "assets/ui_bg.png");
 	ResourceManager::playerTexture = LoadTexture("Player", playerDimensions, "assets/player_ship.png");
 	ResourceManager::playerLifeTexture = LoadTexture("Player Life", playerLifeDimensions, "assets/player_life.png");
 	ResourceManager::meteorTexture = LoadTexture("Meteor", meteorDimensions, "assets/meteors/meteor3.png");
 	ResourceManager::projectileTexture = LoadTexture("Projectile", projectileDimensions, "assets/laser_g.png");
-	ResourceManager::backgroundTexture = LoadTexture("Background", bgDimensions, "assets/background.png");
 	ResourceManager::pickupTexture = LoadTexture("Pickup", pickupDimensions, "assets/star_gold.png");
 	ResourceManager::ammoTexture = LoadTexture("Ammo", ammoDimensions, "assets/ammo_green.png");
 

@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+
 #include "components/Transform.hpp"
 #include "entities/BaseEntity.hpp"
 
@@ -8,15 +10,21 @@ class UIElement : public BaseEntity {
 
 public:
 
-	UIElement(const HUD* parentHud, const Transform& transform = Transform(), const char* name = "NA_UIElement");
+	~UIElement() {};
+
+	void AddChild(UIElement* child);
 
 	Transform m_transform;
 
+	virtual void Render(SDL_Renderer* renderer) override;
+	virtual void Update(const float deltaTime) override;
+
 protected:
 
-	const HUD* GetParentHud() const { return m_parentHud; };
+	UIElement(const Transform& transform = Transform(), const char* name = "NA_UIElement");
 
 private:
 
-	const HUD* m_parentHud;
+	const UIElement* m_parentElement = nullptr;
+	std::vector<UIElement*> m_children;
 };

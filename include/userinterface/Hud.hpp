@@ -1,20 +1,28 @@
 #pragma once
 #include <vector>
 
-#include "entities/BaseEntity.hpp"
+#include "userinterface/UIElement.hpp"
+#include "userinterface/UIProgressTextures.hpp"
+#include "userinterface/UIStaticText.hpp"
+#include "userinterface/DeathMenu.hpp"
 
 struct SDL_Renderer;
-class UIStaticText;
-class UIElement;
-class UIProgressTextures;
 class Window;
 
-class HUD : public BaseEntity {
+enum HUD_STATE {
+	PLAYING,
+	DEAD
+};
+
+class HUD : public UIElement {
 
 public:
-	HUD(Window* window);
+	HUD();
 	~HUD();
 
+	void SetState(HUD_STATE state);
+
+	void UpdateDeathMenu(const int currentScore, const int difficulty);
 	void UpdateLives(const int lives);
 	void UpdateScore(const int score);
 	void UpdateHighScore(const int highScore);
@@ -24,19 +32,18 @@ public:
 	virtual void Render(struct SDL_Renderer* renderer) override;
 	virtual void Update(const float deltaTime) override;
 
-	Window* GetTargetWindow() const { return m_window; };
-
 private:
-	Window* m_window;
 
-	UIProgressTextures* m_livesProgress = nullptr;
-	UIProgressTextures* m_ammoProgress = nullptr;
+	UIProgressTextures m_livesProgress;
+	UIProgressTextures m_ammoProgress;
 
-	UIStaticText* m_score = nullptr;
-	UIStaticText* m_highScore = nullptr;
-	UIStaticText* m_difficultyLevel = nullptr;
+	UIStaticText m_score;
+	UIStaticText m_highScore;
+	UIStaticText m_difficultyLevel;
 
-	std::vector<UIElement*> m_uiElements;
+	DeathMenu m_deathMenu;
+
+	//std::vector<UIElement&> m_uiElements;
 
 
 };

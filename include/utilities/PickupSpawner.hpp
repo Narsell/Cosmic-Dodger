@@ -14,7 +14,7 @@ class PickupSpawner : public BaseEntity {
 
 public:
 
-	PickupSpawner();
+	PickupSpawner(const char* name);
 	~PickupSpawner() override;
 
 	virtual void Update(const float deltaTime) override;

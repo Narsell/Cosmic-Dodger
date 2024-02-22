@@ -12,7 +12,7 @@ class UIStaticText : public UIElement {
 
 public:
 
-	UIStaticText(const HUD* parentHud, const std::string&, const Color& color, const Transform& transform = Transform(), const Vector2& dimensions = Vector2(10.f, 10.f), const char* name = "NA_StaticText");
+	UIStaticText(const std::string& text, const Color& color, const Transform& transform = Transform(), const Vector2& dimensions = Vector2(10.f, 10.f), const char* name = "NA_StaticText");
 	~UIStaticText() override;
 
 	void SetText(const std::string& newText);
@@ -22,7 +22,8 @@ public:
 
 private:
 
-	void UpdateTexture();
+	void UpdateSurfaceWithText();
+	void UpdateTexture(SDL_Renderer* renderer);
 
 	const char* m_text;
 	Color m_color;
@@ -30,5 +31,5 @@ private:
 
 	SDL_Texture* m_fontTexture = nullptr;
 	SDL_Surface* m_fontSurface = nullptr;
-
+	bool m_updateTexture = false;
 };

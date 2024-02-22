@@ -55,11 +55,12 @@ public:
     const ResourceManager& operator=(const ResourceManager&) = delete;
     ~ResourceManager();
 
+    static TextureResource* gameBackgroundTexture;
+    static TextureResource* uiBackgroundTexture;
     static TextureResource* playerTexture;
     static TextureResource* playerLifeTexture;
     static TextureResource* meteorTexture;
     static TextureResource* projectileTexture;
-    static TextureResource* backgroundTexture;
     static TextureResource* pickupTexture;
     static TextureResource* ammoTexture;
 

@@ -7,7 +7,8 @@
 std::list<Pickup*> PickupSpawner::m_activePickups;
 
 
-PickupSpawner::PickupSpawner()
+PickupSpawner::PickupSpawner(const char* name)
+	:BaseEntity("", name)
 {
 }
 

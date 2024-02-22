@@ -49,8 +49,7 @@ GameManager* GameManager::GetInstance()
 
 void GameManager::GameStart(const char* gameTitle)
 {
-    m_window = new Window(gameTitle);
-    
+    m_window = new Window(gameTitle); 
     m_resourceManager = ResourceManager::InitResourceManager(m_window->GetRenderer());
 
     Construction();
@@ -72,14 +71,14 @@ void GameManager::GameStart(const char* gameTitle)
 void GameManager::Construction()
 {
     m_gameState = GameState::GetGameState();
-    m_hud = new HUD(m_window);
+    m_hud = new HUD();
 
     SDL_SetCursor(ResourceManager::cursor);
 
     m_windowBounds = SpawnEntity(new WindowBounds("Window Bounds"));
     m_player = SpawnEntity(new Player(m_hud, "Player"));
-    m_meteorSpawner = SpawnEntity(new MeteorSpawner());
-    m_pickupSpawner = SpawnEntity(new PickupSpawner());
+    m_meteorSpawner = SpawnEntity(new MeteorSpawner("Meteor Spawner"));
+    m_pickupSpawner = SpawnEntity(new PickupSpawner("Pickup Spawner"));
 }
 
 void GameManager::BeginPlay()
@@ -113,14 +112,15 @@ void GameManager::Update(const float deltaTime)
         m_entities.remove(destroyedGameObj);
     }
     m_destroyQueue.clear();
-
-    for (BaseEntity*& entity : m_entities) {
-        assert(entity);
-        if (entity->GetCanUpdate()) {
-            entity->Update(deltaTime);
+    if (!GameState::GetGameState()->GetIsPaused()) {
+        for (BaseEntity*& entity : m_entities) {
+            assert(entity);
+            if (entity->GetCanUpdate()) {
+                entity->Update(deltaTime);
+            }
         }
+        m_meteorSpawner->Update(deltaTime);
     }
-    m_meteorSpawner->Update(deltaTime);
     m_hud->Update(deltaTime);
 
     //std::cout << "fps: " << 1 / (deltaTime) << "\n";

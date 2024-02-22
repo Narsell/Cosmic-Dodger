@@ -1,5 +1,6 @@
 #include "utilities/Color.hpp"
 
+Color Color::black = Color(0, 0, 0);
 Color Color::red = Color(255, 0, 0);
 Color Color::green = Color(0, 255, 0);
 Color Color::blue = Color(0, 0, 255);

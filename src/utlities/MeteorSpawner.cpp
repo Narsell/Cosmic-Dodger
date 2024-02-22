@@ -7,8 +7,9 @@
 
 std::list<Meteor*> MeteorSpawner::m_activeMeteors;
 
-MeteorSpawner::MeteorSpawner()
-	:m_player(GameManager::GetPlayer())
+MeteorSpawner::MeteorSpawner(const char * name)
+	:BaseEntity("", name),
+	m_player(GameManager::GetPlayer())
 {
 	SpawnMeteor();
 }

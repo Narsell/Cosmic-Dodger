@@ -23,6 +23,7 @@
     <ClCompile Include="src\components\ShootingComponent.cpp" />
     <ClCompile Include="src\entities\Pickup.cpp" />
     <ClCompile Include="src\entities\Meteor.cpp" />
+    <ClCompile Include="src\userinterface\DeathMenu.cpp" />
     <ClCompile Include="src\userinterface\UITextureRect.cpp" />
     <ClCompile Include="src\userinterface\UIElement.cpp" />
     <ClCompile Include="src\userinterface\UIProgressTextures.cpp" />

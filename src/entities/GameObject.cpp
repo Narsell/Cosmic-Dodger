@@ -7,14 +7,6 @@
 #include "utilities/ResourceManager.hpp"
 
 
-GameObject::GameObject()
-	:
-	BaseEntity("", "NA_GameObject", true, true),
-    m_transform(Transform()),
-	m_textureResource(nullptr)
-{
-}
-
 GameObject::GameObject(const Transform& transform, TextureResource* texture, const char* name)
 	:BaseEntity("", name, true, true),
     m_transform(transform),

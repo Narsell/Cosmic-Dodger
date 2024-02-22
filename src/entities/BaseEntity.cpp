@@ -3,15 +3,6 @@
 
 #include "entities/BaseEntity.hpp"
 
-BaseEntity::BaseEntity()
-	:
-	m_id(""),
-	m_displayName("NA_BaseEntity"),
-	m_canRender(false),
-	m_canUpdate(true)
-{
-}
-
 BaseEntity::BaseEntity(const char* entityId, const char* entityName, const bool canRender, const bool canUpdate)
 	:
 	m_id(entityId),

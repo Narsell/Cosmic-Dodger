@@ -6,11 +6,10 @@ class Transform {
 
 public:
 
-	Transform(const Vector2& position = Vector2::ZERO, const float rotation = 0.0, const float scale=1.0) :
-		m_position(position),
-		m_rotation(rotation),
-		m_scale(scale)
-	{};
+	Transform(const Vector2& position = Vector2::ZERO, const float rotation = 0.f, const float scale=1.f);
+
+	const Transform operator+(const Transform& other) const;
+	void operator+=(const Transform& other);
 
 	const Vector2& GetPosition() const { return m_position; };
 	const float GetRotation() const { return m_rotation; };

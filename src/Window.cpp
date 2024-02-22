@@ -13,7 +13,7 @@ int Window::s_width = 1280;
 int Window::s_height = 720;
 
 Window::Window(const char* title)
-    :m_window(nullptr), m_renderer(nullptr), m_bgTexture(ResourceManager::backgroundTexture)
+    :m_window(nullptr), m_renderer(nullptr), m_bgTexture(ResourceManager::gameBackgroundTexture)
 {
     m_window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, s_width, s_height, SDL_WINDOW_SHOWN);
     if (!m_window){
@@ -34,9 +34,9 @@ void Window::Clear(){
 
     SDL_RenderClear(m_renderer);
 
-    SDL_FRect bgRect(0.f, 0.f, ResourceManager::backgroundTexture->GetDimensions().x, ResourceManager::backgroundTexture->GetDimensions().y);
-    if (ResourceManager::backgroundTexture)
-        SDL_RenderCopyF(m_renderer, ResourceManager::backgroundTexture->GetTexture(), nullptr, &bgRect);
+    SDL_FRect bgRect(0.f, 0.f, ResourceManager::gameBackgroundTexture->GetDimensions().x, ResourceManager::gameBackgroundTexture->GetDimensions().y);
+    if (ResourceManager::gameBackgroundTexture)
+        SDL_RenderCopyF(m_renderer, ResourceManager::gameBackgroundTexture->GetTexture(), nullptr, &bgRect);
 
 }
 

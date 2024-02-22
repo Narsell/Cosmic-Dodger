@@ -18,29 +18,24 @@ public:
 	Transform m_transform;
 
 	const Vector2 GetCenterPoint() const { return m_centerPoint; };
-	void SetTextureResource(const TextureResource* textureResource) { m_textureResource = textureResource; };
-
 	const TextureResource* GetTextureResource() const { return m_textureResource; };
+	template<typename ComponentType>
+	inline ComponentType* GetComponentOfType() const;
 	
-	//Renders the game object texture and its components
-	virtual void Render(SDL_Renderer* renderer) override;
-
-	//Updates and "physics"
-	virtual void Update(const float deltaTime) override;
-
+	void SetTextureResource(const TextureResource* textureResource) { m_textureResource = textureResource; };
+	
 	//Makes an object unable to update and render, as well as its child components.
 	void Disable() override;
 
-	template<typename ComponentType>
-	inline ComponentType* AddComponent(ComponentType* component);
-
-	template<typename ComponentType>
-	inline ComponentType* GetComponentOfType() const;
+	virtual void Render(SDL_Renderer* renderer) override;
+	virtual void Update(const float deltaTime) override;
 
 protected:
 
 	GameObject(const Transform& transform, TextureResource* texture, const char* name = "NA_GameObject");
-	GameObject();
+
+	template<typename ComponentType>
+	inline ComponentType* AddComponent(ComponentType* component);
 
 private:
 

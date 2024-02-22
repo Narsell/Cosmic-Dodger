@@ -16,7 +16,7 @@ public:
 	//Resets current ammo and shooting timers
 	void Reset();
 
-	const int GetMaxAmmo() const { return m_maxAmmo; };
+	static constexpr int GetMaxAmmo() { return s_maxAmmo; };
 	const int GetCurrentAmmo() const { return m_currentAmmo; };
 
 	virtual void Update(const float deltaTime) override;
@@ -31,8 +31,8 @@ private:
 	float m_timeSinceLastShot = 0.f;
 	const float m_shootingReloadTime = 0.15f;
 	const float m_projetileSpawnDistance = 50.f;
-	int m_maxAmmo = 15;
-	int m_currentAmmo = m_maxAmmo;
+	static constexpr int s_maxAmmo = 20;
+	int m_currentAmmo = s_maxAmmo;
 	float m_timeSinceLastReplenish = 0.f;
 	const float m_increaseAmmoTime = 2.f;
 

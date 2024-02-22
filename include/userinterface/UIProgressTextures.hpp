@@ -13,7 +13,7 @@ enum GROW_DIRECTION {
 class UIProgressTextures : public UIElement {
 
 public:
-	UIProgressTextures(const HUD* parentHud, const Transform& transform, TextureResource* texture, const int maxValue, const char* name = "NA_UIProgressTextures");
+	UIProgressTextures(const Transform& transform, const TextureResource& texture, const int maxValue, const char* name = "NA_UIProgressTextures");
 	~UIProgressTextures() override;
 
 	void UpdateValue(const int currentValue);
@@ -28,7 +28,7 @@ private:
 	const float m_padding = 5;
 	GROW_DIRECTION m_growDirection = GROW_DIRECTION::LEFT;
 
-	TextureResource* m_textureResource = nullptr;
+	const TextureResource& m_textureResource;
 	std::vector<UITextureRect*> m_textures;
 
 };

@@ -31,7 +31,7 @@ ShootingComponent::~ShootingComponent()
 
 void ShootingComponent::Reset()
 {
-	m_currentAmmo = m_maxAmmo;
+	m_currentAmmo = s_maxAmmo;
 	m_timeSinceLastReplenish = 0.f;
 	m_timeSinceLastShot = 0.f;
 }
@@ -84,6 +84,6 @@ void ShootingComponent::Shoot()
 
 void ShootingComponent::UpdateAmmo(const int newAmmo)
 {
-	m_currentAmmo = std::clamp(newAmmo, 0, m_maxAmmo);
+	m_currentAmmo = std::clamp(newAmmo, 0, s_maxAmmo);
 	m_player->GetHud()->UpdateAmmo(m_currentAmmo);
 }

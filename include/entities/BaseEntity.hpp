@@ -16,9 +16,6 @@ public:
 		return this == nullptr;
 	}
 
-	virtual void Render(SDL_Renderer* renderer);
-	virtual void Update(const float deltaTime) = 0;
-
 	bool GetCanRender() const { return m_canRender; };
 	bool GetCanUpdate() const { return m_canUpdate; };
 
@@ -31,9 +28,11 @@ public:
 
 	void SetIdName(const std::string& idName) { m_id = idName; };
 
+	virtual void Render(SDL_Renderer* renderer);
+	virtual void Update(const float deltaTime) = 0;
+
 protected:
 
-	BaseEntity();
 	BaseEntity(const char* entityId, const char* entityName, const bool canRender=false, const bool canUpdate=true);
 
 protected:

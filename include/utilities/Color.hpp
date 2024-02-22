@@ -9,6 +9,7 @@ public:
 
 	SDL_Color ToSDLColor();
 
+	static Color black;
 	static Color red;
 	static Color blue;
 	static Color green;

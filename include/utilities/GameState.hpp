@@ -18,9 +18,11 @@ public:
 	const int GetMaxLives() const { return m_maxLives; };
 	const int GetDifficultyLevel() const { return m_difficultyLevel; };
 	const Vector2& GetPlayerStartPosition() const { return m_startPosition; };
+	const bool GetIsPaused() const { return m_isPaused; };
 
 	void AddScore(const int increment);
 	void PlayerHit();
+	void SetIsPaused(const bool isPaused) { m_isPaused = isPaused; };
 
 	~GameState();
 
@@ -39,6 +41,8 @@ private:
 	int m_currentScore = 0;
 	int m_highScore = 0;
 	int m_difficultyLevel = 1;
+
+	bool m_isPaused = false;
 
 	HUD* m_hud = nullptr;
 
