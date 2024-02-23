@@ -2,6 +2,7 @@
 #include "userinterface/UIElement.hpp"
 #include "userinterface/UITextureRect.hpp"
 #include "userinterface/UIStaticText.hpp"
+#include "userinterface/UIButton.hpp"
 
 class DeathMenu : public UIElement {
 
@@ -20,6 +21,7 @@ private:
 	UIStaticText m_title;
 	UIStaticText m_score;
 	UIStaticText m_level;
-
+	UIButton m_button;
+	UIStaticText m_buttonLabel;
 
 };

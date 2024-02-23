@@ -24,6 +24,7 @@
     <ClCompile Include="src\entities\Pickup.cpp" />
     <ClCompile Include="src\entities\Meteor.cpp" />
     <ClCompile Include="src\userinterface\DeathMenu.cpp" />
+    <ClCompile Include="src\userinterface\UIButton.cpp" />
     <ClCompile Include="src\userinterface\UITextureRect.cpp" />
     <ClCompile Include="src\userinterface\UIElement.cpp" />
     <ClCompile Include="src\userinterface\UIProgressTextures.cpp" />
@@ -70,6 +71,7 @@
     <ClInclude Include="include\components\Sound.hpp" />
     <ClInclude Include="include\userinterface\Hud.hpp" />
     <ClInclude Include="include\userinterface\DeathMenu.hpp" />
+    <ClInclude Include="include\userinterface\UIButton.hpp" />
     <ClInclude Include="include\userinterface\UITextureRect.hpp" />
     <ClInclude Include="include\userinterface\UIElement.hpp" />
     <ClInclude Include="include\userinterface\UIProgressTextures.hpp" />

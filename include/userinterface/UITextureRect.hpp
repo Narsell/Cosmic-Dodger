@@ -16,7 +16,6 @@ public:
 	~UITextureRect() override;
 
 	virtual void Render(SDL_Renderer* renderer) override;
-	virtual void Update(const float deltaTime) override {};
 
 private:
 

@@ -15,6 +15,7 @@ public:
 	void AddChild(UIElement* child);
 
 	Transform m_transform;
+	Transform m_relativeTransform;
 
 	virtual void Render(SDL_Renderer* renderer) override;
 	virtual void Update(const float deltaTime) override;

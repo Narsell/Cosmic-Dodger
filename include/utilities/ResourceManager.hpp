@@ -56,13 +56,14 @@ public:
     ~ResourceManager();
 
     static TextureResource* gameBackgroundTexture;
-    static TextureResource* uiBackgroundTexture;
     static TextureResource* playerTexture;
     static TextureResource* playerLifeTexture;
     static TextureResource* meteorTexture;
     static TextureResource* projectileTexture;
     static TextureResource* pickupTexture;
     static TextureResource* ammoTexture;
+    static TextureResource* uiBackgroundTexture;
+    static TextureResource* uiButton;
 
     static AnimationFrames* meteorDestroyFrames;
 

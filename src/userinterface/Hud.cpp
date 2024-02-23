@@ -107,7 +107,6 @@ void HUD::UpdateDifficultyLevel(const int difficultyLevel)
 	m_difficultyLevel.SetText("LEVEL: " + std::to_string(difficultyLevel));
 }
 
-
 void HUD::Render(SDL_Renderer* renderer)
 {
 	UIElement::Render(renderer);

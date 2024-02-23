@@ -2,7 +2,8 @@
 
 UIElement::UIElement(const Transform& transform, const char* name)
 	:BaseEntity("", name, true, false),
-	m_transform(transform)
+	m_transform(transform),
+	m_relativeTransform(transform)
 {
 }
 
@@ -10,7 +11,10 @@ void UIElement::AddChild(UIElement* child)
 {
 	m_children.push_back(child);
 	child->m_parentElement = this;
-	child->m_transform += m_transform;
+
+	const UIElement* childParent = child->m_parentElement;
+	child->m_transform += childParent->m_transform;
+	
 }
 
 void UIElement::Render(SDL_Renderer* renderer)
