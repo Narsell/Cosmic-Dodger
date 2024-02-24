@@ -1,5 +1,14 @@
 #include "userinterface/UIElement.hpp"
 
+void UIElement::Construct()
+{
+	for (UIElement*& child : m_children) 
+	{
+		child->m_transform += this->m_transform;
+		child->Construct();
+	}
+}
+
 UIElement::UIElement(const Transform& transform, const char* name)
 	:BaseEntity("", name, true, false),
 	m_transform(transform),
@@ -11,10 +20,6 @@ void UIElement::AddChild(UIElement* child)
 {
 	m_children.push_back(child);
 	child->m_parentElement = this;
-
-	const UIElement* childParent = child->m_parentElement;
-	child->m_transform += childParent->m_transform;
-	
 }
 
 void UIElement::Render(SDL_Renderer* renderer)

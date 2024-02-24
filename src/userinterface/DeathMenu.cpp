@@ -5,21 +5,20 @@
 
 DeathMenu::DeathMenu(const Transform& transform, const char* name)
 	:UIElement(transform, name),
-	m_background(*ResourceManager::uiBackgroundTexture, Transform(Vector2(-ResourceManager::uiBackgroundTexture->GetDimensions().x / 2.f, -ResourceManager::uiBackgroundTexture->GetDimensions().y/2.f))),
+	m_background(ResourceManager::uiBackgroundTexture, Transform(Vector2(-ResourceManager::uiBackgroundTexture->GetDimensions().x / 2.f, -ResourceManager::uiBackgroundTexture->GetDimensions().y/2.f))),
 	m_title("YOU LOST!", Color(255, 0, 160), Transform(Vector2(-120.f, -175.f)), Vector2(240.f, 60.)),
 	m_score("SCORE: 0", Color::black, Transform(Vector2(-100.f, -50.f)), Vector2(200.f, 50.f)),
 	m_level("LEVEL: 1", Color::black, Transform(Vector2(-90.f, 0.f)), Vector2(180.f, 50.f)),
-	m_button("TRY AGAIN", *ResourceManager::uiButton, Transform(Vector2(-ResourceManager::uiButton->GetDimensions().x / 2.f, 100.f))),
-	m_buttonLabel("TRY AGAIN", Color::black, Transform(m_button.m_transform.GetPosition()), Vector2(ResourceManager::uiButton->GetDimensions()))
+	m_button("TRY AGAIN", ResourceManager::uiButton, Transform(Vector2(-ResourceManager::uiButton->GetDimensions().x / 2.f, 100.f)))
 {
 	AddChild(&m_background);
 	AddChild(&m_title);
 	AddChild(&m_score);
 	AddChild(&m_level);
 	AddChild(&m_button);
-	AddChild(&m_buttonLabel);
 
 	m_button.m_transform.SetRotation(90.f);
+	m_button.SetHoverTexture(ResourceManager::uiButtonHover);
 
 	SetCanUpdate(true);
 }

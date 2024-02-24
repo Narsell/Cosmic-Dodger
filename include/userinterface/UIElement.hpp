@@ -23,6 +23,9 @@ public:
 protected:
 
 	UIElement(const Transform& transform = Transform(), const char* name = "NA_UIElement");
+	virtual void Construct();
+
+	const UIElement* GetParent() const { return m_parentElement; };
 
 private:
 

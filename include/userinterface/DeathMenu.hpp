@@ -22,6 +22,5 @@ private:
 	UIStaticText m_score;
 	UIStaticText m_level;
 	UIButton m_button;
-	UIStaticText m_buttonLabel;
 
 };

@@ -15,10 +15,10 @@
 HUD::HUD()
 	:UIElement(Transform()),
 	m_livesProgress(
-		Transform(Vector2(Window::s_width - ResourceManager::playerLifeTexture->GetDimensions().x - 30.f, 30.f)), *ResourceManager::playerLifeTexture, GameState::GetGameState()->GetMaxLives()
+		Transform(Vector2(Window::s_width - ResourceManager::playerLifeTexture->GetDimensions().x - 30.f, 30.f)), ResourceManager::playerLifeTexture, GameState::GetGameState()->GetMaxLives()
 	),
 	m_ammoProgress(
-		Transform(Vector2(Window::s_width - ResourceManager::ammoTexture->GetDimensions().x - 30.f, 90.f)), *ResourceManager::ammoTexture, ShootingComponent::GetMaxAmmo()
+		Transform(Vector2(Window::s_width - ResourceManager::ammoTexture->GetDimensions().x - 30.f, 90.f)), ResourceManager::ammoTexture, ShootingComponent::GetMaxAmmo()
 	),
 	m_score(
 		"SCORE: #", Color(176, 228, 16), Transform(Vector2(20.f, 20.f)), Vector2(200.f, 50.f)
@@ -41,6 +41,7 @@ HUD::HUD()
 	AddChild(&m_highScore);
 	AddChild(&m_difficultyLevel);
 	AddChild(&m_deathMenu);
+	Construct();
 	
 	SetCanUpdate(true);
 

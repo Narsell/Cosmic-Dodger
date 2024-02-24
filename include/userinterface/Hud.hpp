@@ -43,7 +43,4 @@ private:
 
 	DeathMenu m_deathMenu;
 
-	//std::vector<UIElement&> m_uiElements;
-
-
 };

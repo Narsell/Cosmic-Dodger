@@ -19,6 +19,7 @@ TextureResource* ResourceManager::pickupTexture = nullptr;
 TextureResource* ResourceManager::ammoTexture = nullptr;
 TextureResource* ResourceManager::uiBackgroundTexture = nullptr;
 TextureResource* ResourceManager::uiButton = nullptr;
+TextureResource* ResourceManager::uiButtonHover = nullptr;
 
 /* ANIMATIONS */
 
@@ -60,6 +61,7 @@ ResourceManager::ResourceManager(SDL_Renderer* renderer)
 	ResourceManager::ammoTexture = LoadTexture("Ammo", ammoDimensions, "assets/ammo_green.png");
 	ResourceManager::uiBackgroundTexture = LoadTexture("UI Background", uibgDimensions, "assets/ui_bg.png");
 	ResourceManager::uiButton = LoadTexture("UI Button", uiButtonDimensions, "assets/ui_button.png");
+	ResourceManager::uiButtonHover = LoadTexture("UI Button Hover", uiButtonDimensions, "assets/ui_button_hover.png");
 
 	Vector2 meteorFramesDimensions = Vector2(100.f, 100.f);
 	ResourceManager::meteorDestroyFrames = CreateAnimationFrames("Meteor Destruction");

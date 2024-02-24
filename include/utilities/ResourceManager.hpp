@@ -64,6 +64,7 @@ public:
     static TextureResource* ammoTexture;
     static TextureResource* uiBackgroundTexture;
     static TextureResource* uiButton;
+    static TextureResource* uiButtonHover;
 
     static AnimationFrames* meteorDestroyFrames;
 
