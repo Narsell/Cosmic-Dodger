@@ -1,4 +1,6 @@
 #pragma once
+#include <functional>
+
 #include "userinterface/UITextureRect.hpp"
 #include "userinterface/UIStaticText.hpp"
 #include "utilities/ResourceManager.hpp"
@@ -10,6 +12,7 @@ public:
 	UIButton(const char* label, const TextureResource* texture, const Transform& transform, const char* name = "NA_UIButton");
 	~UIButton();
 
+	void SetOnPressedDelegate(std::function<void(void)> delegate) { OnPressed = delegate; };
 	void SetHoverTexture(const TextureResource* hoverTexture) { m_hoverTexture = hoverTexture; };
 
 	virtual void Render(SDL_Renderer* renderer) override;
@@ -26,4 +29,5 @@ private:
 	UIStaticText m_label;
 	SDL_FRect m_boundary;
 
+	std::function<void(void)> OnPressed;
 };

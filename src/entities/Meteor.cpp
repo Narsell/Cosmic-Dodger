@@ -61,7 +61,7 @@ void Meteor::OnCollision(HitInfo& hitInformation)
 	m_movementComponent->SetMaxSpeed(m_movementComponent->GetSpeed() * 0.1f);
 
 	if (hitInformation.hitGameObject->GetDisplayName() == "Player") {
-		GameState::GetGameState()->PlayerHit();
+		GameState::GetGameState()->OnPlayerHit();
 	}
 }
 

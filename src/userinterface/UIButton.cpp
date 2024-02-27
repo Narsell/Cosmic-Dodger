@@ -1,5 +1,6 @@
 #include "userinterface/UIButton.hpp"
 #include "utilities/ResourceManager.hpp"
+#include "GameManager.hpp"
 
 UIButton::UIButton(const char* label, const TextureResource* texture, const Transform& transform, const char* name)
 	:UITextureRect(texture, transform, name),
@@ -40,6 +41,15 @@ void UIButton::Update(const float deltaTime)
 	SDL_FRect mouseRect(static_cast<float>(mouseX), static_cast<float>(mouseY), 20.f, 20.f);
 
 	if (SDL_HasIntersectionF(&m_boundary, &mouseRect)) {
+
+		for (SDL_Event& frameEvent : GameManager::GetInputEventQueue()) {
+			if (frameEvent.type == SDL_MOUSEBUTTONDOWN && frameEvent.button.button == SDL_BUTTON_LEFT) {
+				if (OnPressed) {
+					OnPressed();
+				}
+			}
+		}
+
 		SetTextureResource(m_hoverTexture);
 	}
 	else {

@@ -80,7 +80,9 @@ void AnimationComponent::Update(const float deltaTime)
 			if (!m_currentAnimation->CanLoop()) 
 			{
 				m_currentAnimation->Stop();
-				m_currentAnimation->OnTimeout();
+				if (m_currentAnimation->OnTimeout) {
+					m_currentAnimation->OnTimeout();
+				}
 			}
 		}
 		m_timeInCurrentFrame = 0.f;

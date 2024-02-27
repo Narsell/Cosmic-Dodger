@@ -10,7 +10,13 @@ class GameState {
 public:
 
 	static GameState* GetGameState();
+	GameState(const GameState&) = delete;
+	const GameState& operator=(const GameState&) = delete;
 
+	void OnTryAgain();
+	void OnPlayerHit();
+	void AddScore(const int increment);
+	void SetIsPaused(const bool isPaused) { m_isPaused = isPaused; };
 	void SetTargetHUD(HUD* hud);
 
 	const int GetScore() const { return m_currentScore; };
@@ -20,17 +26,15 @@ public:
 	const Vector2& GetPlayerStartPosition() const { return m_startPosition; };
 	const bool GetIsPaused() const { return m_isPaused; };
 
-	void AddScore(const int increment);
-	void PlayerHit();
-	void SetIsPaused(const bool isPaused) { m_isPaused = isPaused; };
-
 	~GameState();
 
 private:
+
 	GameState();
 
 	void IncreaseDifficulty();
 	void GameOver();
+	void UpdateHUD(const Player& player);
 	void ResetGameState(Player& player);
 
 	Vector2 m_startPosition;

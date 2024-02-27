@@ -1,5 +1,6 @@
 #include "userinterface/DeathMenu.hpp"
 #include "utilities/ResourceManager.hpp"
+#include "utilities/GameState.hpp"
 #include "utilities/Color.hpp"
 
 
@@ -16,7 +17,8 @@ DeathMenu::DeathMenu(const Transform& transform, const char* name)
 	AddChild(&m_score);
 	AddChild(&m_level);
 	AddChild(&m_button);
-
+	
+	m_button.SetOnPressedDelegate(std::bind(&GameState::OnTryAgain, GameState::GetGameState()));
 	m_button.m_transform.SetRotation(90.f);
 	m_button.SetHoverTexture(ResourceManager::uiButtonHover);
 

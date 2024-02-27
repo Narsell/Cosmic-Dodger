@@ -57,20 +57,20 @@ void HUD::SetState(HUD_STATE state)
 	switch (state)
 	{
 	case PLAYING:
-		m_deathMenu.SetCanRender(false);
-		m_livesProgress.SetCanRender(true);
-		m_ammoProgress.SetCanRender(true);
-		m_score.SetCanRender(true);
-		m_highScore.SetCanRender(true);
-		m_difficultyLevel.SetCanRender(true);
+		m_deathMenu.Disable();
+		m_livesProgress.Enable();
+		m_ammoProgress.Enable();
+		m_score.Enable();
+		m_highScore.Enable();
+		m_difficultyLevel.Enable();
 		break;
 	case DEAD:
-		m_deathMenu.SetCanRender(true);
-		m_livesProgress.SetCanRender(false);
-		m_ammoProgress.SetCanRender(false);
-		m_score.SetCanRender(false);
-		m_highScore.SetCanRender(false);
-		m_difficultyLevel.SetCanRender(false);
+		m_deathMenu.Enable();
+		m_livesProgress.Disable();
+		m_ammoProgress.Disable();
+		m_score.Disable();
+		m_highScore.Disable();
+		m_difficultyLevel.Disable();
 		break;
 	default:
 		break;

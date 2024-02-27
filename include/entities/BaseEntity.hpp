@@ -20,6 +20,7 @@ public:
 	bool GetCanUpdate() const { return m_canUpdate; };
 
 	virtual void Disable();
+	virtual void Enable();
 	virtual void SetCanRender(const bool canRender) { m_canRender = canRender; };
 	virtual void SetCanUpdate(const bool canUpdate) { m_canUpdate = canUpdate; };
 

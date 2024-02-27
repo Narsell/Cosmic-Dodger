@@ -32,3 +32,9 @@ void BaseEntity::Disable()
 	SetCanUpdate(false);
 	SetCanRender(false);
 }
+
+void BaseEntity::Enable()
+{
+	SetCanUpdate(true);
+	SetCanRender(true);
+}

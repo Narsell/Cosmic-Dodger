@@ -31,6 +31,12 @@ GameState* GameState::GetGameState()
 	return s_gameState;
 }
 
+void GameState::OnTryAgain()
+{
+	SetIsPaused(false);
+	m_hud->SetState(HUD_STATE::PLAYING);
+}
+
 void GameState::SetTargetHUD(HUD* hud)
 {
 	m_hud = hud;
@@ -51,7 +57,7 @@ void GameState::AddScore(const int increment)
 }
 
 
-void GameState::PlayerHit()
+void GameState::OnPlayerHit()
 {
 	m_currentLives = std::clamp(m_currentLives - 1, 0, m_maxLives);
 	m_playerHit.Play();
@@ -73,31 +79,25 @@ void GameState::IncreaseDifficulty()
 
 void GameState::GameOver()
 {
-	//It goes like this:
-	//				Show dead screen, pause entities updates, wait a for callback and then back to game
-	//				Delete all active meteors
-	//				Reset shooting component (timers, ammo)
-	//				Set current lives back to m_maxLives
-	//				Save hi score if score > hi score then set score to 0
-	//				Set player position to starting position
-	//				Update HUD with new values
-
-	// TODO: Add timer on hud to display GAME OVER message and add a callback to return and update HUD
-	
 	SetIsPaused(true);
-	m_hud->SetState(HUD_STATE::DEAD);
 	m_hud->UpdateDeathMenu(m_currentScore, m_difficultyLevel);
+	m_hud->SetState(HUD_STATE::DEAD);
 
 	Player* player = GameManager::GetPlayer();
-	ShootingComponent* playerShootComponent = player->GetShootingComponent();
 	ResetGameState(*player);
+	UpdateHUD(*player);
+
+}
+
+void GameState::UpdateHUD(const Player& player)
+{
+	ShootingComponent* playerShootComponent = player.GetShootingComponent();
 
 	m_hud->UpdateHighScore(m_highScore);
 	m_hud->UpdateScore(m_currentScore);
 	m_hud->UpdateLives(m_currentLives);
 	m_hud->UpdateAmmo(playerShootComponent->GetCurrentAmmo());
 	m_hud->UpdateDifficultyLevel(m_difficultyLevel);
-
 }
 
 void GameState::ResetGameState(Player& player) 
