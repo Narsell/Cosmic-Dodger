@@ -2,10 +2,9 @@
 
 Cosmic Dodger is a simple 2D game where you collect stars while navigating an increasingly frenetic asteroid field.
 
-You can play now on my itch.io!
-
 This project is an effort to learn more about low-level game development. It was made using SDL2 and C++.
 
+You can play now on my [itch.io](https://narsell.itch.io/cosmic-dodger) or download the latest release!
 
 ## Controls
 - **Left Click** to shoot
