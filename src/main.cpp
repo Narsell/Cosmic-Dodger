@@ -19,6 +19,6 @@ void operator delete (void* memory, size_t size)
 int main(int argc, char** args)
 {
     GameManager* app = GameManager::GetInstance();
-    app->GameStart("Game v.1.0");
+    app->GameStart("Cosmic Dodger");
     return 0;
 }

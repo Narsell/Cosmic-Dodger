@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpaceGame", "SpaceGame.vcxproj", "{CE82D9FB-D28E-4A9C-9A15-95CABF021816}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CosmicDodger", "CosmicDodger.vcxproj", "{CE82D9FB-D28E-4A9C-9A15-95CABF021816}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
